@@ -4,8 +4,8 @@ import sideBarItemList from "./sideBarItemList";
 const SideBarItem: any = () => {
   return sideBarItemList.map((e) => {
     return (
+      <Link key={e.id} href={e.href}>
       <Box
-        key={e.id}
         width="full"
         borderBottom="1px"
         padding="15px 0px"
@@ -15,10 +15,9 @@ const SideBarItem: any = () => {
         <Icon w="32px" h="32px" viewBox="0 0 20 20" paddingRight="5px">
           {e.icon}
         </Icon>
-        <Link href={e.href}>
           <a>{e.title}</a>
-        </Link>
       </Box>
+      </Link>
     );
   });
 };
