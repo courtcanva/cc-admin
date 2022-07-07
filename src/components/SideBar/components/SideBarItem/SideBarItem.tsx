@@ -1,8 +1,8 @@
 import { Box, Icon } from "@chakra-ui/react";
 import Link from "next/link";
 import sideBarItemList from "./sideBarItemList";
-const SideBarItem: Function = (): JSX.Element[] => {
-  return sideBarItemList.map((e: any) => {
+const SideBarItem: any = () => {
+  return sideBarItemList.map((e) => {
     return (
       <Box
         key={e.id}

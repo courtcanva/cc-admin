@@ -8,7 +8,7 @@ import SideBar from "@/components/SideBar";
 
 function CourtCanvaApp({ Component, pageProps }: AppProps) {
   return (
-    <Chakra cookies={pageProps.cookies}>
+    <Chakra>
       <Provider store={store}>
         <Layout>
           <SideBar />

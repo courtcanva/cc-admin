@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Icon, Button } from "@chakra-ui/react";
+import { Box, Text, Flex, Icon } from "@chakra-ui/react";
 import { BsFillFilePersonFill } from "react-icons/bs";
 import { MdOutlineLogout } from "react-icons/md";
 const Profile = () => {
