@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { motion } from "framer-motion";
 import Head from "next/head";
 
 interface HeaderLayoutProps {
@@ -17,25 +16,16 @@ const variants = {
 const HeaderLayout: React.FC<HeaderLayoutProps> = ({ children, title }) => {
   const headName = `${title} | CourtCanva`;
   return (
-    <motion.article
-      initial="hidden"
-      animate="enter"
-      exit="exit"
-      variants={variants}
-      transition={{ duration: 0.4, type: "easeInOut" }}
-      className="absolute"
-    >
-      <>
-        {title && (
-          <Head>
-            <title>{headName}</title>
-            <meta name="twitter:title" content={headName} />
-            <meta property="og:title" content={headName} />
-          </Head>
-        )}
-        {children}
-      </>
-    </motion.article>
+    <>
+      {title && (
+        <Head>
+          <title>{headName}</title>
+          <meta name="twitter:title" content={headName} />
+          <meta property="og:title" content={headName} />
+        </Head>
+      )}
+      {children}
+    </>
   );
 };
 

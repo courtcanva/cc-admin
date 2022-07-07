@@ -4,7 +4,14 @@ export const FooterContent = `&copy; ${new Date().getFullYear()} CourtCanva.`;
 
 const Footer = () => {
   return (
-    <Box as="footer" display="flex" justifyContent="center" opacity={0.4} fontSize="sm">
+    <Box
+      as="footer"
+      display="flex"
+      justifyContent="center"
+      opacity={0.4}
+      fontSize="sm"
+      paddingLeft="326px"
+    >
       {FooterContent}
     </Box>
   );

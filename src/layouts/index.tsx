@@ -9,7 +9,6 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
       <Header />
       <Box as="main">
         <Container>{children}</Container>
-        <Footer />
       </Box>
     </>
   );
