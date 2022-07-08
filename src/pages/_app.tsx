@@ -12,7 +12,7 @@ function CourtCanvaApp({ Component, pageProps }: AppProps) {
         <Layout>
           {/* <SideBar /> */}
           {/* <Component {...pageProps} /> */}
-          <Component/>
+          <Component />
         </Layout>
       </Provider>
     </Chakra>
