@@ -10,12 +10,13 @@ import {
   Tr,
   Td,
   IconButton,
+  Button,
 } from "@chakra-ui/react";
 import { BiPencil } from "react-icons/bi";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { AddIcon } from "@chakra-ui/icons";
+import { api } from "@/utils/axios";
 interface ICourt {
-  isDeleted: boolean;
   _id: string;
   name: string;
   length: number;
@@ -29,18 +30,19 @@ interface ICourt {
   sideBorderWidth: number;
   lineBorderWidth: number;
   description: string;
+  createdAt: Date,
+  updatedAt: Date,
+  isDeleted?: boolean
 }
 const courts = () => {
   const [courtsData, setCourtsData] = useState<ICourt[]>([]);
   const [loading, setLoading] = useState(true);
-  const loadCourts = async () => {
-    const response = await axios.get<ICourt[]>("http://localhost:8080/v1/courts");
-    setCourtsData(response.data);
-  };
 
   useEffect(() => {
-    loadCourts();
-    setLoading(false);
+    api(process.env.NEXT_PUBLIC_API_COURTS as string, { method: "get" }).then(({ data }) => {
+      setCourtsData(data);
+      setLoading(false);
+    });
   }, []);
 
   if (loading) {
@@ -48,12 +50,20 @@ const courts = () => {
   }
   return (
     <Flex flexDirection="column">
-      <Heading marginY="50px">Courts Data</Heading>
+      <Heading marginTop="50px">Courts Data</Heading>
+      <Button
+      width="100px"
+      alignSelf="flex-end"
+      marginRight="10px"
+      marginY="20px"
+      leftIcon={<AddIcon /> }
+      >
+        New
+      </Button>
       <TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>Is Deleted</Th>
               <Th>ID</Th>
               <Th>Name</Th>
               <Th>Length</Th>
@@ -67,24 +77,31 @@ const courts = () => {
               <Th>Side Border Width</Th>
               <Th>Line Border Width</Th>
               <Th>Description</Th>
+              <Th>Created At</Th>
+              <Th>Updated At</Th>
               <Th>Edit</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {courtsData.map((court) => (
+            {courtsData.map((court) => {
+              delete court["isDeleted"];
+              return (
               <Tr key={court._id}>
-                {Object.entries(court).map(([key, value]) => {
+                {
+                Object.entries(court).map(([key, value]) => {
                   return (
                     <Td key={key} textAlign="center">
                       {JSON.stringify(value)}
                     </Td>
                   );
-                })}
+                })
+                }
                 <Td>
-                  <IconButton aria-label="Edit" icon={<BiPencil />} />
+                  <IconButton aria-label="Edit" icon={<BiPencil />}/>
                 </Td>
               </Tr>
-            ))}
+              )
+            })}
           </Tbody>
         </Table>
       </TableContainer>
