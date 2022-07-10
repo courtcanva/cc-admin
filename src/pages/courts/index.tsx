@@ -30,9 +30,9 @@ interface ICourt {
   sideBorderWidth: number;
   lineBorderWidth: number;
   description: string;
-  createdAt: Date,
-  updatedAt: Date,
-  isDeleted?: boolean
+  createdAt: Date;
+  updatedAt: Date;
+  isDeleted?: boolean;
 }
 const courts = () => {
   const [courtsData, setCourtsData] = useState<ICourt[]>([]);
@@ -52,11 +52,11 @@ const courts = () => {
     <Flex flexDirection="column">
       <Heading marginTop="50px">Courts Data</Heading>
       <Button
-      width="100px"
-      alignSelf="flex-end"
-      marginRight="10px"
-      marginY="20px"
-      leftIcon={<AddIcon /> }
+        width="100px"
+        alignSelf="flex-end"
+        marginRight="10px"
+        marginY="20px"
+        leftIcon={<AddIcon />}
       >
         New
       </Button>
@@ -86,21 +86,19 @@ const courts = () => {
             {courtsData.map((court) => {
               delete court["isDeleted"];
               return (
-              <Tr key={court._id}>
-                {
-                Object.entries(court).map(([key, value]) => {
-                  return (
-                    <Td key={key} textAlign="center">
-                      {JSON.stringify(value)}
-                    </Td>
-                  );
-                })
-                }
-                <Td>
-                  <IconButton aria-label="Edit" icon={<BiPencil />}/>
-                </Td>
-              </Tr>
-              )
+                <Tr key={court._id}>
+                  {Object.entries(court).map(([key, value]) => {
+                    return (
+                      <Td key={key} textAlign="center">
+                        {JSON.stringify(value)}
+                      </Td>
+                    );
+                  })}
+                  <Td>
+                    <IconButton aria-label="Edit" icon={<BiPencil />} />
+                  </Td>
+                </Tr>
+              );
             })}
           </Tbody>
         </Table>
