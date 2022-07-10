@@ -12,7 +12,7 @@ import _ from "lodash";
 interface IConfig {
   method: string;
   params?: string;
-  requestData?: string;
+  requestData?: any;
   token?: string;
   headers?: { contentType: string };
 }

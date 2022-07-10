@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import HeaderLayout from "../layouts/HeaderLayout";
 import { Heading } from "@chakra-ui/react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const Home: NextPage = () => {
   return (
