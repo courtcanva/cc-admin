@@ -36,7 +36,7 @@ pipeline {
                    echo 'Zip Artifact File'
                    sh 'cd out; zip -r ../"1.0.$Version_ID".zip .'
                    echo 'Upload main branch artifact to UAT Admin artifact repo'
-                   sh 'aws s3 cp "1.0.$Version_ID".zip ${UATAdminS3Bucket}'
+                   sh 'aws s3 cp "1.0.$Version_ID".zip ${UATAdminRepo}'
               }
                    }
         stage('Main Branch Deploy') {
@@ -45,7 +45,7 @@ pipeline {
               }
               steps {
                    echo 'Deploying artifact to UAT Admin from main branch'
-                   sh 'aws s3 sync out ${UATS3Bucket}'
+                   sh 'aws s3 sync out ${UATAdminS3Bucket}'
               }
          }
          stage('Approval') {
