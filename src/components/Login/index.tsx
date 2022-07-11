@@ -1,24 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import HeaderLayout from "../../layouts/HeaderLayout";
 import DashBoardLogo from "@/assets/svg/dashboard-log.svg";
+import LoginForm from "./LoginForm";
 
-import { Box, Flex, Image, Text, Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
 const Login: React.FC = () => {
-  const [userEmail, setUserEmail] = useState<string>("");
-  const [userPassword, setUserPassword] = useState<string>("");
-
-  const isInvalid = !userPassword || !userEmail;
-
-  const handleUserLogin = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    console.log("====================================");
-    console.log("userEmail", userEmail);
-    console.log("userPassword", userPassword);
-    console.log("====================================");
-  };
-
   return (
     <HeaderLayout>
       <Flex
@@ -61,60 +48,7 @@ const Login: React.FC = () => {
             </Flex>
 
             <Flex>
-              <form onSubmit={handleUserLogin}>
-                <FormControl>
-                  <FormLabel htmlFor="email" fontWeight="600">
-                    Email
-                  </FormLabel>
-                  <Input
-                    id="email"
-                    type="email"
-                    size="md"
-                    width="360px"
-                    placeholder="Enter Email"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setUserEmail(e.target.value.trim())
-                    }
-                  />
-                </FormControl>
-
-                <FormControl>
-                  <FormLabel htmlFor="password" fontWeight="600" marginTop="25px">
-                    Password
-                  </FormLabel>
-                  <Input
-                    id="password"
-                    type="password"
-                    size="md"
-                    width="360px"
-                    placeholder="Enter Password"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setUserPassword(e.target.value.trim())
-                    }
-                  />
-                </FormControl>
-
-                <Button
-                  width="360px"
-                  height="40px"
-                  marginTop="25px"
-                  marginBottom="100px"
-                  background={isInvalid ? "#c5c5c6" : "white"}
-                  border="1px solid"
-                  borderColor={isInvalid ? "transparent" : "brand.secondary"}
-                  _hover={{
-                    background: "brand.secondary",
-                    color: "white",
-                  }}
-                  _active={{
-                    background: "button.active",
-                  }}
-                  type="submit"
-                  disabled={isInvalid}
-                >
-                  Login in
-                </Button>
-              </form>
+              <LoginForm />
             </Flex>
           </Flex>
 
