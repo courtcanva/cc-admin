@@ -58,4 +58,3 @@ const CountWrapper = styled.span`
 
 export default Home;
 
-export { getServerSideProps } from "../styles/Chakra";
