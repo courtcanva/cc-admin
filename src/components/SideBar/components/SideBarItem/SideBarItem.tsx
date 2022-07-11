@@ -2,11 +2,10 @@ import { Box, Icon } from "@chakra-ui/react";
 import Link from "next/link";
 import sideBarItemList from "./sideBarItemList";
 const SideBarItem: any = () => {
-  return sideBarItemList.map((e) => {
+  return sideBarItemList.map((item) => {
     return (
-      <Link href={e.href}>
+      <Link href={item.href} key={item.id}>
         <Box
-          key={e.id}
           width="full"
           borderBottom="1px"
           padding="15px 0px"
@@ -14,9 +13,9 @@ const SideBarItem: any = () => {
           color="fontcolor.primary"
         >
           <Icon w="32px" h="32px" viewBox="0 0 20 20" paddingRight="5px">
-            {e.icon}
+            {item.icon}
           </Icon>
-          {e.title}
+          {item.title}
         </Box>
       </Link>
     );

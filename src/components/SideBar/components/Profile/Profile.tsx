@@ -15,7 +15,7 @@ const Profile = () => {
         </Text>
       </Flex>
       <Flex paddingBottom="20px" as="button" color="fontcolor.primary">
-        <Icon w="32px" h="32px" viewBox="0 0 20 22" paddingRight="5px">
+        <Icon width="32px" height="32px" viewBox="0 0 20 22" paddingRight="5px">
           <MdOutlineLogout />
         </Icon>
         <Text fontSize="sm">Logout</Text>

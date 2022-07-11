@@ -13,6 +13,10 @@ interface ITile {
   createAt: string;
   updateAt: string;
 }
+interface IColor {
+  name: string;
+  value: string;
+}
 const Edit = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -21,7 +25,7 @@ const Edit = () => {
   const [name, setName] = useState("");
   const [length, setLength] = useState(300);
   const [width, setWidth] = useState(300);
-  const [color, setColor] = useState([]);
+  const [color, setColor] = useState<IColor[]>();
   const apiUrl = `${process.env.NEXT_PUBLIC_API_TILES}/${id}`;
   useEffect(() => {
     api(apiUrl, { method: "get" }).then(({ data }) => {
@@ -30,14 +34,11 @@ const Edit = () => {
     });
   }, []);
 
-  if (loading) {
-    return <h1>Loading</h1>;
-  }
   console.log(tiles);
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     try {
-      api(`${process.env.NEXT_PUBLIC_API_TILES}/${id}`, {
+      api(apiUrl, {
         method: "put",
         requestData: { ...tiles, color, length, width, name },
       });
@@ -46,23 +47,22 @@ const Edit = () => {
       console.log(error);
     }
   };
-  const handleChang = (index: any) => (e: any) => {
-    console.log("index: " + index);
-    console.log("property name: " + e.currentTarget.value);
-    let newArr: any = [...tiles!.colors]; // copying the old datas array
-    console.log(newArr);
+  const handleChang = (index: number) => (e: React.FormEvent<HTMLInputElement>) => {
+    const newArr: IColor[] = [...tiles!.colors];
+
     newArr[index].name = e.currentTarget.value;
     setColor(newArr);
   };
 
-  const handleChangValue = (index: any) => (e: any) => {
-    console.log("index: " + index);
-    console.log("property name: " + e.currentTarget.value);
-    let newArr: any = [...tiles!.colors]; // copying the old datas array
-    console.log(newArr);
+  const handleChangValue = (index: number) => (e: React.FormEvent<HTMLInputElement>) => {
+    const newArr: IColor[] = [...tiles!.colors];
+
     newArr[index].value = e.currentTarget.value;
     setColor(newArr);
   };
+  if (loading) {
+    return <h1>Loading</h1>;
+  }
   return (
     <Container>
       <form onSubmit={handleSubmit}>

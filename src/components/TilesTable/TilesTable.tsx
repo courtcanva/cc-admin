@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  Box,
   Table,
   Thead,
   Tbody,
@@ -21,14 +20,14 @@ import formatDate from "@/utils/formatDate";
 import TilesTableItemList from "./TilesTableItemList";
 import ColorBoard from "./components/ColorBoard";
 
-const TilesTable = ({ tiles }: any) => {
+const TilesTable = (tiles: any) => {
   return (
     <TableContainer>
       <Table variant="simple">
         <Thead>
           <Tr>
             {TilesTableItemList.map((item) => {
-              return <Th>{item.title}</Th>;
+              return <Th key={item.id}>{item.title}</Th>;
             })}
           </Tr>
         </Thead>
@@ -42,16 +41,11 @@ const TilesTable = ({ tiles }: any) => {
             <Td>{formatDate(tiles.updatedAt)}</Td>
             <Td>
               <Popover>
-                <PopoverTrigger
-                  children={
-                    <IconButton
-                      aria-label="Rb"
-                      children={<IoColorPaletteOutline />}
-                      display="fixed"
-                    />
-                  }
-                />
-
+                <PopoverTrigger>
+                  <IconButton aria-label="Rb" display="fixed">
+                    <IoColorPaletteOutline />
+                  </IconButton>
+                </PopoverTrigger>
                 <PopoverContent>
                   <PopoverArrow />
                   <PopoverBody>

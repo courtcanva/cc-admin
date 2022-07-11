@@ -5,7 +5,7 @@ const Logo = () => {
     <Flex paddingTop="20px">
       <DashBoardLogo />
       <Text
-        m={2}
+        margin={2}
         as="span"
         color="fontcolor.primary"
         fontSize="md"

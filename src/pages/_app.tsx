@@ -5,7 +5,7 @@ import store from "../store";
 import { Chakra } from "@/styles/Chakra";
 import Layout from "@/layouts";
 
-function CourtCanvaApp({ Component, pageProps }: AppProps) {
+function CourtCanvaApp({ Component }: AppProps) {
   return (
     <Chakra>
       <Provider store={store}>

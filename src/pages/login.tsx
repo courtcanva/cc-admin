@@ -6,7 +6,7 @@ const login = () => {
     password: "",
   });
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = () => {
     const loginFormData = new FormData();
     loginFormData.append("username", formValue.email);
     loginFormData.append("password", formValue.password);
