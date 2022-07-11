@@ -12,7 +12,7 @@ const SideBarItem: any = () => {
           _hover={{ bg: "button.hover" }}
           color="fontcolor.primary"
         >
-          <Icon w="32px" h="32px" viewBox="0 0 20 20" paddingRight="5px">
+          <Icon width="32px" height="32px" viewBox="0 0 20 20" paddingRight="5px">
             {item.icon}
           </Icon>
           {item.title}

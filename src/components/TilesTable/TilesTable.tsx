@@ -20,7 +20,7 @@ import formatDate from "@/utils/formatDate";
 import TilesTableItemList from "./TilesTableItemList";
 import ColorBoard from "./components/ColorBoard";
 
-const TilesTable = (tiles: any) => {
+const TilesTable = ({ tiles }: any) => {
   return (
     <TableContainer>
       <Table variant="simple">
@@ -37,8 +37,8 @@ const TilesTable = (tiles: any) => {
             <Td>{tiles._id}</Td>
             <Td>{tiles.width}</Td>
             <Td>{tiles.length}</Td>
-            <Td>{formatDate(tiles.createdAt)}</Td>
-            <Td>{formatDate(tiles.updatedAt)}</Td>
+            <Td>{formatDate(tiles.createdAt as string)}</Td>
+            <Td>{formatDate(tiles.updatedAt as string)}</Td>
             <Td>
               <Popover>
                 <PopoverTrigger>
