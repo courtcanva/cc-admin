@@ -12,7 +12,7 @@ export interface ICourt {
   sideBorderWidth: number;
   lineBorderWidth: number;
   description: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   isDeleted?: boolean;
 }

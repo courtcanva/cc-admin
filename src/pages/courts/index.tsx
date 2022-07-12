@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { AddIcon } from "@chakra-ui/icons";
 import { api } from "@/utils/axios";
 import { useRouter } from "next/router";
-import {ICourt} from "@/interfaces/courtData";
+import { ICourt } from "@/interfaces/courtData";
 import { CgDetailsMore } from "react-icons/cg";
 import formatDate from "@/utils/formatDate";
 
@@ -28,19 +28,13 @@ const courts = () => {
     router.push({
       pathname: "courts/" + _id,
     });
-  }
+  };
   const addNewHandler = () => {
     router.push({
-      pathname: "courts/new"
+      pathname: "courts/new",
     });
-  }
-  const courtDataHeader = [
-    "ID",
-    "Name",
-    "Created At",
-    "Updated At",
-    "Detail"
-  ]
+  };
+  const courtDataHeader = ["ID", "Name", "Created At", "Updated At", "Detail"];
   useEffect(() => {
     api(process.env.NEXT_PUBLIC_API_COURTS as string, { method: "get" }).then(({ data }) => {
       setCourtsData(data);
@@ -60,31 +54,30 @@ const courts = () => {
         marginRight="10px"
         marginY="20px"
         leftIcon={<AddIcon />}
-        onClick = {addNewHandler}
+        onClick={addNewHandler}
       >
         New
       </Button>
       <TableContainer>
         <Table variant="simple">
-        <Thead>
-          <Tr>
-            {courtDataHeader.map((item) => <Th key={item} textAlign="center">{item}</Th>)}
-          </Tr>
-        </Thead>
-        <Tbody>
+          <Thead>
+            <Tr>
+              {courtDataHeader.map((item) => (
+                <Th key={item} textAlign="center">
+                  {item}
+                </Th>
+              ))}
+            </Tr>
+          </Thead>
+          <Tbody>
             {courtsData.map((court) => {
-              court["createdAt"] = formatDate(court.createdAt)
-              court["updatedAt"] = formatDate(court.createdAt)
-              const {
-                _id,
-                name,
-                createdAt,
-                updatedAt, 
-              } = court
+              court["createdAt"] = formatDate(court.createdAt);
+              court["updatedAt"] = formatDate(court.createdAt);
+              const { _id, name, createdAt, updatedAt } = court;
               return (
                 <>
                   <Tr key={court._id}>
-                    {Object.entries({_id, name, createdAt, updatedAt} ).map(([key, value]) => {
+                    {Object.entries({ _id, name, createdAt, updatedAt }).map(([key, value]) => {
                       return (
                         <Td key={key} textAlign="center">
                           {value}
@@ -95,7 +88,7 @@ const courts = () => {
                       <IconButton
                         aria-label="detail"
                         icon={<CgDetailsMore />}
-                        onClick = {() => showDetailHandler(_id)}
+                        onClick={() => showDetailHandler(_id)}
                       />
                     </Td>
                   </Tr>

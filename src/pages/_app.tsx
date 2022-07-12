@@ -9,11 +9,11 @@ function CourtCanvaApp({ Component, pageProps }: AppProps) {
   return (
     <Chakra>
       {/* <Provider store={store}> */}
-        <Layout>
-          {/* <SideBar /> */}
-          {/* <Component {...pageProps} /> */}
-          <Component />
-        </Layout>
+      <Layout>
+        {/* <SideBar /> */}
+        {/* <Component {...pageProps} /> */}
+        <Component />
+      </Layout>
       {/* </Provider> */}
     </Chakra>
   );
