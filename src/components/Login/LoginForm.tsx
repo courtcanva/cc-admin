@@ -1,14 +1,22 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import formReducer, { FormActionKind } from "./formReducer";
+import { loginRequest } from "./loginRequest";
+import { useStoreDispatch } from "@/store/hooks";
+import { saveUserToken } from "@/store/reducer/userTokenSlice";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const initialFormState = {
   userEmail: "",
   userPassword: "",
 };
 
-const LoginForm = () => {
+const LoginForm = ({ loginStatus }: { loginStatus: (arg0: boolean) => boolean | void }) => {
+  const reduxDispatch = useStoreDispatch();
   const [state, dispatch] = useReducer(formReducer, initialFormState);
+  const [isLoginFail, setIsLoginFail] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [, setUserToken] = useLocalStorage<object | undefined>("userToken", undefined);
 
   const isInvalid = !state.userEmail || !state.userPassword;
 
@@ -20,18 +28,28 @@ const LoginForm = () => {
     });
   };
 
-  const handleUserLogin = (event: React.FormEvent) => {
+  const handleUserLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
+    const loginResponse = await loginRequest(state.userEmail, state.userPassword);
 
-    console.log("====================================");
-    console.log("userEmail", state.userEmail);
-    console.log("userPassword", state.userPassword);
-    console.log("====================================");
+    if (loginResponse?.status === 403) {
+      setIsLoginFail(true);
+      loginStatus(true);
+      setIsLoading(false);
+      return;
+    }
+
+    const tokens: object = loginResponse.data;
+
+    setUserToken(tokens);
+    reduxDispatch(saveUserToken(tokens));
+    setIsLoading(false);
   };
 
   return (
     <form onSubmit={handleUserLogin}>
-      <FormControl>
+      <FormControl isInvalid={isLoginFail}>
         <FormLabel htmlFor="email" fontWeight="600">
           Email
         </FormLabel>
@@ -46,7 +64,7 @@ const LoginForm = () => {
         />
       </FormControl>
 
-      <FormControl>
+      <FormControl isInvalid={isLoginFail}>
         <FormLabel htmlFor="password" fontWeight="600" marginTop="25px">
           Password
         </FormLabel>
@@ -78,6 +96,7 @@ const LoginForm = () => {
         }}
         type="submit"
         disabled={isInvalid}
+        isLoading={isLoading}
       >
         Login in
       </Button>

@@ -3,20 +3,17 @@ import { Box, Container } from "@chakra-ui/react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Login from "@/components/Login";
+import { useStoreSelector } from "@/store/hooks";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // const token = false;
+  const userAccessToken = useStoreSelector((state) => state.userToken.accessToken);
 
-  // if (!token) {
-  //   return (
-  //     <>
-  //       <Header />
-  //       <Login />
-  //     </>
-  //   );
-  // }
-
-  return (
+  return !userAccessToken ? (
+    <>
+      <Header />
+      <Login />
+    </>
+  ) : (
     <>
       <Header />
       <Box as="main">
