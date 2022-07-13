@@ -21,11 +21,11 @@ const Edit = () => {
   const router = useRouter();
   const { id } = router.query;
   const [tiles, setTiles] = useState<ITile>();
-  const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [length, setLength] = useState(300);
   const [width, setWidth] = useState(300);
   const [color, setColor] = useState<IColor[]>();
+  const [loading, setLoading] = useState(true);
   const apiUrl = `${process.env.NEXT_PUBLIC_API_TILES}/${id}`;
   useEffect(() => {
     api(apiUrl, { method: "get" }).then(({ data }) => {
@@ -34,7 +34,6 @@ const Edit = () => {
     });
   }, []);
 
-  console.log(tiles);
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {

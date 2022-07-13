@@ -21,6 +21,7 @@ import TilesTableItemList from "./TilesTableItemList";
 import ColorBoard from "./components/ColorBoard";
 
 const TilesTable = ({ tiles }: any) => {
+  console.log(tiles);
   return (
     <TableContainer>
       <Table variant="simple">
@@ -32,39 +33,43 @@ const TilesTable = ({ tiles }: any) => {
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>{tiles.name}</Td>
-            <Td>{tiles._id}</Td>
-            <Td>{tiles.width}</Td>
-            <Td>{tiles.length}</Td>
-            <Td>{formatDate(tiles.createdAt as string)}</Td>
-            <Td>{formatDate(tiles.updatedAt as string)}</Td>
-            <Td>
-              <Popover>
-                <PopoverTrigger>
-                  <IconButton aria-label="Rb" display="fixed">
-                    <IoColorPaletteOutline />
-                  </IconButton>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverArrow />
-                  <PopoverBody>
-                    <ColorBoard colors={tiles.colors} />
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>
-            </Td>
-            <Td>
-              <Link
-                href={{
-                  pathname: "/tiles/[id]",
-                  query: { id: tiles._id },
-                }}
-              >
-                <IconButton aria-label="Edit" icon={<BiPencil />} />
-              </Link>
-            </Td>
-          </Tr>
+          {tiles.map((tile: any) => {
+            return (
+              <Tr key={tile._id}>
+                <Td>{tile.name}</Td>
+                <Td>{tile._id}</Td>
+                <Td>{tile.width}</Td>
+                <Td>{tile.length}</Td>
+                <Td>{formatDate(tile.createdAt as string)}</Td>
+                <Td>{formatDate(tile.updatedAt as string)}</Td>
+                <Td>
+                  <Popover>
+                    <PopoverTrigger>
+                      <IconButton aria-label="Rb" display="fixed">
+                        <IoColorPaletteOutline />
+                      </IconButton>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverBody>
+                        <ColorBoard colors={tile.colors} />
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                </Td>
+                <Td>
+                  <Link
+                    href={{
+                      pathname: "/tiles/[id]",
+                      query: { id: tile._id },
+                    }}
+                  >
+                    <IconButton aria-label="Edit" icon={<BiPencil />} />
+                  </Link>
+                </Td>
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
     </TableContainer>
