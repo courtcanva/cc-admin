@@ -11,10 +11,13 @@ import {
 import HeaderLayout from "../layouts/HeaderLayout";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { Button, Box, Flex, Heading, Text } from "@chakra-ui/react";
+import useAuthRequest from "@/hooks/useAuthRequest";
 
 const Home: NextPage = () => {
   const count = useSelector(changeCounter);
   const dispatch = useDispatch();
+  const { logoutRequest } = useAuthRequest();
+
   return (
     <HeaderLayout>
       <Flex align="center" justify="center" flexDirection="column" maxW="60rem">
@@ -45,6 +48,9 @@ const Home: NextPage = () => {
           onClick={() => dispatch(incrementByAmount(100))}
         >
           Plus 100
+        </Button>
+        <Button mt="12px" mb="24px" aria-label="Clear value" onClick={() => logoutRequest()}>
+          Logout
         </Button>
       </Flex>
     </HeaderLayout>
