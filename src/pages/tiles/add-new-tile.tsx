@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "@/utils/axios";
 import Link from "next/link";
@@ -16,7 +16,7 @@ const AddNewTile = () => {
   const [length, setLength] = useState(300);
   const [width, setWidth] = useState(300);
   const [height, setHeight] = useState(0);
-  const [colors, setColors] = useState<any>([]);
+  const [colors, setColors] = useState<IColor[]>([]);
   console.log(colors);
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ const AddNewTile = () => {
         <FormLabel marginTop="30px">Colors</FormLabel>
         <AddTileColor setColors={setColors} />
         <Box>
-          {colors.map((color: any) => {
+          {colors.map((color: IColor) => {
             return (
               <Flex key={color.name} justifyContent="center">
                 <Input marginY="10px" value={color.name} readOnly />

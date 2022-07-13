@@ -20,6 +20,17 @@ import formatDate from "@/utils/formatDate";
 import TilesTableItemList from "./TilesTableItemList";
 import ColorBoard from "./components/ColorBoard";
 
+interface ITile {
+  _id: string;
+  name: string;
+  colors: { name: string; value: string }[];
+  length: string;
+  width: string;
+  heights: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 const TilesTable = ({ tiles }: any) => {
   console.log(tiles);
   return (
@@ -33,7 +44,7 @@ const TilesTable = ({ tiles }: any) => {
           </Tr>
         </Thead>
         <Tbody>
-          {tiles.map((tile: any) => {
+          {tiles.map((tile: ITile) => {
             return (
               <Tr key={tile._id}>
                 <Td>{tile.name}</Td>
