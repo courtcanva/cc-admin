@@ -34,7 +34,7 @@ const EditCourt = () => {
   const apiUrl = `${process.env.NEXT_PUBLIC_API_COURTS}/${CourtId}`;
   const redirectHandler = () => {
     router.push({
-      pathname: "courts/",
+      pathname: "/courts",
     });
   };
   useEffect(() => {

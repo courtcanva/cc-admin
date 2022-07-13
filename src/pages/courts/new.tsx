@@ -19,7 +19,7 @@ const NewCourt = () => {
   const [description, setDescription] = useState<string>();
   const redirectHandler = () => {
     router.push({
-      pathname: "courts/",
+      pathname: "/courts",
     });
   };
   const handleSubmit = (event: React.SyntheticEvent) => {
@@ -64,7 +64,7 @@ const NewCourt = () => {
   return (
     <Container>
       <Flex flexDirection="column">
-        <Heading marginY="50px">Edit Court Information</Heading>
+        <Heading marginY="50px">Add New Court</Heading>
         <form onSubmit={handleSubmit}>
           <Flex flexDirection="row" flexWrap="wrap" gap="20px" justifyContent="space-around">
             <FormControl width="250px">
