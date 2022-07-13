@@ -1,4 +1,5 @@
 import { api } from "@/utils/axios";
+import { routeHandler } from "@/utils/routeHandler";
 import { Button, Container, Flex, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -17,11 +18,6 @@ const NewCourt = () => {
   const [sideBorderWidth, setSideBorderWidth] = useState<number>();
   const [lineBorderWidth, setLineBorderWidth] = useState<number>();
   const [description, setDescription] = useState<string>();
-  const redirectHandler = () => {
-    router.push({
-      pathname: "/courts",
-    });
-  };
   const handleSubmit = (event: React.SyntheticEvent) => {
     console.log({
       name,
@@ -56,7 +52,7 @@ const NewCourt = () => {
           description,
         },
       });
-      router.push("/courts");
+      routeHandler();
     } catch (error) {
       console.log(error);
     }
@@ -147,20 +143,16 @@ const NewCourt = () => {
             justifyContent="space-around"
             marginTop="50px"
           >
-            {/* <Link href="/courts"> */}
             <Button
               width="250px"
-              // variant='outline'
               backgroundColor="transparent"
               border="2px"
               borderColor="#f05544"
               _hover={{ bg: "#e94d3c", color: "#fff" }}
-              onClick={redirectHandler}
+              onClick={() => routeHandler("")}
             >
               Cancel
             </Button>
-            {/* </Link> */}
-
             <Button
               type="submit"
               width="250px"

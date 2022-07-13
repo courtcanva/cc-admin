@@ -7,7 +7,6 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Th,
   Tr,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -16,6 +15,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/utils/axios";
 import { BiPencil } from "react-icons/bi";
 import formatDate from "@/utils/formatDate";
+import { idRouteHandler } from "@/utils/routeHandler";
 
 const CourtDetail = () => {
   const [courtData, setCourtData] = useState<ICourt>();
@@ -23,11 +23,6 @@ const CourtDetail = () => {
   const router = useRouter();
   const courtId = router.query.courtID;
   const apiUrl = `${process.env.NEXT_PUBLIC_API_COURTS}/${courtId}`;
-  const editHandler = () => {
-    router.push({
-      pathname: `${courtId}/edit`,
-    });
-  };
 
   useEffect(() => {
     api(apiUrl as string, { method: "get" }).then(({ data }) => {
@@ -70,7 +65,7 @@ const CourtDetail = () => {
         marginRight="10px"
         marginY="20px"
         leftIcon={<BiPencil />}
-        onClick={editHandler}
+        onClick={() => idRouteHandler(`${courtId}/edit`)}
       >
         Edit
       </Button>

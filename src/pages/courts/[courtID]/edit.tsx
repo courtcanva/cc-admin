@@ -8,11 +8,11 @@ import {
   FormLabel,
   Heading,
   Input,
-  Link,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ICourt } from "@/interfaces/courtData";
+import { routeHandler } from "@/utils/routeHandler";
 
 const EditCourt = () => {
   const router = useRouter();
@@ -32,11 +32,7 @@ const EditCourt = () => {
   const [lineBorderWidth, setLineBorderWidth] = useState<number>();
   const [description, setDescription] = useState<string>();
   const apiUrl = `${process.env.NEXT_PUBLIC_API_COURTS}/${CourtId}`;
-  const redirectHandler = () => {
-    router.push({
-      pathname: "/courts",
-    });
-  };
+
   useEffect(() => {
     api(apiUrl, { method: "get" }).then(({ data }) => {
       setCourtData(data);
@@ -80,7 +76,7 @@ const EditCourt = () => {
           description,
         },
       });
-      router.push("/courts");
+      routeHandler();
     } catch (error) {
       console.log(error);
     }
@@ -195,19 +191,16 @@ const EditCourt = () => {
             justifyContent="space-around"
             marginTop="50px"
           >
-            {/* <Link href="/courts"> */}
             <Button
               width="250px"
-              // variant='outline'
               backgroundColor="transparent"
               border="2px"
               borderColor="#f05544"
               _hover={{ bg: "#e94d3c", color: "#fff" }}
-              onClick={redirectHandler}
+              onClick={() => routeHandler()}
             >
               Cancel
             </Button>
-            {/* </Link> */}
 
             <Button
               type="submit"

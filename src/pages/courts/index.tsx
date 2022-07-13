@@ -5,8 +5,6 @@ import {
   TableContainer,
   Tbody,
   Heading,
-  Th,
-  Thead,
   Tr,
   Td,
   IconButton,
@@ -19,22 +17,18 @@ import { useRouter } from "next/router";
 import { ICourt } from "@/interfaces/courtData";
 import { CgDetailsMore } from "react-icons/cg";
 import formatDate from "@/utils/formatDate";
+import TableHeader from "@/components/CourtsTable";
+import { routeHandler } from "@/utils/routeHandler";
 
 const courts = () => {
   const [courtsData, setCourtsData] = useState<ICourt[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const showDetailHandler = (_id: string) => {
-    router.push({
-      pathname: "courts/" + _id,
-    });
-  };
-  const addNewHandler = () => {
-    router.push({
-      pathname: "courts/new",
-    });
-  };
-  const courtDataHeader = ["ID", "Name", "Created At", "Updated At", "Detail"];
+  // const addNewHandler = () => {
+  //   router.push({
+  //     pathname: "courts/new",
+  //   });
+  // };
   useEffect(() => {
     api(process.env.NEXT_PUBLIC_API_COURTS as string, { method: "get" }).then(({ data }) => {
       setCourtsData(data);
@@ -54,21 +48,13 @@ const courts = () => {
         marginRight="10px"
         marginY="20px"
         leftIcon={<AddIcon />}
-        onClick={addNewHandler}
+        onClick={() => routeHandler("new")}
       >
         New
       </Button>
       <TableContainer>
         <Table variant="simple">
-          <Thead>
-            <Tr>
-              {courtDataHeader.map((item) => (
-                <Th key={item} textAlign="center">
-                  {item}
-                </Th>
-              ))}
-            </Tr>
-          </Thead>
+          <TableHeader />
           <Tbody>
             {courtsData.map((court) => {
               court["createdAt"] = formatDate(court.createdAt);
@@ -88,7 +74,7 @@ const courts = () => {
                       <IconButton
                         aria-label="detail"
                         icon={<CgDetailsMore />}
-                        onClick={() => showDetailHandler(_id)}
+                        onClick={() => routeHandler(_id)}
                       />
                     </Td>
                   </Tr>
