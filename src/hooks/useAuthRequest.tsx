@@ -1,6 +1,7 @@
 import useTokenService from "@/hooks/useTokenService";
 import { api } from "@/utils/axios";
 import { AxiosRequestConfig } from "axios";
+import { useRouter } from "next/router";
 
 export interface AxiosResponse<T = object> {
   data: T;
@@ -13,6 +14,7 @@ export interface AxiosResponse<T = object> {
 
 export default function useAuthRequest() {
   const { removeUser, getLocalAccessToken } = useTokenService();
+  const router = useRouter();
 
   const loginRequest = async (email: string, password: string) => {
     try {
@@ -24,12 +26,12 @@ export default function useAuthRequest() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       return error.response;
+    } finally {
+      router.push("/");
     }
   };
 
   const logoutRequest = async () => {
-    console.log(getLocalAccessToken());
-
     try {
       await api("/admin/logout", {
         method: "post",
