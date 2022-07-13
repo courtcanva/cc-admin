@@ -53,9 +53,11 @@ const CourtDetail = () => {
           {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
           <Tbody>
             {Object.entries(courtData!).map(([key, value]) => {
+              const title =
+                key.charAt(0).toUpperCase() + key.slice(1).replace(/[A-Z]/g, " $&").trim();
               return (
                 <Tr key={key}>
-                  <Th>{key}</Th>
+                  <Td>{title}</Td>
                   <Td>{value}</Td>
                 </Tr>
               );

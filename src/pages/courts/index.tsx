@@ -40,7 +40,7 @@ const courts = () => {
       setCourtsData(data);
       setLoading(false);
     });
-  }, []);
+  });
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -76,7 +76,7 @@ const courts = () => {
               const { _id, name, createdAt, updatedAt } = court;
               return (
                 <>
-                  <Tr key={court._id}>
+                  <Tr key={court._id} _hover={{ bg: "gray.50" }}>
                     {Object.entries({ _id, name, createdAt, updatedAt }).map(([key, value]) => {
                       return (
                         <Td key={key} textAlign="center">

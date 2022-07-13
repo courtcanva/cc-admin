@@ -31,9 +31,12 @@ const EditCourt = () => {
   const [sideBorderWidth, setSideBorderWidth] = useState<number>();
   const [lineBorderWidth, setLineBorderWidth] = useState<number>();
   const [description, setDescription] = useState<string>();
-
   const apiUrl = `${process.env.NEXT_PUBLIC_API_COURTS}/${CourtId}`;
-
+  const redirectHandler = () => {
+    router.push({
+      pathname: "courts/",
+    });
+  };
   useEffect(() => {
     api(apiUrl, { method: "get" }).then(({ data }) => {
       setCourtData(data);
@@ -192,11 +195,28 @@ const EditCourt = () => {
             justifyContent="space-around"
             marginTop="50px"
           >
-            <Link href="/courts">
-              <Button width="250px">Cancel</Button>
-            </Link>
+            {/* <Link href="/courts"> */}
+            <Button
+              width="250px"
+              // variant='outline'
+              backgroundColor="transparent"
+              border="2px"
+              borderColor="#f05544"
+              _hover={{ bg: "#e94d3c", color: "#fff" }}
+              onClick={redirectHandler}
+            >
+              Cancel
+            </Button>
+            {/* </Link> */}
 
-            <Button type="submit" width="250px">
+            <Button
+              type="submit"
+              width="250px"
+              backgroundColor="transparent"
+              border="2px"
+              borderColor="#40B484"
+              _hover={{ bg: "#40B484", color: "#fff" }}
+            >
               Save
             </Button>
           </Flex>

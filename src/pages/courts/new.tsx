@@ -1,15 +1,5 @@
 import { api } from "@/utils/axios";
-import {
-  Text,
-  Button,
-  Container,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Link,
-} from "@chakra-ui/react";
+import { Button, Container, Flex, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -27,7 +17,11 @@ const NewCourt = () => {
   const [sideBorderWidth, setSideBorderWidth] = useState<number>();
   const [lineBorderWidth, setLineBorderWidth] = useState<number>();
   const [description, setDescription] = useState<string>();
-
+  const redirectHandler = () => {
+    router.push({
+      pathname: "courts/",
+    });
+  };
   const handleSubmit = (event: React.SyntheticEvent) => {
     console.log({
       name,
@@ -47,22 +41,6 @@ const NewCourt = () => {
     try {
       api(process.env.NEXT_PUBLIC_API_COURTS as string, {
         method: "post",
-        // the sample requestData below can be post
-        // requestData: {
-        //   name: "Pgy 2",
-        //   length: 2800,
-        //   width: 1500,
-        //   centreCircleRadius: 100,
-        //   threePointRadius: 60,
-        //   threePointLine: 90,
-        //   lengthOfCorner: 290,
-        //   restrictedAreaLength: 500,
-        //   restrictedAreaWidth: 4900,
-        //   sideBorderWidth: 2000,
-        //   lineBorderWidth: 50,
-        //   description: "hi",
-        // },
-        // the data below can not be post, response is 400, the reason maybe the axios request is XMLHttpRequest. Bug need to be fixed.
         requestData: {
           name,
           length,
@@ -169,11 +147,28 @@ const NewCourt = () => {
             justifyContent="space-around"
             marginTop="50px"
           >
-            <Link href="/courts">
-              <Button width="250px">Cancel</Button>
-            </Link>
+            {/* <Link href="/courts"> */}
+            <Button
+              width="250px"
+              // variant='outline'
+              backgroundColor="transparent"
+              border="2px"
+              borderColor="#f05544"
+              _hover={{ bg: "#e94d3c", color: "#fff" }}
+              onClick={redirectHandler}
+            >
+              Cancel
+            </Button>
+            {/* </Link> */}
 
-            <Button type="submit" width="250px">
+            <Button
+              type="submit"
+              width="250px"
+              backgroundColor="transparent"
+              border="2px"
+              borderColor="#40B484"
+              _hover={{ bg: "#40B484", color: "#fff" }}
+            >
               Save
             </Button>
           </Flex>
