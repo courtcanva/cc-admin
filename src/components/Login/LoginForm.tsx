@@ -4,7 +4,7 @@ import formReducer, { FormActionKind } from "./formReducer";
 import { loginRequest } from "./loginRequest";
 import { useStoreDispatch } from "@/store/hooks";
 import { saveUserToken } from "@/store/reducer/userTokenSlice";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import useTokenService from "@/hooks/useTokenService";
 
 const initialFormState = {
   userEmail: "",
@@ -16,11 +16,13 @@ const LoginForm = ({ loginStatus }: { loginStatus: (arg0: boolean) => boolean | 
   const [state, dispatch] = useReducer(formReducer, initialFormState);
   const [isLoginFail, setIsLoginFail] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [, setUserToken] = useLocalStorage<object | undefined>("userToken", undefined);
+  const { setUserToken } = useTokenService();
 
   const isInvalid = !state.userEmail || !state.userPassword;
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsLoginFail(false);
+    loginStatus(false);
     dispatch({
       type: FormActionKind.HANDLE_LOGIN_INPUT,
       field: e.target.name,
@@ -30,6 +32,7 @@ const LoginForm = ({ loginStatus }: { loginStatus: (arg0: boolean) => boolean | 
 
   const handleUserLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsLoginFail(false);
     setIsLoading(true);
     const loginResponse = await loginRequest(state.userEmail, state.userPassword);
 
