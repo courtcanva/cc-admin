@@ -13,7 +13,6 @@ import {
 import { useEffect, useState } from "react";
 import { AddIcon } from "@chakra-ui/icons";
 import { api } from "@/utils/axios";
-import { useRouter } from "next/router";
 import { ICourt } from "@/interfaces/courtData";
 import { CgDetailsMore } from "react-icons/cg";
 import formatDate from "@/utils/formatDate";
@@ -23,12 +22,7 @@ import { routeHandler } from "@/utils/routeHandler";
 const courts = () => {
   const [courtsData, setCourtsData] = useState<ICourt[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  // const addNewHandler = () => {
-  //   router.push({
-  //     pathname: "courts/new",
-  //   });
-  // };
+
   useEffect(() => {
     api(process.env.NEXT_PUBLIC_API_COURTS as string, { method: "get" }).then(({ data }) => {
       setCourtsData(data);

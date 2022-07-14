@@ -38,14 +38,12 @@ const CourtDetail = () => {
   if (loading) {
     return <Text>Loading...</Text>;
   }
-  // console.log(courtData)
 
   return (
     <Flex flexDirection="column" alignItems="center">
       <Heading marginTop="50px">ID: {courtId}</Heading>
       <TableContainer maxWidth="600px" marginY="20px">
         <Table variant="simple">
-          {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
           <Tbody>
             {Object.entries(courtData!).map(([key, value]) => {
               const title =
