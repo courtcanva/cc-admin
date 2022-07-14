@@ -63,4 +63,3 @@ const CountWrapper = styled.span`
 `;
 
 export default Home;
-

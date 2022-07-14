@@ -41,6 +41,7 @@ export default function useAuthRequest() {
       console.log(error);
     } finally {
       removeUser();
+      router.push("/login");
     }
   };
 
