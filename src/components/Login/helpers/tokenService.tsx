@@ -1,22 +1,21 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 export default function userTokenService() {
   function getLocalRefreshToken() {
     if (typeof window !== "undefined") {
-      const userToken = JSON.parse(window.localStorage.getItem("userToken")!);
+      const userToken = JSON.parse(window.localStorage.getItem("userToken") as string);
       return userToken.refreshToken;
     }
   }
 
   function getLocalAccessToken() {
     if (typeof window !== "undefined") {
-      const userToken = JSON.parse(window.localStorage.getItem("userToken")!);
+      const userToken = JSON.parse(window.localStorage.getItem("userToken") as string);
       return userToken.accessToken;
     }
   }
 
   function updateLocalAccessToken(accessToken: string) {
     if (typeof window !== "undefined") {
-      const userToken = JSON.parse(window.localStorage.getItem("userToken")!);
+      const userToken = JSON.parse(window.localStorage.getItem("userToken") as string);
       userToken.accessToken = accessToken;
       window.localStorage.setItem("userToken", JSON.stringify(userToken));
     }
@@ -30,7 +29,7 @@ export default function userTokenService() {
 
   function getUserToken() {
     if (typeof window !== "undefined") {
-      const userToken = JSON.parse(window.localStorage.getItem("userToken")!);
+      const userToken = JSON.parse(window.localStorage.getItem("userToken") as string);
       return userToken;
     }
   }

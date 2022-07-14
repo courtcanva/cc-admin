@@ -13,8 +13,15 @@ export interface AxiosResponse<T = object> {
 }
 
 export default function userAuthRequest() {
-  const { removeUser, getLocalAccessToken } = userTokenService();
+  const { removeUser, getLocalAccessToken, getLocalRefreshToken, setUserToken } =
+    userTokenService();
   const router = useRouter();
+
+  // avoid using any type at catch-error
+  const getErrorMessage = (error: unknown) => {
+    if (error instanceof Error) return error;
+    return Object(error);
+  };
 
   const loginRequest = async (email: string, password: string) => {
     try {
@@ -22,12 +29,12 @@ export default function userAuthRequest() {
         method: "post",
         requestData: { email, password },
       });
-      return response;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      return error.response;
-    } finally {
       router.push("/");
+      return response;
+    } catch (error) {
+      router.push("/login");
+      const err = getErrorMessage(error);
+      return err.response;
     }
   };
 
@@ -45,5 +52,21 @@ export default function userAuthRequest() {
     }
   };
 
-  return { loginRequest, logoutRequest };
+  const updateToken = async () => {
+    try {
+      const response: AxiosResponse = await api("/admin/refresh", {
+        method: "post",
+        token: getLocalRefreshToken(),
+      });
+      setUserToken(response.data);
+    } catch (error) {
+      const err = getErrorMessage(error);
+      if (err.response?.status === 401) {
+        removeUser();
+        router.push("/login");
+      }
+    }
+  };
+
+  return { loginRequest, logoutRequest, updateToken };
 }

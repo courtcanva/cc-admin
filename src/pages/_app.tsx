@@ -5,15 +5,17 @@ import store from "../store";
 import { Chakra } from "@/styles/Chakra";
 import Layout from "@/layouts";
 import Login from "./login";
+import userAuthRequest from "@/components/Login/helpers/authRequest";
+import userTokenService from "@/components/Login/helpers/tokenService";
 
 function CourtCanvaApp({ Component, pageProps }: AppProps) {
-  let accessToken;
+  const { updateToken } = userAuthRequest();
+  const { getUserToken } = userTokenService();
 
-  if (typeof window !== "undefined") {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const userToken = JSON.parse(window.localStorage.getItem("userToken")!);
-    accessToken = userToken?.accessToken;
-  }
+  updateToken(); // check user refresh token TODO: using axios interceptors instead
+
+  let accessToken;
+  if (getUserToken() !== null) accessToken = getUserToken();
 
   if (!accessToken)
     return (

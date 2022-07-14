@@ -16,7 +16,7 @@ import userAuthRequest from "@/components/Login/helpers/authRequest";
 const Home: NextPage = () => {
   const count = useSelector(changeCounter);
   const dispatch = useDispatch();
-  const { logoutRequest } = userAuthRequest();
+  const { logoutRequest, updateToken } = userAuthRequest();
 
   return (
     <HeaderLayout>
@@ -51,6 +51,9 @@ const Home: NextPage = () => {
         </Button>
         <Button mt="12px" mb="24px" aria-label="Clear value" onClick={() => logoutRequest()}>
           Logout
+        </Button>
+        <Button mt="12px" mb="24px" aria-label="Clear value" onClick={() => updateToken()}>
+          Refresh
         </Button>
       </Flex>
     </HeaderLayout>

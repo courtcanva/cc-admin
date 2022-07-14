@@ -28,7 +28,10 @@ const customJestConfig = {
     "!<rootDir>/src/utils/axios.ts",
     "!<rootDir>/src/styles/*.{tsx,ts}",
     "!<rootDir>/src/pages/_app.tsx",
+    "!<rootDir>/src/pages/login.tsx",
+    "!<rootDir>/src/components/Login/**/*.{tsx,ts}",
     "!<rootDir>/src/pages/_document.tsx",
+    "!<rootDir>/src/store/hooks.ts",
     "!<rootDir>/node_modules/",
     "!<rootDir>/**/__tests__/**",
     "!<rootDir>/**/*.d.ts",
@@ -37,10 +40,10 @@ const customJestConfig = {
   collectCoverage: true,
   coverageThreshold: {
     global: {
-      statements: 0,
-      branches: 0,
-      functions: 0,
-      lines: 0,
+      statements: 80,
+      branches: 80,
+      functions: 80,
+      lines: 80,
     },
   },
 };
