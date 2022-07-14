@@ -1,4 +1,4 @@
-import useTokenService from "@/hooks/useTokenService";
+import userTokenService from "@/components/Login/helpers/tokenService";
 import { api } from "@/utils/axios";
 import { AxiosRequestConfig } from "axios";
 import { useRouter } from "next/router";
@@ -12,8 +12,8 @@ export interface AxiosResponse<T = object> {
   request?: never;
 }
 
-export default function useAuthRequest() {
-  const { removeUser, getLocalAccessToken } = useTokenService();
+export default function userAuthRequest() {
+  const { removeUser, getLocalAccessToken } = userTokenService();
   const router = useRouter();
 
   const loginRequest = async (email: string, password: string) => {

@@ -1,21 +1,16 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { useStoreDispatch } from "@/store/hooks";
-import { saveUserToken } from "@/store/reducer/userTokenSlice";
-
-export default function useTokenService() {
-  const dispatch = useStoreDispatch();
-
+export default function userTokenService() {
   function getLocalRefreshToken() {
     if (typeof window !== "undefined") {
       const userToken = JSON.parse(window.localStorage.getItem("userToken")!);
-      return userToken?.refreshToken;
+      return userToken.refreshToken;
     }
   }
 
   function getLocalAccessToken() {
     if (typeof window !== "undefined") {
       const userToken = JSON.parse(window.localStorage.getItem("userToken")!);
-      return userToken?.accessToken;
+      return userToken.accessToken;
     }
   }
 
@@ -30,7 +25,6 @@ export default function useTokenService() {
   function removeUser() {
     if (typeof window !== "undefined") {
       window.localStorage.removeItem("userToken");
-      dispatch(saveUserToken({ accessToken: null, refreshToken: null }));
     }
   }
 

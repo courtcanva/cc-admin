@@ -11,12 +11,12 @@ import {
 import HeaderLayout from "../layouts/HeaderLayout";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { Button, Box, Flex, Heading, Text } from "@chakra-ui/react";
-import useAuthRequest from "@/hooks/useAuthRequest";
+import userAuthRequest from "@/components/Login/helpers/authRequest";
 
 const Home: NextPage = () => {
   const count = useSelector(changeCounter);
   const dispatch = useDispatch();
-  const { logoutRequest } = useAuthRequest();
+  const { logoutRequest } = userAuthRequest();
 
   return (
     <HeaderLayout>
