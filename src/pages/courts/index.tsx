@@ -18,17 +18,16 @@ import { CgDetailsMore } from "react-icons/cg";
 import formatDate from "@/utils/formatDate";
 import TableHeader from "@/components/CourtsTable";
 import { routeHandler } from "@/utils/routeHandler";
+
 const courts = () => {
   const [courtsData, setCourtsData] = useState<ICourt[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     api(process.env.NEXT_PUBLIC_API_COURTS as string, { method: "get" }).then(({ data }) => {
       setCourtsData(data);
       setLoading(false);
     });
   }, []);
-
   if (loading) {
     return <Text>Loading...</Text>;
   }

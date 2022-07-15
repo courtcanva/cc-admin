@@ -1,5 +1,6 @@
 import { Text, Flex } from "@chakra-ui/react";
 import DashBoardLogo from "@/assets/svg/SideBarSvg/dashboard-log.svg";
+
 const Logo = () => {
   return (
     <Flex paddingTop="20px">
