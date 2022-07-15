@@ -2,22 +2,10 @@ import { routeHandler } from "@/utils/routeHandler";
 import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useState } from "react";
 import { api } from "../../utils/axios";
+import { ICourt } from "../../interfaces/courtData";
 
-const CourtForm = () => {
-  const [inputData, setInputData] = useState({
-    name: "",
-    length: 0,
-    width: 0,
-    centreCircleRadius: 0,
-    threePointRadius: 0,
-    threePointLine: 0,
-    lengthOfCorner: 0,
-    restrictedAreaLength: 0,
-    restrictedAreaWidth: 0,
-    sideBorderWidth: 0,
-    lineBorderWidth: 0,
-    description: "",
-  });
+const CourtForm = (courtData: ICourt) => {
+  const [inputData, setInputData] = useState(courtData);
   const handleInputData = (value: string, key: string) => {
     const input = isNaN(+value) ? value : +value;
     setInputData(Object({ ...inputData, [key]: input }));
