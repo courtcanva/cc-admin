@@ -50,12 +50,11 @@ const EditCourt = () => {
   if (loading) {
     return <Text>Loading...</Text>;
   }
-
   return (
     <Container>
       <Flex flexDirection="column">
         <Heading marginY="50px">Edit Court Information</Heading>
-        <CourtForm {...defaultCourtData!} />
+        <CourtForm courtData={defaultCourtData!} API={apiUrl} method="put" />
       </Flex>
     </Container>
   );

@@ -1,9 +1,8 @@
-// import CourtForm from "@/components/CourtsForm";
 import { Container, Flex, Heading } from "@chakra-ui/react";
 import CourtForm from "@/components/CourtsForm";
 import { ICourt } from "@/interfaces/courtData";
 
-const NewCourt = () => {
+const NewCourt: React.FC = () => {
   const defaultCourtData = {
     name: "",
     length: 0,
@@ -18,11 +17,12 @@ const NewCourt = () => {
     lineBorderWidth: 0,
     description: "",
   } as ICourt;
+  const API = process.env.NEXT_PUBLIC_API_COURTS as string;
   return (
     <Container>
       <Flex flexDirection="column">
         <Heading marginY="50px">Add New Court</Heading>
-        <CourtForm {...defaultCourtData} />
+        <CourtForm courtData={defaultCourtData} API={API} method="post" />
       </Flex>
     </Container>
   );
