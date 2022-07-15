@@ -6,6 +6,7 @@ import { ICourt } from "../../interfaces/courtData";
 
 const CourtForm = (courtData: ICourt) => {
   const [inputData, setInputData] = useState(courtData);
+
   const handleInputData = (value: string, key: string) => {
     const input = isNaN(+value) ? value : +value;
     setInputData(Object({ ...inputData, [key]: input }));
@@ -26,12 +27,16 @@ const CourtForm = (courtData: ICourt) => {
   return (
     <form onSubmit={handleSubmit}>
       <Flex flexDirection="row" flexWrap="wrap" gap="20px" justifyContent="space-around">
-        {Object.entries(inputData).map(([key]) => {
+        {Object.entries(inputData).map(([key, value]) => {
           const title = key.charAt(0).toUpperCase() + key.slice(1).replace(/[A-Z]/g, " $&").trim();
           return (
             <FormControl width="250px" key={key}>
               <FormLabel htmlFor={key}>{title}</FormLabel>
-              <Input id={key} onChange={(e) => handleInputData(e.target.value, key)} />
+              <Input
+                id={key}
+                placeholder={value ? value : ""}
+                onChange={(e) => handleInputData(e.target.value, key)}
+              />
             </FormControl>
           );
         })}
