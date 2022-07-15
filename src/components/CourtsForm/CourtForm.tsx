@@ -14,10 +14,10 @@ const CourtForm: React.FC<Props> = ({ courtData, API, method }) => {
     const input = isNaN(+value) ? value : +value;
     setInputData(Object({ ...inputData, [key]: input }));
   };
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     try {
-      api(API as string, {
+      await api(API as string, {
         method: method,
         requestData: inputData,
       });

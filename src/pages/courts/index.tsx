@@ -27,7 +27,7 @@ const courts = () => {
       setCourtsData(data);
       setLoading(false);
     });
-  });
+  }, []);
 
   if (loading) {
     return <Text>Loading...</Text>;
