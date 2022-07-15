@@ -15,7 +15,7 @@ pipeline {
          }
         stage('Build') {
               steps {
-                   sh 'npm run build'
+                   sh '. /var/jenkins_home/adminuat.env; npm run build'
               }
                    }
         stage('Export') {
@@ -78,7 +78,7 @@ pipeline {
                  branch 'main'
             }
               steps {
-                   sh 'npm run build'
+                   sh '. /var/jenkins_home/adminprod.env; npm run build'
               }
                    }
          
@@ -114,10 +114,10 @@ pipeline {
               }
          }
     }
-    //post {
-      //   always {
-        //      cleanWs()
+    post {
+         always {
+              cleanWs()
              
-         //}
-//    }
+         }
+    }
 }
