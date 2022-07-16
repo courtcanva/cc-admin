@@ -15,16 +15,16 @@ const SideBar = () => {
         fontWeight="bold"
         margin="20px"
       >
-        <GridItem pl="2" area={"logo"}>
+        <GridItem paddingLeft="2" area={"logo"}>
           <Logo />
         </GridItem>
-        <GridItem pl="2" area={"sideBarItem"}>
+        <GridItem paddingLeft="2" area={"sideBarItem"}>
           <SideBarItem />
         </GridItem>
-        <GridItem pl="2" area={"divider"}>
+        <GridItem paddingLeft="2" area={"divider"}>
           <Divider />
         </GridItem>
-        <GridItem pl="2" area={"Profile"}>
+        <GridItem paddingLeft="2" area={"Profile"}>
           <Profile />
         </GridItem>
       </Grid>
