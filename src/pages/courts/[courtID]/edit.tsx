@@ -10,7 +10,6 @@ const EditCourt = () => {
   const CourtId = router.query.courtID;
   const [defaultCourtData, setDefaultCourtData] = useState<ICourt>();
   const [loading, setLoading] = useState<boolean>(true);
-
   const apiUrl = `courts/${CourtId}`;
 
   useEffect(() => {

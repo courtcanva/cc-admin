@@ -1,5 +1,5 @@
 import { routeHandler } from "@/utils/routeHandler";
-import { Button, Flex, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Heading, Input, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { api } from "../../utils/axios";
 import { ICourt } from "../../interfaces/courtData";
@@ -13,6 +13,7 @@ type Props = {
   method: string;
 };
 const CourtForm: React.FC<Props> = ({ header, courtData, API, method }) => {
+  const toast = useToast();
   const [inputData, setInputData] = useState({});
   const handleInputData = (value: string, key: string) => {
     const input = isNaN(+value) ? value : +value;
@@ -21,13 +22,22 @@ const CourtForm: React.FC<Props> = ({ header, courtData, API, method }) => {
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     try {
-      await api(API as string, {
+      const response = await api(API as string, {
         method: method,
         requestData: inputData,
       });
+      if (response.status >= 300 || response.status < 200) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       routeHandler();
     } catch (error) {
-      console.log(error);
+      toast({
+        title: `Can not get data, ${error}`,
+        description: "Try again or contact IT support",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
   return (

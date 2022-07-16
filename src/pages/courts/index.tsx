@@ -1,7 +1,6 @@
 import {
   Flex,
   Table,
-  Text,
   TableContainer,
   Tbody,
   Heading,
@@ -9,6 +8,7 @@ import {
   Td,
   IconButton,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { AddIcon } from "@chakra-ui/icons";
@@ -20,18 +20,29 @@ import TableHeader from "@/components/CourtsTable";
 import { routeHandler } from "@/utils/routeHandler";
 
 const courts = () => {
+  const toast = useToast();
   const [courtsData, setCourtsData] = useState<ICourt[]>([]);
-  const [loading, setLoading] = useState(true);
-
+  const getAllCourtData = async () => {
+    try {
+      const response = await api("courts", { method: "get" });
+      if (response.status >= 300 || response.status < 200) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      setCourtsData(response.data);
+    } catch (error) {
+      toast({
+        title: `Can not get data, ${error}`,
+        description: "Try again or contact IT support",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
   useEffect(() => {
-    api("courts", { method: "get" }).then(({ data }) => {
-      setCourtsData(data);
-      setLoading(false);
-    });
+    getAllCourtData();
   }, []);
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
+
   return (
     <Flex flexDirection="column" maxWidth="1000" margin="0 auto">
       <Heading marginTop="50px">Courts Data</Heading>
