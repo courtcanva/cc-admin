@@ -16,13 +16,14 @@ import { api } from "@/utils/axios";
 import { BiPencil } from "react-icons/bi";
 import formatDate from "@/utils/formatDate";
 import { idRouteHandler } from "@/utils/routeHandler";
+import { headerCellGenerator } from "@/utils/headerCellGenerator";
 
 const CourtDetail = () => {
   const [courtData, setCourtData] = useState<ICourt>();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const courtId = router.query.courtID;
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_COURTS}/${courtId}`;
+  const apiUrl = `courts/${courtId}`;
 
   useEffect(() => {
     api(apiUrl as string, { method: "get" }).then(({ data }) => {
@@ -46,11 +47,10 @@ const CourtDetail = () => {
           <Tbody>
             {courtData &&
               Object.entries(courtData).map(([key, value]) => {
-                const title =
-                  key.charAt(0).toUpperCase() + key.slice(1).replace(/[A-Z]/g, " $&").trim();
+                const headerCellContent = headerCellGenerator(key);
                 return (
                   <Tr key={key}>
-                    <Td>{title}</Td>
+                    <Td>{headerCellContent}</Td>
                     <Td>{value}</Td>
                   </Tr>
                 );

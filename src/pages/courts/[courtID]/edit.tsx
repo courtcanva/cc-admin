@@ -11,7 +11,7 @@ const EditCourt = () => {
   const [defaultCourtData, setDefaultCourtData] = useState<ICourt>();
   const [loading, setLoading] = useState<boolean>(true);
 
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_COURTS}/${CourtId}`;
+  const apiUrl = `courts/${CourtId}`;
 
   useEffect(() => {
     api(apiUrl, { method: "get" }).then(({ data }) => {

@@ -17,12 +17,11 @@ const NewCourt: React.FC = () => {
     lineBorderWidth: 0,
     description: "",
   } as ICourt;
-  const API = process.env.NEXT_PUBLIC_API_COURTS as string;
   return (
     <Container>
       <Flex flexDirection="column">
         <Heading marginY="50px">Add New Court</Heading>
-        <CourtForm courtData={defaultCourtData} API={API} method="post" />
+        <CourtForm courtData={defaultCourtData} API="courts" method="post" />
       </Flex>
     </Container>
   );
