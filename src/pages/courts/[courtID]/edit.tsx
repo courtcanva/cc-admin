@@ -1,6 +1,6 @@
 import CourtForm from "@/components/CourtsForm";
 import { api } from "@/utils/axios";
-import { Text, Container, Flex, Heading } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ICourt } from "../../../interfaces/courtData";
@@ -52,12 +52,12 @@ const EditCourt = () => {
   }
   if (!defaultCourtData) return;
   return (
-    <Container>
-      <Flex flexDirection="column">
-        <Heading marginY="50px">Edit Court Information</Heading>
-        <CourtForm courtData={defaultCourtData} API={apiUrl} method="put" />
-      </Flex>
-    </Container>
+    <CourtForm
+      header="Edit Court Information"
+      courtData={defaultCourtData}
+      API={apiUrl}
+      method="put"
+    />
   );
 };
 

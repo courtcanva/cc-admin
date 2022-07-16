@@ -1,4 +1,3 @@
-import { Container, Flex, Heading } from "@chakra-ui/react";
 import CourtForm from "@/components/CourtsForm";
 import { ICourt } from "@/interfaces/courtData";
 
@@ -18,12 +17,7 @@ const NewCourt: React.FC = () => {
     description: "",
   } as ICourt;
   return (
-    <Container>
-      <Flex flexDirection="column">
-        <Heading marginY="50px">Add New Court</Heading>
-        <CourtForm courtData={defaultCourtData} API="courts" method="post" />
-      </Flex>
-    </Container>
+    <CourtForm header="Add New Court" courtData={defaultCourtData} API="courts" method="post" />
   );
 };
 

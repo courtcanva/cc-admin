@@ -22,6 +22,7 @@ import { routeHandler } from "@/utils/routeHandler";
 const courts = () => {
   const [courtsData, setCourtsData] = useState<ICourt[]>([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     api("courts", { method: "get" }).then(({ data }) => {
       setCourtsData(data);
@@ -32,7 +33,7 @@ const courts = () => {
     return <Text>Loading...</Text>;
   }
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" maxWidth="1000" margin="0 auto">
       <Heading marginTop="50px">Courts Data</Heading>
       <Button
         width="100px"

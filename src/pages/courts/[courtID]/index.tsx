@@ -15,8 +15,9 @@ import { useEffect, useState } from "react";
 import { api } from "@/utils/axios";
 import { BiPencil } from "react-icons/bi";
 import formatDate from "@/utils/formatDate";
-import { idRouteHandler } from "@/utils/routeHandler";
+import { idRouteHandler, routeHandler } from "@/utils/routeHandler";
 import { headerCellGenerator } from "@/utils/headerCellGenerator";
+import { ChevronLeftIcon } from "@chakra-ui/icons";
 
 const CourtDetail = () => {
   const [courtData, setCourtData] = useState<ICourt>();
@@ -40,9 +41,29 @@ const CourtDetail = () => {
     return <Text>Loading...</Text>;
   }
   return (
-    <Flex flexDirection="column" alignItems="center">
-      <Heading marginTop="50px">ID: {courtId}</Heading>
-      <TableContainer maxWidth="600px" marginY="20px">
+    <Flex flexDirection="column" width="600px" margin="0 auto">
+      <Flex justifyContent="space-between">
+        <Button
+          width="100px"
+          marginRight="10px"
+          marginY="50px"
+          leftIcon={<ChevronLeftIcon />}
+          onClick={() => routeHandler("")}
+        >
+          Back
+        </Button>
+        <Button
+          width="100px"
+          marginRight="10px"
+          marginY="50px"
+          leftIcon={<BiPencil />}
+          onClick={() => idRouteHandler(`${courtId}/edit`)}
+        >
+          Edit
+        </Button>
+      </Flex>
+      <Heading>ID: {courtId}</Heading>
+      <TableContainer width="600px" marginY="20px">
         <Table variant="simple">
           <Tbody>
             {courtData &&
@@ -58,15 +79,6 @@ const CourtDetail = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Button
-        width="100px"
-        marginRight="10px"
-        marginY="20px"
-        leftIcon={<BiPencil />}
-        onClick={() => idRouteHandler(`${courtId}/edit`)}
-      >
-        Edit
-      </Button>
     </Flex>
   );
 };
