@@ -1,4 +1,4 @@
-import userTokenService from "@/components/Login/helpers/tokenService";
+import UserTokenService from "@/components/Login/helpers/TokenService";
 import { api } from "@/utils/axios";
 import { AxiosRequestConfig } from "axios";
 import { useRouter } from "next/router";
@@ -13,8 +13,6 @@ export interface AxiosResponse<T = object> {
 }
 
 export default function userAuthRequest() {
-  const { removeUser, getLocalAccessToken, getLocalRefreshToken, setUserToken } =
-    userTokenService();
   const router = useRouter();
 
   // avoid using any type at catch-error
@@ -29,10 +27,10 @@ export default function userAuthRequest() {
         method: "post",
         requestData: { email, password },
       });
-      router.push("/");
+      if (typeof window !== "undefined") router.push("/");
       return response;
     } catch (error) {
-      router.push("/login");
+      if (typeof window !== "undefined") router.push("/login");
       const err = getErrorMessage(error);
       return err.response;
     }
@@ -42,13 +40,13 @@ export default function userAuthRequest() {
     try {
       await api("/admin/logout", {
         method: "post",
-        token: getLocalAccessToken(),
+        token: UserTokenService.getLocalAccessToken(),
       });
     } catch (error) {
       console.log(error);
     } finally {
-      removeUser();
-      router.push("/login");
+      UserTokenService.removeUser();
+      if (typeof window !== "undefined") router.push("/login");
     }
   };
 
@@ -56,14 +54,14 @@ export default function userAuthRequest() {
     try {
       const response: AxiosResponse = await api("/admin/refresh", {
         method: "post",
-        token: getLocalRefreshToken(),
+        token: UserTokenService.getLocalRefreshToken(),
       });
-      setUserToken(response.data);
+      UserTokenService.setUserToken(response.data);
     } catch (error) {
       const err = getErrorMessage(error);
       if (err.response?.status === 401) {
-        removeUser();
-        router.push("/login");
+        UserTokenService.removeUser();
+        if (typeof window !== "undefined") router.push("/login");
       }
     }
   };

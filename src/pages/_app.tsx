@@ -1,21 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import { Provider } from "react-redux";
+import { useRouter } from "next/router";
 import store from "../store";
 import { Chakra } from "@/styles/Chakra";
 import Layout from "@/layouts";
 import Login from "./login";
 import userAuthRequest from "@/components/Login/helpers/authRequest";
-import userTokenService from "@/components/Login/helpers/tokenService";
+import UserTokenService from "@/components/Login/helpers/TokenService";
 
 function CourtCanvaApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   const { updateToken } = userAuthRequest();
-  const { getUserToken } = userTokenService();
 
   updateToken(); // check user refresh token TODO: using axios interceptors instead
 
   let accessToken;
-  if (getUserToken() !== null) accessToken = getUserToken();
+  if (UserTokenService.getUserToken() !== null) {
+    accessToken = UserTokenService.getUserToken()?.accessToken;
+  }
+
+  useEffect(() => {
+    UserTokenService.getUserToken() === null && router.push("/login");
+  }, []);
 
   if (!accessToken)
     return (
