@@ -33,7 +33,7 @@ const LoginForm = ({ loginStatus }: { loginStatus: (arg0: boolean) => boolean | 
     setIsLoading(true);
     const loginResponse = await loginRequest(state.userEmail, state.userPassword);
 
-    if (loginResponse?.status === 403) {
+    if (loginResponse?.status !== 200) {
       setIsLoginFail(true);
       loginStatus(true);
       setIsLoading(false);
