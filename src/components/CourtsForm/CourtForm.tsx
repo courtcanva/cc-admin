@@ -14,7 +14,7 @@ type Props = {
 };
 const CourtForm: React.FC<Props> = ({ header, courtData, API, method }) => {
   const toast = useToast();
-  const [inputData, setInputData] = useState({});
+  const [inputData, setInputData] = useState(courtData);
   const handleInputData = (value: string, key: string) => {
     const input = isNaN(+value) ? value : +value;
     setInputData(Object({ ...inputData, [key]: input }));
@@ -77,14 +77,15 @@ const CourtForm: React.FC<Props> = ({ header, courtData, API, method }) => {
         {header}
       </Heading>
       <Flex maxWidth="1100px" flexDirection="row" flexWrap="wrap" gap="30px" alignSelf="center">
-        {Object.entries(courtData).map(([key, value]) => {
+        {Object.entries(inputData).map(([key, value]) => {
           const headerCellContent = headerCellGenerator(key);
           return (
             <FormControl width="250px" key={key}>
               <FormLabel htmlFor={key}>{headerCellContent}</FormLabel>
               <Input
                 id={key}
-                placeholder={value ? value.toString() : ""}
+                value={value ? value.toString() : ""}
+                // placeholder={value ? value.toString() : ""}
                 onChange={(e) => handleInputData(e.target.value, key)}
               />
             </FormControl>
