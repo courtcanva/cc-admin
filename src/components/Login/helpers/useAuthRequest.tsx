@@ -12,7 +12,7 @@ export interface AxiosResponse<T = object> {
   request?: never;
 }
 
-export default function userAuthRequest() {
+export default function useAuthRequest() {
   const router = useRouter();
 
   // avoid using any type at catch-error
@@ -66,5 +66,5 @@ export default function userAuthRequest() {
     }
   };
 
-  return { loginRequest, logoutRequest, updateToken };
+  return { loginRequest, logoutRequest, updateToken, getErrorMessage };
 }

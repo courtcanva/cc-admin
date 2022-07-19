@@ -8,7 +8,7 @@ interface IFromState {
 }
 
 interface IFormAction {
-  type: FormActionKind;
+  type: FormActionKind | null;
   field: string;
   payload: string;
 }

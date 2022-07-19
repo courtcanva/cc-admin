@@ -1,7 +1,7 @@
 import React, { useReducer, useState } from "react";
 import { Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import formReducer, { FormActionKind } from "./formReducer";
-import userAuthRequest from "@/components/Login/helpers/authRequest";
+import useAuthRequest from "@/components/Login/helpers/useAuthRequest";
 import UserTokenService from "@/components/Login/helpers/TokenService";
 
 const initialFormState = {
@@ -13,7 +13,7 @@ const LoginForm = ({ loginStatus }: { loginStatus: (arg0: boolean) => boolean | 
   const [state, dispatch] = useReducer(formReducer, initialFormState);
   const [isLoginFail, setIsLoginFail] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { loginRequest } = userAuthRequest();
+  const { loginRequest } = useAuthRequest();
 
   const isInvalid = !state.userEmail || !state.userPassword;
 

@@ -6,12 +6,12 @@ import store from "../store";
 import { Chakra } from "@/styles/Chakra";
 import Layout from "@/layouts";
 import Login from "./login";
-import userAuthRequest from "@/components/Login/helpers/authRequest";
+import useAuthRequest from "@/components/Login/helpers/useAuthRequest";
 import UserTokenService from "@/components/Login/helpers/TokenService";
 
 function CourtCanvaApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const { updateToken } = userAuthRequest();
+  const { updateToken } = useAuthRequest();
 
   updateToken(); // check user refresh token TODO: using axios interceptors instead
 
