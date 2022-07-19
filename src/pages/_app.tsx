@@ -16,15 +16,13 @@ function CourtCanvaApp({ Component, pageProps }: AppProps) {
   updateToken(); // check user refresh token TODO: using axios interceptors instead
 
   let accessToken;
-  if (UserTokenService.getUserToken() !== null) {
-    accessToken = UserTokenService.getUserToken()?.accessToken;
-  }
+  if (UserTokenService.getUserToken()) accessToken = UserTokenService.getUserToken()?.accessToken;
 
   useEffect(() => {
-    UserTokenService.getUserToken() === null && router.push("/login");
+    !UserTokenService.getUserToken() && router.push("/login");
   }, []);
 
-  if (!accessToken)
+  if (typeof accessToken !== "string")
     return (
       <Chakra cookies={pageProps.cookies}>
         <Provider store={store}>

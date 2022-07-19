@@ -1,19 +1,24 @@
+interface IUserToken {
+  accessToken: string;
+  refreshToken: string;
+}
+
 class UserTokenService {
-  getLocalRefreshToken() {
+  getLocalRefreshToken(): string | undefined {
     if (typeof window !== "undefined") {
       const userToken = JSON.parse(window.localStorage.getItem("userToken") as string);
       return userToken.refreshToken;
     }
   }
 
-  getLocalAccessToken() {
+  getLocalAccessToken(): string | undefined {
     if (typeof window !== "undefined") {
       const userToken = JSON.parse(window.localStorage.getItem("userToken") as string);
       return userToken.accessToken;
     }
   }
 
-  updateLocalAccessToken(accessToken: string) {
+  updateLocalAccessToken(accessToken: string): void {
     if (typeof window !== "undefined") {
       const userToken = JSON.parse(window.localStorage.getItem("userToken") as string);
       userToken.accessToken = accessToken;
@@ -21,20 +26,20 @@ class UserTokenService {
     }
   }
 
-  removeUser() {
+  removeUser(): void {
     if (typeof window !== "undefined") {
       window.localStorage.removeItem("userToken");
     }
   }
 
-  getUserToken() {
+  getUserToken(): IUserToken | undefined {
     if (typeof window !== "undefined") {
       const userToken = JSON.parse(window.localStorage.getItem("userToken") as string);
       return userToken;
     }
   }
 
-  setUserToken(userToken: object) {
+  setUserToken(userToken: IUserToken | object) {
     if (typeof window !== "undefined") {
       window.localStorage.setItem("userToken", JSON.stringify(userToken));
     }
