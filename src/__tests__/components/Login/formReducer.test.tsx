@@ -11,6 +11,7 @@ it("should receive the correct form input value", () => {
       ...utils,
     };
   };
+
   const { input } = setup();
   fireEvent.change(input, { target: { value: "john.doe@gmail.com" } });
   expect(input.value).toBe("john.doe@gmail.com");

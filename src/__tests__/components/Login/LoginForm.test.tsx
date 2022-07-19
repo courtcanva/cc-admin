@@ -1,7 +1,5 @@
 import { screen, render } from "@testing-library/react";
 import LoginForm from "@/components/Login/LoginForm";
-// import renderWithMockedProvider, { createMockRouter } from "../../utils";
-// import { RouterContext } from "next/dist/shared/lib/router-context";
 
 describe("LoginForm", () => {
   it("should render the LoginForm", () => {
@@ -16,13 +14,3 @@ describe("LoginForm", () => {
     expect(loginBtn).toBeInTheDocument();
   });
 });
-
-// renderWithMockedProvider(
-//   <RouterContext.Provider value={createMockRouter({})}>
-//     <LoginForm
-//       loginStatus={function (arg0: boolean): boolean | void {
-//         throw new Error("Function not implemented.");
-//       }}
-//     />
-//   </RouterContext.Provider>
-// );

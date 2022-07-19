@@ -4,12 +4,16 @@ import formReducer, { FormActionKind } from "./formReducer";
 import useAuthRequest from "@/components/Login/helpers/useAuthRequest";
 import UserTokenService from "@/components/Login/helpers/TokenService";
 
+interface ILoginFromProps {
+  loginStatus: (arg0: boolean) => boolean | void;
+}
+
 const initialFormState = {
   userEmail: "",
   userPassword: "",
 };
 
-const LoginForm = ({ loginStatus }: { loginStatus: (arg0: boolean) => boolean | void }) => {
+const LoginForm = ({ loginStatus }: ILoginFromProps) => {
   const [state, dispatch] = useReducer(formReducer, initialFormState);
   const [isLoginFail, setIsLoginFail] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
