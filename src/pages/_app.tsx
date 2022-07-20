@@ -5,12 +5,12 @@ import store from "../store";
 import { Chakra } from "@/styles/Chakra";
 import Layout from "@/layouts";
 
-function CourtCanvaApp({ Component, pageProps }: AppProps) {
+function CourtCanvaApp({ Component }: AppProps) {
   return (
-    <Chakra cookies={pageProps.cookies}>
+    <Chakra>
       <Provider store={store}>
         <Layout>
-          <Component {...pageProps} />
+          <Component />
         </Layout>
       </Provider>
     </Chakra>
