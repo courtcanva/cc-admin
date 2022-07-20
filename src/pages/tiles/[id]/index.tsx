@@ -66,7 +66,9 @@ const Edit = () => {
         setTile(data);
         setLoading(false);
       });
-    } catch {}
+    } catch {
+      console.log(Error);
+    }
   }, []);
 
   if (loading) {
@@ -85,7 +87,7 @@ const Edit = () => {
       onSubmit={({ name, length, width, height, colors }, actions) => {
         api(apiUrl, {
           method: "put",
-          requestData: { ...tile, colors, length, width, name },
+          requestData: { ...tile, colors, length, height, width, name },
         });
         actions.setSubmitting(false);
         router.push("/tiles");
