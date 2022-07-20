@@ -30,7 +30,6 @@ const TileSchema = Yup.object().shape({
 const AddNewTileTest = () => {
   const router = useRouter();
   const validateColorValue = (value: string) => {
-    console.log("ValidateColorValue");
     let error;
     if (!value) {
       error = `Value is required`;

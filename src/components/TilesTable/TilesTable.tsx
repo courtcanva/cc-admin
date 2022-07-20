@@ -32,7 +32,6 @@ interface ITile {
 }
 
 const TilesTable = ({ tiles }: any) => {
-  console.log(tiles);
   return (
     <TableContainer>
       <Table variant="simple">
