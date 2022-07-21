@@ -11,10 +11,13 @@ import {
 import HeaderLayout from "../layouts/HeaderLayout";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { Button, Box, Flex, Heading, Text } from "@chakra-ui/react";
+import useAuthRequest from "@/components/Login/helpers/useAuthRequest";
 
 const Home: NextPage = () => {
   const count = useSelector(changeCounter);
   const dispatch = useDispatch();
+  const { logoutRequest, updateToken } = useAuthRequest();
+
   return (
     <HeaderLayout>
       <Flex align="center" justify="center" flexDirection="column" maxW="60rem">
@@ -46,6 +49,12 @@ const Home: NextPage = () => {
         >
           Plus 100
         </Button>
+        <Button mt="12px" mb="24px" aria-label="Clear value" onClick={() => logoutRequest()}>
+          Logout
+        </Button>
+        <Button mt="12px" mb="24px" aria-label="Clear value" onClick={() => updateToken()}>
+          Refresh
+        </Button>
       </Flex>
     </HeaderLayout>
   );
@@ -57,4 +66,3 @@ const CountWrapper = styled.span`
 `;
 
 export default Home;
-

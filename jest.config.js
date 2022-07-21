@@ -14,11 +14,24 @@ const customJestConfig = {
   testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testMatch: ["<rootDir>/src/__tests__/**/**/*.{spec,test}.{js,jsx,ts,tsx}"],
+  moduleNameMapper: {
+    "^@/components/(.*)$": "<rootDir>/src/components/$1",
+    "^@/constants/(.*)$": "<rootDir>/src/constants/$1",
+    "^@/assets/(.*)$": "<rootDir>/src/assets/$1",
+    "^@/store/(.*)$": "<rootDir>/src/store/$1",
+    "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
+    "^@/hooks/(.*)$": "<rootDir>/src/hooks/$1",
+    "^@/utils/(.*)$": "<rootDir>/src/utils/$1",
+  },
   collectCoverageFrom: [
     "<rootDir>/src/**/*.{tsx,ts}",
+    "!<rootDir>/src/utils/axios.ts",
     "!<rootDir>/src/styles/*.{tsx,ts}",
     "!<rootDir>/src/pages/_app.tsx",
+    "!<rootDir>/src/pages/login.tsx",
+    "!<rootDir>/src/components/Login/**/*.{tsx,ts}",
     "!<rootDir>/src/pages/_document.tsx",
+    "!<rootDir>/src/store/hooks.ts",
     "!<rootDir>/node_modules/",
     "!<rootDir>/**/__tests__/**",
     "!<rootDir>/**/*.d.ts",
@@ -35,5 +48,17 @@ const customJestConfig = {
   },
 };
 
-// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(customJestConfig);
+const jestConfig = async () => {
+  // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
+  const nextJestConfig = await createJestConfig(customJestConfig)();
+  return {
+    ...nextJestConfig,
+    moduleNameMapper: {
+      // Workaround to put our SVG stub first
+      "\\.svg$": "<rootDir>/__mocks__/svgMock.js",
+      ...nextJestConfig.moduleNameMapper,
+    },
+  };
+};
+
+module.exports = jestConfig;
