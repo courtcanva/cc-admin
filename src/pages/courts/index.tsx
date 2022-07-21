@@ -52,7 +52,7 @@ const courts = () => {
         marginRight="10px"
         marginY="20px"
         leftIcon={<AddIcon />}
-        onClick={() => routeHandler("new")}
+        onClick={() => routeHandler("courts", "new")}
       >
         New
       </Button>
@@ -78,7 +78,7 @@ const courts = () => {
                       <IconButton
                         aria-label="detail"
                         icon={<CgDetailsMore />}
-                        onClick={() => routeHandler(_id)}
+                        onClick={() => routeHandler("courts", _id)}
                       />
                     </Td>
                   </Tr>

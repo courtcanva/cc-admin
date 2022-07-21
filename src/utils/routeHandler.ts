@@ -1,16 +1,18 @@
 import router from "next/router";
 
-export const routeHandler = (endpoint?: string) => {
-  endpoint? router.push({
-    pathname: "courts/" + endpoint,
-  }): router.push({
-    pathname: "/courts",
-  });
-  return
+export const routeHandler = (path: string, endpoint?: string) => {
+  endpoint
+    ? router.push({
+        pathname: `${path}/${endpoint}`,
+      })
+    : router.push({
+        pathname: `/${path}`,
+      });
+  return;
 };
 export const idRouteHandler = (endpoint: string) => {
-   router.push({
+  router.push({
     pathname: endpoint,
   });
-  return
+  return;
 };

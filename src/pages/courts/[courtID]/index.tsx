@@ -27,14 +27,16 @@ const CourtDetail = () => {
   const apiUrl = `courts/${courtId}`;
 
   useEffect(() => {
-    api(apiUrl as string, { method: "get" }).then(({ data }) => {
+    const fetchCourts = async () => {
+      const { data } = await api(apiUrl as string, { method: "get" });
       ["_id", "isDeleted"].forEach((e) => delete data[e]);
       delete data.isDeleted;
       data["createdAt"] = formatDate(data.createdAt);
       data["updatedAt"] = formatDate(data.createdAt);
       setCourtData(data);
       setLoading(false);
-    });
+    };
+    fetchCourts();
   }, []);
 
   if (loading) {
@@ -48,7 +50,7 @@ const CourtDetail = () => {
           marginRight="10px"
           marginY="50px"
           leftIcon={<ChevronLeftIcon />}
-          onClick={() => routeHandler("")}
+          onClick={() => routeHandler("courts")}
         >
           Back
         </Button>

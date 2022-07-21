@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import SideBar from "../../../components/SideBar";
 import sidebarItemList from "@/components/SideBar/components/SideBarItem/sideBarItemList";
 import renderWithMockedProvider from "../../utils";
+
 describe("Sidebar component", () => {
   test("Each element in the sidebar should render the correct text");
   render(<SideBar />);

@@ -16,13 +16,6 @@ const Header = () => {
         <link rel="manifest" href="/site.webmanifest" />
         <title>Welcome CourtCanva</title>
       </Head>
-      <NextHeadSeo
-        title="CourtCanva Admin"
-        canonical=""
-        description=""
-        customMetaTags={[]}
-        og={{}}
-      />
     </>
   );
 };
