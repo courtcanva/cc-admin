@@ -5,7 +5,7 @@ import { ICourt } from "../../interfaces/courtData";
 import { headerCellGenerator } from "@/utils/headerCellGenerator";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import CourtSchema from "./CourtSchema";
-import useValidator from "./utils/validator";
+import useValidator from "./hooks/useValidator";
 
 type Props = {
   header: string;
