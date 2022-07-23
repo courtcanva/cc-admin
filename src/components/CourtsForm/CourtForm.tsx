@@ -1,20 +1,11 @@
 import { routeHandler } from "@/utils/routeHandler";
-import {
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  useToast,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Heading, Input, Text } from "@chakra-ui/react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { api } from "../../utils/axios";
 import { ICourt } from "../../interfaces/courtData";
 import { headerCellGenerator } from "@/utils/headerCellGenerator";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import CourtSchema from "./CourtSchema";
+import useValidator from "./utils/validator";
 
 type Props = {
   header: string;
@@ -24,32 +15,12 @@ type Props = {
 };
 
 const CourtForm: React.FC<Props> = ({ header, courtData, API, method }) => {
-  const toast = useToast();
+  const validator = useValidator({ API, method });
   return (
     <Formik
       initialValues={{ ...courtData }}
       validationSchema={CourtSchema}
-      onSubmit={async (values, actions) => {
-        try {
-          const response = await api(API as string, {
-            method: method,
-            requestData: values,
-          });
-          if (response.status >= 300 || response.status < 200) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          actions.setSubmitting(false);
-          routeHandler("courts");
-        } catch (error) {
-          toast({
-            title: `Can not get data, ${error}`,
-            description: "Try again or contact IT support",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-        }
-      }}
+      onSubmit={(values, actions) => validator(values, actions)}
     >
       {(props) => (
         <Form>
@@ -91,7 +62,7 @@ const CourtForm: React.FC<Props> = ({ header, courtData, API, method }) => {
                       <FormControl width="250px" isInvalid={form.errors.key && form.touched.key}>
                         <FormLabel htmlFor="key">{headerCellContent}</FormLabel>
                         <Input {...field} id={key} />
-                        <Text color="#E53E3E">
+                        <Text color="#E53E3E" height="1rem" fontSize="1rem">
                           <ErrorMessage name={key} />
                         </Text>
                       </FormControl>
