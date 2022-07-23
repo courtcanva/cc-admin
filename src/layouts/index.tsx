@@ -1,15 +1,15 @@
 import { ReactNode } from "react";
 import { Box, Container } from "@chakra-ui/react";
 import Header from "./Header";
-import Footer from "./Footer";
+import SideBar from "@/components/SideBar";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <>
       <Header />
-      <Box as="main">
-        <Container>{children}</Container>
-        <Footer />
+      <SideBar />
+      <Box as="main" marginLeft="326px" paddingX="50px">
+        {children}
       </Box>
     </>
   );
