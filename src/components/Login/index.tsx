@@ -44,7 +44,7 @@ const Login: React.FC = () => {
 
             <Flex flexDir="column" alignItems="center">
               <Text fontSize="xl" fontWeight="700">
-                Login in to CourtCanva Admin
+                Log in to CourtCanva Admin
               </Text>
               <Text color={isLoginFail ? "#E44C66" : "black"}>
                 {isLoginFail ? "Incorrect Email or Password!" : "Control Panel login"}
