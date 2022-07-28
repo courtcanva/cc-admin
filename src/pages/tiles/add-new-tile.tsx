@@ -27,7 +27,7 @@ const TileSchema = Yup.object().shape({
   ),
 });
 
-const AddNewTileTest = () => {
+const AddNewTile = () => {
   const router = useRouter();
   const validateColorValue = (value: string) => {
     let error;
@@ -170,4 +170,4 @@ const AddNewTileTest = () => {
     </Formik>
   );
 };
-export default AddNewTileTest;
+export default AddNewTile;
