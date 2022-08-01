@@ -67,7 +67,7 @@ const courts = () => {
               return (
                 <>
                   <Tr key={court._id} _hover={{ bg: "gray.50" }}>
-                    {Object.entries({ _id, name, createdAt, updatedAt }).map(([key, value]) => {
+                    {Object.entries({ name, createdAt, updatedAt }).map(([key, value]) => {
                       return (
                         <Td key={key} textAlign="center">
                           {value}
