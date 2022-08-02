@@ -15,12 +15,13 @@ function CourtCanvaApp({ Component, pageProps }: AppProps) {
 
   updateToken(); // check user refresh token TODO: using axios interceptors instead
 
-  let accessToken;
+  let accessToken: string | undefined;
   if (UserTokenService.getUserToken()) accessToken = UserTokenService.getUserToken()?.accessToken;
 
   useEffect(() => {
-    !UserTokenService.getUserToken() && router.push("/login");
-  }, []);
+    !UserTokenService.getUserToken() && router.replace("/login");
+    UserTokenService.getUserToken() && router.pathname === "/login" && router.replace("/");
+  }, [router.pathname]);
 
   if (typeof accessToken !== "string")
     return (
