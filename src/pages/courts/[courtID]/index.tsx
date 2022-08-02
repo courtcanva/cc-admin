@@ -63,7 +63,6 @@ const CourtDetail = () => {
           Edit
         </Button>
       </Flex>
-      <Heading>ID: {courtId}</Heading>
       <TableContainer width="600px" marginY="20px">
         <Table variant="simple">
           <Tbody>
