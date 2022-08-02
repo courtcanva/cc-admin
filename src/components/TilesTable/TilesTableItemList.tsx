@@ -6,36 +6,31 @@ const TilesTableItemList = [
   },
   {
     id: 2,
-    title: "Id",
-    property: "_id",
-  },
-  {
-    id: 3,
     title: "Width",
     property: "width",
   },
   {
-    id: 4,
+    id: 3,
     title: "Length",
     property: "length",
   },
   {
-    id: 5,
+    id: 4,
     title: "Created At",
     property: "createdAt",
   },
   {
-    id: 6,
+    id: 5,
     title: "Updated At",
     property: "updatedAt",
   },
   {
-    id: 7,
+    id: 6,
     title: "Colors",
     property: "colors",
   },
   {
-    id: 8,
+    id: 7,
     title: "Edit",
     property: "edit",
   },
