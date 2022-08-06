@@ -18,14 +18,13 @@ const Profile = () => {
           Chui
         </Text>
       </Flex>
-      <Flex paddingBottom="20px" as="button" color="fontcolor.primary">
-        <IconButton
-          aria-label="logout"
-          width="32px"
-          height="32px"
-          padding={2}
-          onClick={() => logoutRequest()}
-        >
+      <Flex
+        paddingBottom="20px"
+        as="button"
+        color="fontcolor.primary"
+        onClick={() => logoutRequest()}
+      >
+        <IconButton aria-label="logout" width="32px" height="32px" padding={2}>
           <MdOutlineLogout />
         </IconButton>
         <Text as="span" fontSize="sm" padding={2}>
