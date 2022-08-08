@@ -47,7 +47,6 @@ const TilesTable = ({ tiles }: any) => {
             return (
               <Tr key={tile._id}>
                 <Td>{tile.name}</Td>
-                <Td>{tile._id}</Td>
                 <Td>{tile.width}</Td>
                 <Td>{tile.length}</Td>
                 <Td>{formatDate(tile.createdAt as string)}</Td>
