@@ -35,7 +35,7 @@ const Login: React.FC = () => {
             zIndex="10"
           >
             <Flex flexDir="column" alignItems="center" marginTop="50px">
-              <Image boxSize="32px" src="/dashboard-log.png" />
+              <Image boxSize="64px" src="dashboard-logo-192x192.png" />
               <Text marginTop="10px" color="brand.secondary">
                 CourtCanva
               </Text>

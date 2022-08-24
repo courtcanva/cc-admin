@@ -2,7 +2,7 @@ import { Text, Flex, Image } from "@chakra-ui/react";
 const Logo = () => {
   return (
     <Flex paddingTop="20px">
-      <Image boxSize="32px" src="/dashboard-log.png" />
+      <Image boxSize="32px" src="/dashboard-logo-32x32.png" />
       <Text
         m={2}
         as="span"
