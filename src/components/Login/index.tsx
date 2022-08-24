@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import HeaderLayout from "../../layouts/HeaderLayout";
-import DashBoardLogo from "@/assets/svg/dashboard-log.svg";
 import LoginForm from "./LoginForm";
 
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
@@ -36,7 +35,7 @@ const Login: React.FC = () => {
             zIndex="10"
           >
             <Flex flexDir="column" alignItems="center" marginTop="50px">
-              <DashBoardLogo />
+              <Image boxSize="32px" src="/dashboard-log.png" />
               <Text marginTop="10px" color="brand.secondary">
                 CourtCanva
               </Text>
