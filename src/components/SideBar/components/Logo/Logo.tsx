@@ -1,10 +1,8 @@
-import { Text, Flex } from "@chakra-ui/react";
-import DashBoardLogo from "@/assets/svg/dashboard-log.svg";
-
+import { Text, Flex, Image } from "@chakra-ui/react";
 const Logo = () => {
   return (
     <Flex paddingTop="20px">
-      <DashBoardLogo />
+      <Image boxSize="32px" src="/dashboard-logo-32x32.png" />
       <Text
         m={2}
         as="span"
