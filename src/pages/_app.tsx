@@ -8,13 +8,25 @@ import Layout from "@/layouts";
 import Login from "./login";
 import useAuthRequest from "@/components/Login/helpers/useAuthRequest";
 import UserTokenService from "@/components/Login/helpers/TokenService";
+import type { ReactElement, ReactNode } from "react";
+import type { NextPage } from "next";
 
-function CourtCanvaApp({ Component, pageProps }: AppProps) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function CourtCanvaApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   const { updateToken } = useAuthRequest();
 
   updateToken(); // check user refresh token TODO: using axios interceptors instead
 
+  const cookies = pageProps.cookies;
   let accessToken: string | undefined;
   if (UserTokenService.getUserToken()) accessToken = UserTokenService.getUserToken()?.accessToken;
 
@@ -25,7 +37,7 @@ function CourtCanvaApp({ Component, pageProps }: AppProps) {
 
   if (typeof accessToken !== "string")
     return (
-      <Chakra cookies={pageProps.cookies}>
+      <Chakra cookies={cookies}>
         <Provider store={store}>
           <Login />
         </Provider>
@@ -33,7 +45,7 @@ function CourtCanvaApp({ Component, pageProps }: AppProps) {
     );
 
   return (
-    <Chakra cookies={pageProps.cookies}>
+    <Chakra cookies={cookies}>
       <Provider store={store}>
         <Layout>
           <Component {...pageProps} />

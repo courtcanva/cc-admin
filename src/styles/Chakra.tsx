@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from "next";
 import { ChakraProvider, cookieStorageManager, localStorageManager } from "@chakra-ui/react";
 import theme from "./theme";
+import React from "react";
 
 interface ChakraProps {
   cookies: any;

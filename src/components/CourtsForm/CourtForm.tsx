@@ -52,7 +52,7 @@ const CourtForm: React.FC<Props> = ({ header, courtData, API, method }) => {
           {header}
         </Heading>
         <Flex maxWidth="1100px" flexDirection="row" flexWrap="wrap" gap="30px" alignSelf="center">
-          {Object.entries(courtData).map(([key, value]) => {
+          {Object.entries(courtData).map(([key]) => {
             const headerCellContent = headerCellGenerator(key);
             const inputType = key === "name" || key === "description" ? "string" : "number";
             return (

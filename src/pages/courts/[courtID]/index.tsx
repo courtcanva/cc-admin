@@ -1,14 +1,4 @@
-import {
-  Text,
-  Button,
-  Flex,
-  Heading,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Tr,
-} from "@chakra-ui/react";
+import { Text, Button, Flex, Table, TableContainer, Tbody, Td, Tr } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ICourt } from "@/interfaces/courtData";
 import { useEffect, useState } from "react";
