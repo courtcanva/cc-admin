@@ -18,6 +18,10 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
+  pageProps: {
+    cookies?: string | undefined;
+    children: React.ReactNode;
+  };
 };
 
 function CourtCanvaApp({ Component, pageProps }: AppPropsWithLayout) {
@@ -25,7 +29,7 @@ function CourtCanvaApp({ Component, pageProps }: AppPropsWithLayout) {
   const { updateToken } = useAuthRequest();
 
   updateToken(); // check user refresh token TODO: using axios interceptors instead
-
+  console.log("page props", pageProps);
   const cookies = pageProps.cookies;
   let accessToken: string | undefined;
   if (UserTokenService.getUserToken()) accessToken = UserTokenService.getUserToken()?.accessToken;
