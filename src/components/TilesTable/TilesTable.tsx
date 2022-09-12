@@ -72,6 +72,7 @@ const TilesTable = ({ tiles }: any) => {
                       pathname: "/tiles/[id]",
                       query: { id: tile._id },
                     }}
+                    passHref
                   >
                     <IconButton aria-label="Edit" icon={<BiPencil />} />
                   </Link>

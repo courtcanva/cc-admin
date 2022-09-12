@@ -25,10 +25,6 @@ interface ITile {
   createAt: string;
   updateAt: string;
 }
-interface IColor {
-  name: string;
-  value: string;
-}
 
 const TileSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -207,7 +203,7 @@ const Edit = () => {
               )}
             </FieldArray>
             <Flex justifyContent="center">
-              <Link href="/tiles">
+              <Link href="/tiles" passHref>
                 <Button margin={4}>Cancel</Button>
               </Link>
               <Button margin={4} colorScheme="teal" isLoading={props.isSubmitting} type="submit">

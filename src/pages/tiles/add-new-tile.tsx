@@ -105,7 +105,7 @@ const AddNewTile = () => {
                     props.values.colors.map((color, index: number) => (
                       <Flex key={index} justifyContent="space-between">
                         <Field name={`colors[${index}].name`}>
-                          {({ field, form }: any) => (
+                          {({ field }: any) => (
                             <FormControl marginRight={4} marginBottom={4}>
                               <Input
                                 {...field}
@@ -119,7 +119,7 @@ const AddNewTile = () => {
                           )}
                         </Field>
                         <Field name={`colors[${index}].value`} validate={validateColorValue}>
-                          {({ field, form }: any) => (
+                          {({ field }: any) => (
                             <FormControl marginRight={4} marginBottom={4}>
                               <Input
                                 {...field}
@@ -157,7 +157,7 @@ const AddNewTile = () => {
               )}
             </FieldArray>
             <Flex justifyContent="center">
-              <Link href="/tiles">
+              <Link href="/tiles" passHref>
                 <Button margin={4}>Cancel</Button>
               </Link>
               <Button margin={4} colorScheme="teal" isLoading={props.isSubmitting} type="submit">
