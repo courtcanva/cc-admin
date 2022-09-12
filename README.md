@@ -5,9 +5,9 @@
 ### Install dependencies
 ```bash
 $ npm install
-# or
-$ yarn install
 ```
+
+NB: we do not use `yarn install` here because it seems to [cause some trouble in SWC](https://www.notion.so/CourtCanva-Boards-9a664c4a1114424080ed647b31873151?p=b0d5e366f59942f4822dc4705b16d20c&pm=s).
 
 ### Start dev environment
 ```bash
