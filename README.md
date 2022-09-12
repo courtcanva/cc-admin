@@ -3,7 +3,13 @@
 ## Getting Started
 
 ### Install dependencies
+```bash
+$ npm install
+# or
+$ yarn install
+```
 
+### Start dev environment
 ```bash
 $ npm run dev
 # or
