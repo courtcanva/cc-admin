@@ -21,14 +21,14 @@
     "e2e": "start-server-and-test start http://localhost:3000 cypress",
     "e2e:headless": "start-server-and-test start http://localhost:3000 cypress:headless",
     "prepare": "husky install",
-    "pre-commit": "npm run prettier && npm run lint && npm run type-check && npm run test && npx --no-install lint-staged"
+    "pre-commit": "npm run prettier && npm run lint && npm run type-check && npm run test && npx --no-install"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,json,md}": [
       "git add ."
     ],
     "*.{js,jsx,ts,tsx}": [
-      "npm eslint",
+      "yarn eslint",
       "git add ."
     ]
   },

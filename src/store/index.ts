@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import counterReducer from "./reducer/counterSlice";
-import { courtsApi } from "@/redux/api/courtsApi";
+import { courtsApi } from "../redux/api/courtsApi";
 export const makeStore = () =>
   configureStore({
     reducer: {
