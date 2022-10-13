@@ -6,8 +6,6 @@
 
 ```bash
 $ npm run dev
-# or
-$ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -22,16 +20,12 @@ The `src/pages/api` directory is mapped to `/api/*`. Files in this directory are
 
 ```shell
 $ npm run build
-# or
-$ yarn build
 ```
 
 ### Run the Production
 
 ```shell
 $ npm run start
-# or
-$ yarn start
 ```
 
 ## Project structure

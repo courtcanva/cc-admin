@@ -1,4 +1,4 @@
-import { AiFillHome } from "react-icons/ai";
+import { AiFillHome, AiOutlineKey } from "react-icons/ai";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { CgMicrosoft } from "react-icons/cg";
 import { TbRectangle } from "react-icons/tb";
@@ -13,7 +13,7 @@ const sideBarItemList: ISideBarItem[] = [
   },
   {
     id: 2,
-    title: "Accounts",
+    title: "Users",
     icon: <IoPersonCircleSharp />,
     href: "/accounts",
   },
@@ -29,5 +29,11 @@ const sideBarItemList: ISideBarItem[] = [
     icon: <TbRectangle />,
     href: "/courts",
   },
+  // {
+  //   id: 5,
+  //   title: "Admin",
+  //   icon: <AiOutlineKey />,
+  //   href: "/adminAcc",
+  // },
 ];
 export default sideBarItemList;
