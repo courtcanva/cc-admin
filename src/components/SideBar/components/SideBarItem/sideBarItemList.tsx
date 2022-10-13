@@ -29,11 +29,11 @@ const sideBarItemList: ISideBarItem[] = [
     icon: <TbRectangle />,
     href: "/courts",
   },
-  // {
-  //   id: 5,
-  //   title: "Admin",
-  //   icon: <AiOutlineKey />,
-  //   href: "/adminAcc",
-  // },
+  {
+    id: 5,
+    title: "Admin",
+    icon: <AiOutlineKey />,
+    href: "/admin",
+  },
 ];
 export default sideBarItemList;
