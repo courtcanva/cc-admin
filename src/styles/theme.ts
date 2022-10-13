@@ -36,6 +36,9 @@ const colors = {
     hover: "rgba(159, 162, 180, 0.3)",
     active: "#699D88",
   },
+  footerSwitch: {
+    500: "#40B484",
+  },
 };
 
 const theme = extendTheme({

@@ -10,38 +10,46 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import React from "react";
 import { AddIcon } from "@chakra-ui/icons";
-import { api } from "@/utils/axios";
+import { useEffect } from "react";
 import { ICourt } from "@/interfaces/courtData";
 import { CgDetailsMore } from "react-icons/cg";
+import { useGetAllCourtQuery } from "@/redux/api/courtsApi";
 import formatDate from "@/utils/formatDate";
 import TableHeader from "@/components/CourtsTable";
+import SwitchButton from "@/components/CourtsTable/SwitchButton";
 import { routeHandler } from "@/utils/routeHandler";
 
 const courts = () => {
   const toast = useToast();
-  const [courtsData, setCourtsData] = useState<ICourt[]>([]);
-  const getAllCourtData = async () => {
-    try {
-      const response = await api("courts", { method: "get" });
-      if (response.status >= 300 || response.status < 200) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+  const {
+    data: courtsData,
+    isError,
+    error,
+  } = useGetAllCourtQuery(0, {
+    selectFromResult: (result) => {
+      if (result.data) {
+        result.data = result.data
+          .filter((court: ICourt) => court.isHidden === false)
+          .concat(result.data.filter((court: ICourt) => court.isHidden !== false));
       }
-      setCourtsData(response.data);
-    } catch (error) {
-      toast({
-        title: `Can not get data, ${error}`,
-        description: "Try again or contact IT support",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  };
+      return result;
+    },
+  });
+
   useEffect(() => {
-    getAllCourtData();
-  }, []);
+    if (isError) {
+      if (error && "data" in error)
+        toast({
+          title: `Can not get data, ${error.status}`,
+          description: "Try again or contact IT support",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+    }
+  }, [isError, error]);
 
   return (
     <Flex flexDirection="column" maxWidth="1000" margin="0 auto">
@@ -60,10 +68,11 @@ const courts = () => {
         <Table variant="simple">
           <TableHeader />
           <Tbody>
-            {courtsData.map((court) => {
-              court["createdAt"] = formatDate(court.createdAt);
-              court["updatedAt"] = formatDate(court.updatedAt);
-              const { _id, name, createdAt, updatedAt } = court;
+            {courtsData?.map((court: ICourt) => {
+              const courtCopy = { ...court };
+              courtCopy["createdAt"] = formatDate(court.createdAt);
+              courtCopy["updatedAt"] = formatDate(court.updatedAt);
+              const { _id, name, createdAt, updatedAt } = courtCopy;
               return (
                 <>
                   <Tr key={court._id} _hover={{ bg: "gray.50" }}>
@@ -80,6 +89,9 @@ const courts = () => {
                         icon={<CgDetailsMore />}
                         onClick={() => routeHandler("courts", _id)}
                       />
+                    </Td>
+                    <Td>
+                      <SwitchButton court={court} />
                     </Td>
                   </Tr>
                 </>

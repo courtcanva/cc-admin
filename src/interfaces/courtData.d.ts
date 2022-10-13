@@ -15,4 +15,5 @@ export interface ICourt {
   createdAt: string;
   updatedAt: string;
   isDeleted?: boolean;
+  isHidden: boolean;
 }
