@@ -1,6 +1,6 @@
 import { Flex, FormControl, FormLabel, Switch } from "@chakra-ui/react";
 import React from "react";
-import { useUpdateCourtMutation } from "@/redux/api/courtsApi";
+import { useUpdateCourtMutation } from "../../redux/api/courtsApi";
 import { ICourt } from "@/interfaces/courtData";
 interface Props {
   court: ICourt;
@@ -17,10 +17,10 @@ const SwitchButton = ({ court }: Props) => {
     <Flex marginRight="2" justifyContent="center">
       <FormControl display="flex" w="80px" alignItems="center">
         <FormLabel
-          htmlFor="ruler-switch-btn"
+          htmlFor="switch-btn-label"
           marginBottom="0"
           color="brand.primary"
-          data-testid="ruler-label"
+          data-testid="switch-label"
           width={{ base: "60px", lg: "70px" }}
           height="40px"
           fontSize={{ base: "xs", lg: "sm" }}

@@ -9,13 +9,14 @@ import {
   IconButton,
   Button,
   useToast,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { ICourt } from "@/interfaces/courtData";
 import { CgDetailsMore } from "react-icons/cg";
-import { useGetAllCourtQuery } from "@/redux/api/courtsApi";
+import { useGetAllCourtQuery } from "../../redux/api/courtsApi";
 import formatDate from "@/utils/formatDate";
 import TableHeader from "@/components/CourtsTable";
 import SwitchButton from "@/components/CourtsTable/SwitchButton";
@@ -26,6 +27,7 @@ const courts = () => {
   const {
     data: courtsData,
     isError,
+    isLoading,
     error,
   } = useGetAllCourtQuery(0, {
     selectFromResult: (result) => {
@@ -37,7 +39,6 @@ const courts = () => {
       return result;
     },
   });
-
   useEffect(() => {
     if (isError) {
       if (error && "data" in error)
@@ -68,6 +69,7 @@ const courts = () => {
         <Table variant="simple">
           <TableHeader />
           <Tbody>
+            {isLoading && <Text>Please wait while the courts data are loading...</Text>}
             {courtsData?.map((court: ICourt) => {
               const courtCopy = { ...court };
               courtCopy["createdAt"] = formatDate(court.createdAt);
