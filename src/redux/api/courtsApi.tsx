@@ -11,6 +11,10 @@ export const courtsApi = createApi({
       query: () => "/courts",
       providesTags: [{ type: "courts", id: "LIST" }],
     }),
+    getCourtById: builder.query({
+      query: (courtID: string) => `/courts/${courtID}`,
+      providesTags: (_1, _2, courtID) => [{ type: "courts", id: courtID }],
+    }),
     updateCourt: builder.mutation({
       query: (court: ICourt) => ({
         url: `/courts/${court._id}`,
@@ -32,7 +36,21 @@ export const courtsApi = createApi({
         { type: "courts", id: "LIST" },
       ],
     }),
+    createCourt: builder.mutation({
+      query: (court: ICourt) => ({
+        url: "/courts",
+        method: "POST",
+        body: court,
+      }),
+      invalidatesTags: [{ type: "courts", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useGetAllCourtQuery, useUpdateCourtMutation, useDeleteCourtMutation } = courtsApi;
+export const {
+  useGetAllCourtQuery,
+  useGetCourtByIdQuery,
+  useUpdateCourtMutation,
+  useDeleteCourtMutation,
+  useCreateCourtMutation,
+} = courtsApi;

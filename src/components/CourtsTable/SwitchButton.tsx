@@ -10,7 +10,7 @@ const SwitchButton = ({ court }: Props) => {
   const [updateCourt] = useUpdateCourtMutation();
 
   const handSwitchBtnState = () => {
-    updateCourt({ ...court, ...{ updatedAt: new Date().toString(), isHidden: !court.isHidden } });
+    updateCourt({ ...court, isHidden: !court.isHidden });
   };
 
   return (

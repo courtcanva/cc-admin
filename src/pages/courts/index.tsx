@@ -11,7 +11,6 @@ import {
   useToast,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { ICourt } from "@/interfaces/courtData";
@@ -51,7 +50,6 @@ const courts = () => {
         });
     }
   }, [isError, error]);
-
   return (
     <Flex flexDirection="column" maxWidth="1000" margin="0 auto">
       <Heading marginTop="50px">Courts Data</Heading>
