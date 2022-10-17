@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Flex,
   IconButton,
   Table,
@@ -9,6 +10,7 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
@@ -16,11 +18,11 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import formatDate from "@/utils/formatDate";
 import { api } from "@/utils/axios";
-import { BiPencil } from "react-icons/bi";
+import { BiPencil, BiRefresh } from "react-icons/bi";
 // import router from "next/router";
 import { ImBlocked } from "react-icons/im";
 import { routeHandler } from "@/utils/routeHandler";
-// import DeleteComfirmModal from "@/components/DeleteComfirmModal";
+import DeleteComfirmModal from "@/components/DeleteComfirmModal";
 
 interface AdminProp {
   _id: string;
@@ -46,6 +48,13 @@ const AdminAccounts = () => {
     //   permission: "Super",
     // },
   ]);
+  const [adminIdToDelete, setAdminIdToDelete] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const confirmDeleteAdmin = (id: string) => {
+    api(`admin/${id}`, { method: "delete" });
+    onClose();
+  };
 
   const toast = useToast();
   const getAllAdminData = async () => {
@@ -67,22 +76,8 @@ const AdminAccounts = () => {
   };
 
   useEffect(() => {
-    // api(process.env.NEXT_PUBLIC_API_ADMIN as string, { method: "get" }).then(({ data }) => {
-    //   setAdminAccData(data);
     getAllAdminData();
   }, []);
-
-  // const addNewAdminHandler = () => {
-  //   router.push({
-  //     pathname: "admin/add-new-admin",
-  //   });
-  // };
-
-  // const editAdminHandler = () => {
-  //   router.push({
-  //     pathname: "admin/edit",
-  //   });
-  // }
 
   const adminTableHeader = [
     "Admin Name",
@@ -90,7 +85,7 @@ const AdminAccounts = () => {
     "Created At",
     "Updated At",
     "Permission",
-    "is Deleted",
+    "State",
     "Operation",
   ];
   return (
@@ -139,14 +134,35 @@ const AdminAccounts = () => {
                       );
                     })}
                     <Td key={"isDeleted"} textAlign="center">
-                      {isDeleted ? <ImBlocked /> : null}
+                      {isDeleted ? <ImBlocked /> : "active"}
                     </Td>
                     <Td textAlign="center">
-                      <IconButton
-                        aria-label="detail"
-                        icon={<BiPencil onClick={() => routeHandler("admin", _id)} />}
-                      />
-                      <IconButton aria-label="edit" icon={<DeleteIcon />} />
+                      <ButtonGroup
+                        display="flex"
+                        justifyContent="center"
+                        variant="outline"
+                        spacing="1"
+                      >
+                        {!isDeleted ? (
+                          <>
+                            <IconButton
+                              aria-label="detail"
+                              icon={<BiPencil onClick={() => routeHandler("admin", _id)} />}
+                            />
+                            <IconButton
+                              aria-label="delete"
+                              icon={<DeleteIcon />}
+                              onClick={() => {
+                                setAdminIdToDelete(_id);
+                                onOpen();
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <IconButton aria-label="restore" icon={<BiRefresh />} />
+                          // This button function is to be written, probably in server side, to restore a deleted account; or just remove this.
+                        )}
+                      </ButtonGroup>
                     </Td>
                   </Tr>
                 </>
@@ -155,7 +171,11 @@ const AdminAccounts = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      {/* < DeleteComfirmModal /> */}
+      <DeleteComfirmModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={() => confirmDeleteAdmin(adminIdToDelete)}
+      />
     </Flex>
   );
 };

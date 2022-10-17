@@ -1,5 +1,5 @@
 import { Box, Text, Flex, IconButton } from "@chakra-ui/react";
-import { BsFillFilePersonFill } from "react-icons/bs";
+import { AiOutlineKey } from "react-icons/ai";
 import { MdOutlineLogout } from "react-icons/md";
 import useAuthRequest from "@/components/Login/helpers/useAuthRequest";
 
@@ -12,7 +12,7 @@ const Profile = () => {
 
       <Flex paddingTop="20px" color="fontcolor.primary">
         <IconButton aria-label="person" w="32px" h="32px" padding={2}>
-          <BsFillFilePersonFill />
+          <AiOutlineKey />
         </IconButton>
         <Text as="span" fontSize="sm" padding={2}>
           Chui
