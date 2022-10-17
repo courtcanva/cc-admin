@@ -47,7 +47,7 @@ const SwitchButton = ({ court }: Props) => {
               boxShadow: "none",
             },
           }}
-          isChecked={court.isHidden ? false : true}
+          isChecked={!court.isHidden}
           data-testid="switch-btn"
           onChange={handSwitchBtnState}
         />

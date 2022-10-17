@@ -31,9 +31,7 @@ const courts = () => {
   } = useGetAllCourtQuery(0, {
     selectFromResult: (result) => {
       if (result.data) {
-        result.data = result.data
-          .filter((court: ICourt) => court.isHidden === false)
-          .concat(result.data.filter((court: ICourt) => court.isHidden !== false));
+        result.data = [...result.data].sort((a, b) => a.isHidden - b.isHidden);
       }
       return result;
     },
