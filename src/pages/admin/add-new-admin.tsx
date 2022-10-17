@@ -21,14 +21,16 @@ const AddNewAdmin = () => {
         name: "",
         email: "",
         password: "",
+        permission: "",
       }}
-      onSubmit={({ name, email, password }, actions) => {
-        api(process.env.NEXT_PUBLIC_API_ADMIN as string, {
-          method: "register",
-          requestData: { email, password },
+      onSubmit={({ name, email, password, permission }, actions) => {
+        // process.env.NEXT_PUBLIC_API_ADMIN as string
+        api("admin/register", {
+          method: "post",
+          requestData: { name, email, password, permission },
         });
         actions.setSubmitting(false);
-        router.push("admin");
+        router.push("/admin");
       }}
     >
       {(props) => (
@@ -59,6 +61,15 @@ const AddNewAdmin = () => {
                   <FormLabel htmlFor="password">Admin password</FormLabel>
                   <Input {...field} id="password" />
                   <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                </FormControl>
+              )}
+            </Field>
+            <Field name="permission">
+              {({ field, form }: any) => (
+                <FormControl isInvalid={form.errors.permission && form.touched.permission}>
+                  <FormLabel htmlFor="permission">Permission</FormLabel>
+                  <Input {...field} id="permission" />
+                  <FormErrorMessage>{form.errors.permission}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
