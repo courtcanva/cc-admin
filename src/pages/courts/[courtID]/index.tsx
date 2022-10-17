@@ -19,7 +19,8 @@ const CourtDetail = () => {
   useEffect(() => {
     const fetchCourts = async () => {
       const { data } = await api(apiUrl as string, { method: "get" });
-      ["_id", "isDeleted", "__v", "isHidden"].forEach((e) => delete data[e]);
+      console.log(data);
+      ["_id", "isDeleted", "isHidden"].forEach((e) => delete data[e]);
       data["createdAt"] = formatDate(data.createdAt);
       data["updatedAt"] = formatDate(data.updatedAt);
       setCourtData(data);
