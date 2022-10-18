@@ -15,13 +15,13 @@
     "test:watch": "jest --colors --config jest.config.js --watch --maxWorkers=25%",
     "test:ci": "CI=true jest --colors --config jest.config.js --runInBand --coverage",
     "coverage": "jest --coverage",
-    "typecheck": "tsc --project tsconfig.json --pretty --noEmit",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
     "e2e": "start-server-and-test start http://localhost:3000 cypress",
     "e2e:headless": "start-server-and-test start http://localhost:3000 cypress:headless",
     "prepare": "husky install",
-    "pre-commit": "yarn prettier && yarn lint && yarn typecheck && yarn test && npx --no-install lint-staged"
+    "pre-commit": "npm run prettier && npm run lint && npm run type-check && npm run test && npx --no-install"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,json,md}": [
@@ -81,6 +81,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
+    "msw": "^0.47.4",
     "prettier": "^2.6.2",
     "typescript": "4.6.2"
   }

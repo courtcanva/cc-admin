@@ -1,1 +1,1 @@
-export const courtsTableHeader = ["Name", "Created At", "Updated At", "Detail"];
+export const courtsTableHeader = ["Name", "Created At", "Updated At", "Detail", "Display"];
