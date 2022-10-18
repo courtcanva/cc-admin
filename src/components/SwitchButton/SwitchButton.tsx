@@ -19,7 +19,7 @@ const SwitchButton = ({ initialState, switchBtnHandler }: Props) => {
           fontWeight="500"
           paddingTop="9px"
         >
-          {initialState ? "OFF" : "ON"}
+          {!initialState ? "OFF" : "ON"}
         </FormLabel>
         <Switch
           id="ruler-switch-btn"
@@ -39,7 +39,7 @@ const SwitchButton = ({ initialState, switchBtnHandler }: Props) => {
               boxShadow: "none",
             },
           }}
-          isChecked={!initialState}
+          isChecked={initialState}
           data-testid="switch-btn"
           onChange={switchBtnHandler}
         />

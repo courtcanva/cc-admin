@@ -95,7 +95,7 @@ const courts = () => {
                     </Td>
                     <Td>
                       <SwitchButton
-                        initialState={court.isHidden}
+                        initialState={!court.isHidden}
                         switchBtnHandler={() => switchBtnHandler(court)}
                       />
                     </Td>
