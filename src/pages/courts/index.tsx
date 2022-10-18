@@ -16,9 +16,10 @@ import { useEffect } from "react";
 import { ICourt } from "@/interfaces/courtData";
 import { CgDetailsMore } from "react-icons/cg";
 import { useGetAllCourtQuery } from "../../redux/api/courtsApi";
+import { useUpdateCourtMutation } from "../../redux/api/courtsApi";
 import formatDate from "@/utils/formatDate";
 import TableHeader from "@/components/CourtsTable";
-import SwitchButton from "@/components/CourtsTable/SwitchButton";
+import SwitchButton from "@/components/SwitchButton/SwitchButton";
 import { routeHandler } from "@/utils/routeHandler";
 
 const courts = () => {
@@ -36,17 +37,21 @@ const courts = () => {
       return result;
     },
   });
+
+  const [updateCourt] = useUpdateCourtMutation();
+  const switchBtnHandler = (court: ICourt) => {
+    updateCourt({ ...court, isHidden: !court.isHidden });
+  };
+
   useEffect(() => {
-    if (isError) {
-      if (error && "data" in error)
-        toast({
-          title: `Can not get data, ${error.status}`,
-          description: "Try again or contact IT support",
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-    }
+    if (isError && error && "data" in error)
+      toast({
+        title: `Can not get data, ${error.status}`,
+        description: "Try again or contact IT support",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
   }, [isError, error]);
   return (
     <Flex flexDirection="column" maxWidth="1000" margin="0 auto">
@@ -89,7 +94,10 @@ const courts = () => {
                       />
                     </Td>
                     <Td>
-                      <SwitchButton court={court} />
+                      <SwitchButton
+                        initialState={court.isHidden}
+                        switchBtnHandler={() => switchBtnHandler(court)}
+                      />
                     </Td>
                   </Tr>
                 </>

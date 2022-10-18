@@ -1,18 +1,10 @@
 import { Flex, FormControl, FormLabel, Switch } from "@chakra-ui/react";
-import React from "react";
-import { useUpdateCourtMutation } from "../../redux/api/courtsApi";
-import { ICourt } from "@/interfaces/courtData";
 interface Props {
-  court: ICourt;
+  initialState: boolean;
+  switchBtnHandler: () => void;
 }
 
-const SwitchButton = ({ court }: Props) => {
-  const [updateCourt] = useUpdateCourtMutation();
-
-  const handSwitchBtnState = () => {
-    updateCourt({ ...court, isHidden: !court.isHidden });
-  };
-
+const SwitchButton = ({ initialState, switchBtnHandler }: Props) => {
   return (
     <Flex marginRight="2" justifyContent="center">
       <FormControl display="flex" w="80px" alignItems="center">
@@ -27,7 +19,7 @@ const SwitchButton = ({ court }: Props) => {
           fontWeight="500"
           paddingTop="9px"
         >
-          {court.isHidden ? "OFF" : "ON"}
+          {initialState ? "OFF" : "ON"}
         </FormLabel>
         <Switch
           id="ruler-switch-btn"
@@ -47,9 +39,9 @@ const SwitchButton = ({ court }: Props) => {
               boxShadow: "none",
             },
           }}
-          isChecked={!court.isHidden}
+          isChecked={!initialState}
           data-testid="switch-btn"
-          onChange={handSwitchBtnState}
+          onChange={switchBtnHandler}
         />
       </FormControl>
     </Flex>
