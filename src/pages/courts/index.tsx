@@ -9,40 +9,50 @@ import {
   IconButton,
   Button,
   useToast,
+  Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { AddIcon } from "@chakra-ui/icons";
-import { api } from "@/utils/axios";
+import { useEffect } from "react";
 import { ICourt } from "@/interfaces/courtData";
 import { CgDetailsMore } from "react-icons/cg";
+import { useGetAllCourtQuery } from "../../redux/api/courtsApi";
+import { useUpdateCourtMutation } from "../../redux/api/courtsApi";
 import formatDate from "@/utils/formatDate";
 import TableHeader from "@/components/CourtsTable";
+import SwitchButton from "@/components/SwitchButton/SwitchButton";
 import { routeHandler } from "@/utils/routeHandler";
 
 const courts = () => {
   const toast = useToast();
-  const [courtsData, setCourtsData] = useState<ICourt[]>([]);
-  const getAllCourtData = async () => {
-    try {
-      const response = await api("courts", { method: "get" });
-      if (response.status >= 300 || response.status < 200) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+  const {
+    data: courtsData,
+    isError,
+    isLoading,
+    error,
+  } = useGetAllCourtQuery(0, {
+    selectFromResult: (result) => {
+      if (result.data) {
+        result.data = [...result.data].sort((a, b) => a.isHidden - b.isHidden);
       }
-      setCourtsData(response.data);
-    } catch (error) {
+      return result;
+    },
+  });
+
+  const [updateCourt] = useUpdateCourtMutation();
+  const switchBtnHandler = (court: ICourt) => {
+    updateCourt({ ...court, isHidden: !court.isHidden });
+  };
+
+  useEffect(() => {
+    if (isError && error && "data" in error)
       toast({
-        title: `Can not get data, ${error}`,
+        title: `Can not get data, ${error.status}`,
         description: "Try again or contact IT support",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
-    }
-  };
-  useEffect(() => {
-    getAllCourtData();
-  }, []);
-
+  }, [isError, error]);
   return (
     <Flex flexDirection="column" maxWidth="1000" margin="0 auto">
       <Heading marginTop="50px">Courts Data</Heading>
@@ -60,10 +70,12 @@ const courts = () => {
         <Table variant="simple">
           <TableHeader />
           <Tbody>
-            {courtsData.map((court) => {
-              court["createdAt"] = formatDate(court.createdAt);
-              court["updatedAt"] = formatDate(court.updatedAt);
-              const { _id, name, createdAt, updatedAt } = court;
+            {isLoading && <Text>Please wait while the courts data are loading...</Text>}
+            {courtsData?.map((court: ICourt) => {
+              const courtCopy = { ...court };
+              courtCopy["createdAt"] = formatDate(court.createdAt);
+              courtCopy["updatedAt"] = formatDate(court.updatedAt);
+              const { _id, name, createdAt, updatedAt } = courtCopy;
               return (
                 <>
                   <Tr key={court._id} _hover={{ bg: "gray.50" }}>
@@ -79,6 +91,12 @@ const courts = () => {
                         aria-label="detail"
                         icon={<CgDetailsMore />}
                         onClick={() => routeHandler("courts", _id)}
+                      />
+                    </Td>
+                    <Td>
+                      <SwitchButton
+                        initialState={!court.isHidden}
+                        switchBtnHandler={() => switchBtnHandler(court)}
                       />
                     </Td>
                   </Tr>
