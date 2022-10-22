@@ -10,75 +10,55 @@ import {
   Th,
   Thead,
   Tr,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
-import formatDate from "@/utils/formatDate";
-import { api } from "@/utils/axios";
 import { BiPencil, BiRefresh } from "react-icons/bi";
-// import router from "next/router";
 import { ImBlocked } from "react-icons/im";
 import { routeHandler } from "@/utils/routeHandler";
-import DeleteComfirmModal from "@/components/DeleteComfirmModal";
+import DeleteComfirmModal from "@/components/AdminOperation/DeleteComfirmModal";
+import RestoreComfirmModal from "@/components/AdminOperation/RestoreComfirmModal";
+import {
+  useGetAllAdminQuery,
+  useDeleteAdminMutation,
+  useRestoreAdminMutation,
+} from "@/redux/api/adminApi";
+import { IAdmin } from "@/interfaces/adminData";
 
-interface AdminProp {
-  _id: string;
-  name: string;
-  email: string;
-  password: string;
-  hashedRefreshToken: string;
-  createdAt: string;
-  updatedAt: string;
-  isDeleted: boolean;
-  permission: string;
-}
 const AdminAccounts = () => {
-  const [adminAccData, setAdminAccData] = useState<AdminProp[]>([
-    // {
-    //   adminName: "TestAdmin_1",
-    //   email: "123@gmail.com",
-    //   password: "123",
-    //   hashedRefreshToken: "123",
-    //   createdAt: "2020-01-01 12:00:00",
-    //   updatedAt: "2020-01-01 12:00:00",
-    //   isDeleted: false,
-    //   permission: "Super",
-    // },
-  ]);
   const [adminIdToDelete, setAdminIdToDelete] = useState("");
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [adminIdToRestore, setAdminIdToRestore] = useState("");
+  const [currentModal, setCurrentModal] = useState("");
+  const [deleteAdmin] = useDeleteAdminMutation();
+  const [restoreAdmin] = useRestoreAdminMutation();
+  const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
 
   const confirmDeleteAdmin = (id: string) => {
-    api(`admin/${id}`, { method: "delete" });
-    onClose();
+    deleteAdmin(id);
+    onModalClose();
+  };
+  const restoreDeletedAdmin = (id: string) => {
+    restoreAdmin(id);
+    onModalClose();
   };
 
   const toast = useToast();
-  const getAllAdminData = async () => {
-    try {
-      const response = await api("admin", { method: "get" });
-      if (response.status >= 300 || response.status < 200) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      setAdminAccData(response.data);
-    } catch (error) {
+  const { data: adminAccData, isError, isLoading, error } = useGetAllAdminQuery(0);
+  console.log(adminAccData);
+  useEffect(() => {
+    if (isError && error && "data" in error)
       toast({
-        title: `Can not get data, ${error}`,
+        title: `Can not get data, ${error.status}`,
         description: "Try again or contact IT support",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
-    }
-  };
-
-  useEffect(() => {
-    getAllAdminData();
-  }, []);
-
+  }, [isError, error]);
   const adminTableHeader = [
     "Admin Name",
     "Email",
@@ -113,9 +93,7 @@ const AdminAccounts = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {adminAccData.map((adminAcc) => {
-              adminAcc["createdAt"] = formatDate(adminAcc.createdAt as string);
-              adminAcc["updatedAt"] = formatDate(adminAcc.updatedAt as string);
+            {adminAccData?.map((adminAcc: IAdmin) => {
               const { _id, name, email, createdAt, updatedAt, permission, isDeleted } = adminAcc;
               return (
                 <>
@@ -146,21 +124,29 @@ const AdminAccounts = () => {
                         {!isDeleted ? (
                           <>
                             <IconButton
-                              aria-label="detail"
+                              aria-label="admin detail"
                               icon={<BiPencil onClick={() => routeHandler("admin", _id)} />}
                             />
                             <IconButton
-                              aria-label="delete"
+                              aria-label="delete admin"
                               icon={<DeleteIcon />}
                               onClick={() => {
+                                setCurrentModal("Delete");
                                 setAdminIdToDelete(_id);
-                                onOpen();
+                                onModalOpen();
                               }}
                             />
                           </>
                         ) : (
-                          <IconButton aria-label="restore" icon={<BiRefresh />} />
-                          // This button function is to be written, probably in server side, to restore a deleted account; or just remove this.
+                          <IconButton
+                            aria-label="restore admin"
+                            icon={<BiRefresh />}
+                            onClick={() => {
+                              setCurrentModal("Restore");
+                              setAdminIdToRestore(_id);
+                              onModalOpen();
+                            }}
+                          />
                         )}
                       </ButtonGroup>
                     </Td>
@@ -171,11 +157,21 @@ const AdminAccounts = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <DeleteComfirmModal
-        isOpen={isOpen}
-        onClose={onClose}
-        onConfirm={() => confirmDeleteAdmin(adminIdToDelete)}
-      />
+      {isLoading && <Text textAlign="center">Please wait for the loading of admin data.</Text>}
+      {currentModal === "Delete" && (
+        <DeleteComfirmModal
+          isOpen={isModalOpen}
+          onClose={onModalClose}
+          onConfirm={() => confirmDeleteAdmin(adminIdToDelete)}
+        />
+      )}
+      {currentModal === "Restore" && (
+        <RestoreComfirmModal
+          isOpen={isModalOpen}
+          onClose={onModalClose}
+          onConfirm={() => restoreDeletedAdmin(adminIdToRestore)}
+        />
+      )}
     </Flex>
   );
 };
