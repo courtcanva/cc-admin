@@ -3,11 +3,10 @@ import { useRouter } from "next/router";
 import { IAdmin } from "@/interfaces/adminData";
 import { useEffect, useState } from "react";
 import { api } from "@/utils/axios";
-import { BiPencil } from "react-icons/bi";
 import formatDate from "@/utils/formatDate";
 import { idRouteHandler, routeHandler } from "@/utils/routeHandler";
 import { headerCellGenerator } from "@/utils/headerCellGenerator";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
+import { RiArrowLeftSLine, RiEdit2Line } from "react-icons/ri";
 
 const AdminDetail = () => {
   const [adminData, setAdminData] = useState<IAdmin>();
@@ -38,7 +37,7 @@ const AdminDetail = () => {
           width="100px"
           marginRight="10px"
           marginY="50px"
-          leftIcon={<ChevronLeftIcon />}
+          leftIcon={<RiArrowLeftSLine />}
           onClick={() => routeHandler("admin")}
         >
           Back
@@ -47,7 +46,7 @@ const AdminDetail = () => {
           width="100px"
           marginRight="10px"
           marginY="50px"
-          leftIcon={<BiPencil />}
+          leftIcon={<RiEdit2Line />}
           onClick={() => idRouteHandler(`${adminId}/edit`)}
         >
           Edit

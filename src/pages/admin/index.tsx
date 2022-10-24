@@ -13,12 +13,13 @@ import {
   Text,
   useDisclosure,
   useToast,
+  Icon,
 } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
-import { useEffect, useState } from "react";
-import { BiPencil, BiRefresh } from "react-icons/bi";
+import { FaTrashAlt } from "react-icons/fa";
 import { ImBlocked } from "react-icons/im";
+import { RiEdit2Line, RiMenuAddFill, RiRepeatLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
 import { routeHandler } from "@/utils/routeHandler";
 import DeleteComfirmModal from "@/components/AdminOperation/DeleteComfirmModal";
 import RestoreComfirmModal from "@/components/AdminOperation/RestoreComfirmModal";
@@ -28,6 +29,7 @@ import {
   useRestoreAdminMutation,
 } from "@/redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
+import formatDate from "@/utils/formatDate";
 
 const AdminAccounts = () => {
   const [adminIdToDelete, setAdminIdToDelete] = useState("");
@@ -65,7 +67,7 @@ const AdminAccounts = () => {
     "Created At",
     "Updated At",
     "Permission",
-    "State",
+    "Status",
     "Operation",
   ];
   return (
@@ -76,7 +78,7 @@ const AdminAccounts = () => {
         alignSelf="flex-end"
         marginRight="10px"
         marginY="20px"
-        leftIcon={<AddIcon />}
+        leftIcon={<RiMenuAddFill />}
         onClick={() => routeHandler("admin", "add-new-admin")}
       >
         New
@@ -85,22 +87,34 @@ const AdminAccounts = () => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              {adminTableHeader.map((account) => (
-                <Th key={account} textAlign="center">
-                  {account}
+              {adminTableHeader.map((header) => (
+                <Th key={header} textAlign="center">
+                  {header}
                 </Th>
               ))}
             </Tr>
           </Thead>
           <Tbody>
             {adminAccData?.map((adminAcc: IAdmin) => {
-              const { _id, name, email, createdAt, updatedAt, permission, isDeleted } = adminAcc;
+              const adminAccCopy = { ...adminAcc };
+              adminAccCopy["createdAt"] = formatDate(adminAcc.createdAt);
+              adminAccCopy["updatedAt"] = formatDate(adminAcc.updatedAt);
+              const { _id, name, email, createdAt, updatedAt, permission, isDeleted } =
+                adminAccCopy;
               return (
                 <>
                   <Tr key={email}>
                     {Object.entries({
                       name,
                       email,
+                    }).map(([key, value]) => {
+                      return (
+                        <Td key={key} textAlign="left">
+                          {value}
+                        </Td>
+                      );
+                    })}
+                    {Object.entries({
                       createdAt,
                       updatedAt,
                       permission,
@@ -112,9 +126,9 @@ const AdminAccounts = () => {
                       );
                     })}
                     <Td key={"isDeleted"} textAlign="center">
-                      {isDeleted ? <ImBlocked /> : "active"}
+                      {isDeleted ? <Icon as={ImBlocked} /> : "active"}
                     </Td>
-                    <Td textAlign="center">
+                    <Td>
                       <ButtonGroup
                         display="flex"
                         justifyContent="center"
@@ -125,11 +139,11 @@ const AdminAccounts = () => {
                           <>
                             <IconButton
                               aria-label="admin detail"
-                              icon={<BiPencil onClick={() => routeHandler("admin", _id)} />}
+                              icon={<RiEdit2Line onClick={() => routeHandler("admin", _id)} />}
                             />
                             <IconButton
                               aria-label="delete admin"
-                              icon={<DeleteIcon />}
+                              icon={<FaTrashAlt />}
                               onClick={() => {
                                 setCurrentModal("Delete");
                                 setAdminIdToDelete(_id);
@@ -140,7 +154,7 @@ const AdminAccounts = () => {
                         ) : (
                           <IconButton
                             aria-label="restore admin"
-                            icon={<BiRefresh />}
+                            icon={<RiRepeatLine />}
                             onClick={() => {
                               setCurrentModal("Restore");
                               setAdminIdToRestore(_id);
