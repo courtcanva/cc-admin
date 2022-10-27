@@ -1,22 +1,8 @@
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Stack,
-  IconButton,
-  Text,
-  Flex,
-  Button,
-} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, Stack, IconButton, Text, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useCheckboxGroup } from "@chakra-ui/react";
+import { RiArrowDownSLine } from "react-icons/ri";
 interface PropsType {
   handleValueChange: (value: any) => void;
 }
@@ -44,7 +30,7 @@ const DropDownFilter = ({ handleValueChange }: PropsType) => {
         <MenuButton
           as={IconButton}
           aria-label="Options"
-          icon={<ChevronDownIcon />}
+          icon={<RiArrowDownSLine />}
           variant="outline"
           size="xs"
         />

@@ -1,33 +1,39 @@
-import { Text, Button, Flex, Table, TableContainer, Tbody, Td, Tr } from "@chakra-ui/react";
+import {
+  Text,
+  Button,
+  Flex,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Tr,
+  useToast,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { IAdmin } from "@/interfaces/adminData";
 import { useEffect, useState } from "react";
-import { api } from "@/utils/axios";
 import formatDate from "@/utils/formatDate";
 import { idRouteHandler, routeHandler } from "@/utils/routeHandler";
 import { headerCellGenerator } from "@/utils/headerCellGenerator";
 import { RiArrowLeftSLine, RiEdit2Line } from "react-icons/ri";
+import { useGetAdminByIdQuery } from "@/redux/api/adminApi";
 
 const AdminDetail = () => {
-  const [adminData, setAdminData] = useState<IAdmin>();
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const adminId = router.query.adminID;
-  const apiUrl = `admin/${adminId}`;
-
+  const adminId = router.query.adminID as string;
+  const toast = useToast();
+  const { data: adminData, isError, isLoading, error } = useGetAdminByIdQuery(adminId);
   useEffect(() => {
-    const fetchAdmin = async () => {
-      const { data } = await api(apiUrl as string, { method: "get" });
-      ["_id", "__v", "hashedRefreshToken", "password"].forEach((e) => delete data[e]);
-      data["createdAt"] = formatDate(data.createdAt);
-      data["updatedAt"] = formatDate(data.updatedAt);
-      setAdminData(data);
-      setLoading(false);
-    };
-    fetchAdmin();
-  }, []);
+    if (isError && error && "data" in error)
+      toast({
+        title: `Can not get data, ${error.status}`,
+        description: "Try again or contact IT support",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+  }, [isError, error]);
 
-  if (loading) {
+  if (isLoading) {
     return <Text>Loading...</Text>;
   }
   return (
@@ -58,11 +64,15 @@ const AdminDetail = () => {
             {adminData &&
               Object.entries(adminData).map(([key, value]) => {
                 const headerCellContent = headerCellGenerator(key);
+                console.log(key, value);
+                ["createdAt", "updatedAt"].includes(key) && (value = formatDate(value));
                 return (
-                  <Tr key={key}>
-                    <Td>{headerCellContent}</Td>
-                    <Td>{value}</Td>
-                  </Tr>
+                  !["_id", "__v", "hashedRefreshToken", "password"].includes(key) && (
+                    <Tr key={key}>
+                      <Td>{headerCellContent}</Td>
+                      <Td>{value}</Td>
+                    </Tr>
+                  )
                 );
               })}
           </Tbody>

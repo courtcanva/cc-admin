@@ -81,9 +81,9 @@ const AdminForm: React.FC<Props> = ({ header, adminData }) => {
                 )}
               </Field>
               <Flex justifyContent="center">
-                <Link href="/admin">
-                  <Button margin={4}>Cancel</Button>
-                </Link>
+                <Button margin={4} onClick={() => routeHandler("admin")}>
+                  Cancel
+                </Button>
                 <Button margin={4} isLoading={props.isSubmitting} type="submit">
                   Submit
                 </Button>
