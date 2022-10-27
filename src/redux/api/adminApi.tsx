@@ -1,4 +1,4 @@
-import { IAdmin } from "@/interfaces/adminData";
+import { IAdmin, INewAdmin } from "@/interfaces/adminData";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { environment } from "../../constants/environment";
 
@@ -11,8 +11,8 @@ export const adminApi = createApi({
       query: () => "/admin",
       providesTags: [{ type: "admin", id: "LIST" }],
     }),
-    getAdminById: builder.query({
-      query: (adminId: string) => `/admin/${adminId}`,
+    getAdminById: builder.query<IAdmin, string>({
+      query: (adminId: string ) => `/admin/${adminId}`,
       providesTags: (_1, _2, adminId) => [{ type: "admin", id: adminId }],
     }),
     updateAdmin: builder.mutation({
@@ -46,7 +46,17 @@ export const adminApi = createApi({
         { type: "admin", id: "LIST" },
       ],
     }),
+    createAdmin: builder.mutation({
+      query: (admin: INewAdmin) => ({
+        url: `/admin/register`,
+        method: "POST",
+        body: admin,
+      }),
+      invalidatesTags: (_1, _2, admin) => [
+        { type: "admin", id: "LIST" },
+      ],
+    }),
   }),
 });
 
-export const { useGetAllAdminQuery, useGetAdminByIdQuery, useUpdateAdminMutation, useDeleteAdminMutation, useRestoreAdminMutation } = adminApi;
+export const { useGetAllAdminQuery, useGetAdminByIdQuery, useUpdateAdminMutation, useDeleteAdminMutation, useRestoreAdminMutation, useCreateAdminMutation } = adminApi;

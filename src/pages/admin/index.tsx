@@ -30,6 +30,7 @@ import {
 } from "@/redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
 import formatDate from "@/utils/formatDate";
+import DropDownFilter from "@/components/DropDownFilter";
 
 const AdminAccounts = () => {
   const [adminIdToDelete, setAdminIdToDelete] = useState("");
@@ -38,19 +39,25 @@ const AdminAccounts = () => {
   const [deleteAdmin] = useDeleteAdminMutation();
   const [restoreAdmin] = useRestoreAdminMutation();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
+  const [filterValue, setFilterValue] = useState<any>(null);
 
   const confirmDeleteAdmin = (id: string) => {
     deleteAdmin(id);
     onModalClose();
   };
+
   const restoreDeletedAdmin = (id: string) => {
     restoreAdmin(id);
     onModalClose();
   };
 
+  const handleValueChange = (value: any) => {
+    setFilterValue(value);
+  };
+
   const toast = useToast();
   const { data: adminAccData, isError, isLoading, error } = useGetAllAdminQuery(0);
-  console.log(adminAccData);
+
   useEffect(() => {
     if (isError && error && "data" in error)
       toast({
@@ -61,6 +68,7 @@ const AdminAccounts = () => {
         isClosable: true,
       });
   }, [isError, error]);
+
   const adminTableHeader = [
     "Admin Name",
     "Email",
@@ -70,9 +78,11 @@ const AdminAccounts = () => {
     "Status",
     "Operation",
   ];
+
   return (
     <Flex flexDirection="column">
       <Heading marginY="50px">Admin Accounts</Heading>
+      <DropDownFilter handleValueChange={handleValueChange} />
       <Button
         width="100px"
         alignSelf="flex-end"
@@ -95,79 +105,87 @@ const AdminAccounts = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {adminAccData?.map((adminAcc: IAdmin) => {
-              const adminAccCopy = { ...adminAcc };
-              adminAccCopy["createdAt"] = formatDate(adminAcc.createdAt);
-              adminAccCopy["updatedAt"] = formatDate(adminAcc.updatedAt);
-              const { _id, name, email, createdAt, updatedAt, permission, isDeleted } =
-                adminAccCopy;
-              return (
-                <>
-                  <Tr key={email}>
-                    {Object.entries({
-                      name,
-                      email,
-                    }).map(([key, value]) => {
-                      return (
-                        <Td key={key} textAlign="left">
-                          {value}
-                        </Td>
-                      );
-                    })}
-                    {Object.entries({
-                      createdAt,
-                      updatedAt,
-                      permission,
-                    }).map(([key, value]) => {
-                      return (
-                        <Td key={key} textAlign="center">
-                          {value}
-                        </Td>
-                      );
-                    })}
-                    <Td key={"isDeleted"} textAlign="center">
-                      {isDeleted ? <Icon as={ImBlocked} /> : "active"}
-                    </Td>
-                    <Td>
-                      <ButtonGroup
-                        display="flex"
-                        justifyContent="center"
-                        variant="outline"
-                        spacing="1"
-                      >
-                        {!isDeleted ? (
-                          <>
+            {adminAccData
+              ?.filter((admin: any) => {
+                if (!filterValue) return true;
+                return (
+                  (filterValue.isDelete && admin.isDeleted) ||
+                  (!admin.isDeleted && filterValue.isActive)
+                );
+              })
+              .map((adminAcc: IAdmin) => {
+                const adminAccCopy = { ...adminAcc };
+                adminAccCopy["createdAt"] = formatDate(adminAcc.createdAt);
+                adminAccCopy["updatedAt"] = formatDate(adminAcc.updatedAt);
+                const { _id, name, email, createdAt, updatedAt, permission, isDeleted } =
+                  adminAccCopy;
+                return (
+                  <>
+                    <Tr key={email}>
+                      {Object.entries({
+                        name,
+                        email,
+                      }).map(([key, value]) => {
+                        return (
+                          <Td key={key} textAlign="left">
+                            {value}
+                          </Td>
+                        );
+                      })}
+                      {Object.entries({
+                        createdAt,
+                        updatedAt,
+                        permission,
+                      }).map(([key, value]) => {
+                        return (
+                          <Td key={key} textAlign="center">
+                            {value}
+                          </Td>
+                        );
+                      })}
+                      <Td key={"isDeleted"} textAlign="center">
+                        {isDeleted ? <Icon as={ImBlocked} /> : "active"}
+                      </Td>
+                      <Td>
+                        <ButtonGroup
+                          display="flex"
+                          justifyContent="center"
+                          variant="outline"
+                          spacing="1"
+                        >
+                          {!isDeleted ? (
+                            <>
+                              <IconButton
+                                aria-label="admin detail"
+                                icon={<RiEdit2Line onClick={() => routeHandler("admin", _id)} />}
+                              />
+                              <IconButton
+                                aria-label="delete admin"
+                                icon={<FaTrashAlt />}
+                                onClick={() => {
+                                  setCurrentModal("Delete");
+                                  setAdminIdToDelete(_id);
+                                  onModalOpen();
+                                }}
+                              />
+                            </>
+                          ) : (
                             <IconButton
-                              aria-label="admin detail"
-                              icon={<RiEdit2Line onClick={() => routeHandler("admin", _id)} />}
-                            />
-                            <IconButton
-                              aria-label="delete admin"
-                              icon={<FaTrashAlt />}
+                              aria-label="restore admin"
+                              icon={<RiRepeatLine />}
                               onClick={() => {
-                                setCurrentModal("Delete");
-                                setAdminIdToDelete(_id);
+                                setCurrentModal("Restore");
+                                setAdminIdToRestore(_id);
                                 onModalOpen();
                               }}
                             />
-                          </>
-                        ) : (
-                          <IconButton
-                            aria-label="restore admin"
-                            icon={<RiRepeatLine />}
-                            onClick={() => {
-                              setCurrentModal("Restore");
-                              setAdminIdToRestore(_id);
-                              onModalOpen();
-                            }}
-                          />
-                        )}
-                      </ButtonGroup>
-                    </Td>
-                  </Tr>
-                </>
-              );
-            })}
+                          )}
+                        </ButtonGroup>
+                      </Td>
+                    </Tr>
+                  </>
+                );
+              })}
           </Tbody>
         </Table>
       </TableContainer>

@@ -9,3 +9,10 @@ export interface IAdmin {
     updatedAt: string;
     isDeleted?: boolean;
   }
+
+  export interface INewAdmin {
+    email: string;
+    password: string;
+    name: string;
+    permission: string;
+  }
