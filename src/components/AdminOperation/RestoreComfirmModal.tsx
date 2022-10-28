@@ -21,7 +21,7 @@ const RestoreComfirmModal = ({ isOpen, onClose, onConfirm }: Props) => {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader display={"flex"} flexDirection="column" gap="10px" alignItems={"center"}>
+          <ModalHeader display="flex" justifyContent="center">
             <BiRefresh
               size={35}
               style={{ color: "green", marginTop: "25px", marginBottom: "10px" }}

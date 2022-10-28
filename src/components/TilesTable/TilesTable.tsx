@@ -15,7 +15,7 @@ import {
   PopoverArrow,
 } from "@chakra-ui/react";
 import { IoColorPaletteOutline } from "react-icons/io5";
-import { BiPencil } from "react-icons/bi";
+import { RiEdit2Line } from "react-icons/ri";
 import formatDate from "@/utils/formatDate";
 import TilesTableItemList from "./TilesTableItemList";
 import ColorBoard from "./components/ColorBoard";
@@ -74,7 +74,7 @@ const TilesTable = ({ tiles }: any) => {
                     }}
                     passHref
                   >
-                    <IconButton aria-label="Edit" icon={<BiPencil />} />
+                    <IconButton aria-label="Edit" icon={<RiEdit2Line />} />
                   </Link>
                 </Td>
               </Tr>

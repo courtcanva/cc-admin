@@ -1,13 +1,14 @@
 export interface IAdmin {
     _id: string;
     email: string;
-    password: string;
+    password?: string;
     name: string;
-    hashedRefreshToken: string;
+    hashedRefreshToken?: string;
     permission: string;
     createdAt: string;
     updatedAt: string;
-    isDeleted?: boolean;
+    isDeleted: boolean;
+    __v?: number;
   }
 
   export interface INewAdmin {

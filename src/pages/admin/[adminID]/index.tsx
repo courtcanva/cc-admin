@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import formatDate from "@/utils/formatDate";
 import { idRouteHandler, routeHandler } from "@/utils/routeHandler";
 import { headerCellGenerator } from "@/utils/headerCellGenerator";
 import { RiArrowLeftSLine, RiEdit2Line } from "react-icons/ri";
@@ -64,15 +63,11 @@ const AdminDetail = () => {
             {adminData &&
               Object.entries(adminData).map(([key, value]) => {
                 const headerCellContent = headerCellGenerator(key);
-                console.log(key, value);
-                ["createdAt", "updatedAt"].includes(key) && (value = formatDate(value));
                 return (
-                  !["_id", "__v", "hashedRefreshToken", "password"].includes(key) && (
-                    <Tr key={key}>
-                      <Td>{headerCellContent}</Td>
-                      <Td>{value}</Td>
-                    </Tr>
-                  )
+                  <Tr key={key}>
+                    <Td>{headerCellContent}</Td>
+                    <Td>{value}</Td>
+                  </Tr>
                 );
               })}
           </Tbody>

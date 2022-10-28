@@ -29,7 +29,6 @@ import {
   useRestoreAdminMutation,
 } from "@/redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
-import formatDate from "@/utils/formatDate";
 import DropDownFilter from "@/components/DropDownFilter";
 
 const AdminAccounts = () => {
@@ -56,7 +55,7 @@ const AdminAccounts = () => {
   };
 
   const toast = useToast();
-  const { data: adminAccData, isError, isLoading, error } = useGetAllAdminQuery(0);
+  const { data: adminAccData, isError, isLoading, error } = useGetAllAdminQuery();
 
   useEffect(() => {
     if (isError && error && "data" in error)
@@ -114,38 +113,16 @@ const AdminAccounts = () => {
                 );
               })
               .map((adminAcc: IAdmin) => {
-                const adminAccCopy = { ...adminAcc };
-                adminAccCopy["createdAt"] = formatDate(adminAcc.createdAt);
-                adminAccCopy["updatedAt"] = formatDate(adminAcc.updatedAt);
-                const { _id, name, email, createdAt, updatedAt, permission, isDeleted } =
-                  adminAccCopy;
+                const { _id, name, email, createdAt, updatedAt, permission, isDeleted } = adminAcc;
                 return (
                   <>
-                    <Tr key={email}>
-                      {Object.entries({
-                        name,
-                        email,
-                      }).map(([key, value]) => {
-                        return (
-                          <Td key={key} textAlign="left">
-                            {value}
-                          </Td>
-                        );
-                      })}
-                      {Object.entries({
-                        createdAt,
-                        updatedAt,
-                        permission,
-                      }).map(([key, value]) => {
-                        return (
-                          <Td key={key} textAlign="center">
-                            {value}
-                          </Td>
-                        );
-                      })}
-                      <Td key={"isDeleted"} textAlign="center">
-                        {isDeleted ? <Icon as={ImBlocked} /> : "active"}
-                      </Td>
+                    <Tr key={_id}>
+                      <Td textAlign="left">{name}</Td>
+                      <Td textAlign="left">{email}</Td>
+                      <Td textAlign="center">{createdAt}</Td>
+                      <Td textAlign="center">{updatedAt}</Td>
+                      <Td textAlign="center">{permission}</Td>
+                      <Td textAlign="center">{isDeleted ? <Icon as={ImBlocked} /> : "active"}</Td>
                       <Td>
                         <ButtonGroup
                           display="flex"

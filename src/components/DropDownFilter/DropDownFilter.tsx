@@ -24,7 +24,7 @@ const DropDownFilter = ({ handleValueChange }: PropsType) => {
   return (
     <Flex alignItems="center" gap={2}>
       <Text fontSize="md" color="teal.500">
-        User Types
+        Admin Status
       </Text>
       <Menu closeOnSelect={false}>
         <MenuButton
@@ -46,7 +46,7 @@ const DropDownFilter = ({ handleValueChange }: PropsType) => {
             All
           </Checkbox>
           <CheckboxGroup colorScheme="teal" value={value} onChange={(value) => setValue(value)}>
-            <Stack pl={6} direction={["column"]}>
+            <Stack paddingLeft={6} direction="column">
               <Checkbox value="active">Active User</Checkbox>
               <Checkbox value="deleted">Deleted User</Checkbox>
             </Stack>

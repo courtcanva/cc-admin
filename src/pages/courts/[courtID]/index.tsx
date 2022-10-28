@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { ICourt } from "@/interfaces/courtData";
 import { useEffect, useState } from "react";
 import { api } from "@/utils/axios";
-import { BiPencil } from "react-icons/bi";
+import { RiEdit2Line } from "react-icons/ri";
 import formatDate from "@/utils/formatDate";
 import { idRouteHandler, routeHandler } from "@/utils/routeHandler";
 import { headerCellGenerator } from "@/utils/headerCellGenerator";
@@ -47,7 +47,7 @@ const CourtDetail = () => {
           width="100px"
           marginRight="10px"
           marginY="50px"
-          leftIcon={<BiPencil />}
+          leftIcon={<RiEdit2Line />}
           onClick={() => idRouteHandler(`${courtId}/edit`)}
         >
           Edit

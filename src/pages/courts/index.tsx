@@ -11,7 +11,7 @@ import {
   useToast,
   Text,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import { RiMenuAddFill } from "react-icons/ri";
 import { useEffect } from "react";
 import { ICourt } from "@/interfaces/courtData";
 import { CgDetailsMore } from "react-icons/cg";
@@ -61,7 +61,7 @@ const courts = () => {
         alignSelf="flex-end"
         marginRight="10px"
         marginY="20px"
-        leftIcon={<AddIcon />}
+        leftIcon={<RiMenuAddFill />}
         onClick={() => routeHandler("courts", "new")}
       >
         New

@@ -21,7 +21,7 @@ const DeleteComfirmModal = ({ isOpen, onClose, onConfirm }: Props) => {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader display={"flex"} flexDirection="column" gap="10px" alignItems={"center"}>
+          <ModalHeader display={"flex"} justifyContent="center">
             <FaTrashAlt
               size={35}
               style={{ color: "red", marginTop: "25px", marginBottom: "10px" }}
