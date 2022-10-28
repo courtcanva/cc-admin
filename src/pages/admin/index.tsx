@@ -21,8 +21,8 @@ import { ImBlocked } from "react-icons/im";
 import { RiEdit2Line, RiMenuAddFill, RiRepeatLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { routeHandler } from "@/utils/routeHandler";
-import DeleteComfirmModal from "@/components/AdminOperation/DeleteComfirmModal";
-import RestoreComfirmModal from "@/components/AdminOperation/RestoreComfirmModal";
+import DeleteComfirmModal from "@/components/ConfirmModal/DeleteComfirmModal";
+import RestoreComfirmModal from "@/components/ConfirmModal/RestoreComfirmModal";
 import {
   useGetAllAdminQuery,
   useDeleteAdminMutation,
@@ -105,7 +105,7 @@ const AdminAccounts = () => {
           </Thead>
           <Tbody>
             {adminAccData
-              ?.filter((admin: any) => {
+              ?.filter((admin: IAdmin) => {
                 if (!filterValue) return true;
                 return (
                   (filterValue.isDelete && admin.isDeleted) ||
@@ -172,6 +172,7 @@ const AdminAccounts = () => {
           isOpen={isModalOpen}
           onClose={onModalClose}
           onConfirm={() => confirmDeleteAdmin(adminIdToDelete)}
+          shownText={"Are you sure you want to restore this admin?"}
         />
       )}
       {currentModal === "Restore" && (
@@ -179,6 +180,7 @@ const AdminAccounts = () => {
           isOpen={isModalOpen}
           onClose={onModalClose}
           onConfirm={() => restoreDeletedAdmin(adminIdToRestore)}
+          shownText={"Are you sure you want to restore this admin?"}
         />
       )}
     </Flex>

@@ -8,35 +8,36 @@ import {
   ModalCloseButton,
   Button,
 } from "@chakra-ui/react";
-import { FaTrashAlt } from "react-icons/fa";
+import { BiRefresh } from "react-icons/bi";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  shownText: string;
 }
-const DeleteComfirmModal = ({ isOpen, onClose, onConfirm }: Props) => {
+const RestoreComfirmModal = ({ isOpen, onClose, onConfirm, shownText }: Props) => {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader display={"flex"} justifyContent="center">
-            <FaTrashAlt
+          <ModalHeader display="flex" justifyContent="center">
+            <BiRefresh
               size={35}
-              style={{ color: "red", marginTop: "25px", marginBottom: "10px" }}
+              style={{ color: "green", marginTop: "25px", marginBottom: "10px" }}
             />
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody textAlign={"center"}>
-            <p>Are you sure you want to remove this admin ?</p>
+            <p>{shownText}</p>
           </ModalBody>
           <ModalFooter display={"flex"} gap="10px" marginTop={"10px"}>
             <Button variant="ghost" onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="red" marginRight={3} onClick={onConfirm}>
-              Remove
+            <Button colorScheme="green" marginRight={3} onClick={onConfirm}>
+              Restore
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -45,4 +46,4 @@ const DeleteComfirmModal = ({ isOpen, onClose, onConfirm }: Props) => {
   );
 };
 
-export default DeleteComfirmModal;
+export default RestoreComfirmModal;
