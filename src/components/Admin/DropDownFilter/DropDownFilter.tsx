@@ -3,8 +3,12 @@ import { useEffect } from "react";
 import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import { useCheckboxGroup } from "@chakra-ui/react";
 import { RiArrowDownSLine } from "react-icons/ri";
+interface FilterType {
+  isActive: boolean;
+  isDelete: boolean;
+}
 interface PropsType {
-  handleValueChange: (value: any) => void;
+  handleValueChange: (value: FilterType) => void;
 }
 
 const FILTER_VALUES: string[] = ["active", "deleted"];

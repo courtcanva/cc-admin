@@ -15,9 +15,7 @@ export const adminApi = createApi({
       transformResponse: (response: IAdmin[]) => 
         response.map((item) => { 
           item.createdAt = formatDate(item.createdAt);
-          item.updatedAt = formatDate(item.updatedAt); 
-          // const { password, __v, hashedRefreshToken, ...data } = item; 
-          // return data;
+          item.updatedAt = formatDate(item.updatedAt);
           return _.omit(item, ["__v", "password", "hashedRefreshToken"]);
         }),
     }),
@@ -27,8 +25,6 @@ export const adminApi = createApi({
       transformResponse: (item: IAdmin) => {
         item.createdAt = formatDate(item.createdAt);
         item.updatedAt = formatDate(item.updatedAt);
-        // const { password, __v, hashedRefreshToken, ...data } = item;
-        // return data;
         return _.omit(item, ["__v", "password", "hashedRefreshToken"]);
         },
     }),

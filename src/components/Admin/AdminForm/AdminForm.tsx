@@ -12,7 +12,7 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { IAdmin } from "../../interfaces/adminData";
+import { IAdmin } from "../../../interfaces/adminData";
 import AdminSchema from "./AdminSchema";
 import { useUpdateAdminMutation } from "@/redux/api/adminApi";
 

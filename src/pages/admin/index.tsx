@@ -20,7 +20,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { ImBlocked } from "react-icons/im";
 import { RiEdit2Line, RiMenuAddFill, RiRepeatLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
-import { routeHandler } from "@/utils/routeHandler";
+import { idRouteHandler, routeHandler } from "@/utils/routeHandler";
 import DeleteComfirmModal from "@/components/ConfirmModal/DeleteComfirmModal";
 import RestoreComfirmModal from "@/components/ConfirmModal/RestoreComfirmModal";
 import {
@@ -29,8 +29,12 @@ import {
   useRestoreAdminMutation,
 } from "@/redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
-import DropDownFilter from "@/components/DropDownFilter";
+import DropDownFilter from "@/components/Admin/DropDownFilter";
 
+interface FilterType {
+  isActive: boolean;
+  isDelete: boolean;
+}
 const AdminAccounts = () => {
   const [adminIdToDelete, setAdminIdToDelete] = useState("");
   const [adminIdToRestore, setAdminIdToRestore] = useState("");
@@ -38,7 +42,7 @@ const AdminAccounts = () => {
   const [deleteAdmin] = useDeleteAdminMutation();
   const [restoreAdmin] = useRestoreAdminMutation();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
-  const [filterValue, setFilterValue] = useState<any>(null);
+  const [filterValue, setFilterValue] = useState<FilterType>();
 
   const confirmDeleteAdmin = (id: string) => {
     deleteAdmin(id);
@@ -50,7 +54,7 @@ const AdminAccounts = () => {
     onModalClose();
   };
 
-  const handleValueChange = (value: any) => {
+  const handleValueChange = (value: FilterType) => {
     setFilterValue(value);
   };
 
@@ -121,8 +125,10 @@ const AdminAccounts = () => {
                       <Td textAlign="left">{email}</Td>
                       <Td textAlign="center">{createdAt}</Td>
                       <Td textAlign="center">{updatedAt}</Td>
-                      <Td textAlign="center">{permission}</Td>
-                      <Td textAlign="center">{isDeleted ? <Icon as={ImBlocked} /> : "active"}</Td>
+                      <Td textAlign="center" textTransform="capitalize">
+                        {permission}
+                      </Td>
+                      <Td textAlign="center">{isDeleted ? <Icon as={ImBlocked} /> : "Active"}</Td>
                       <Td>
                         <ButtonGroup
                           display="flex"
@@ -134,7 +140,9 @@ const AdminAccounts = () => {
                             <>
                               <IconButton
                                 aria-label="admin detail"
-                                icon={<RiEdit2Line onClick={() => routeHandler("admin", _id)} />}
+                                icon={
+                                  <RiEdit2Line onClick={() => idRouteHandler(`admin/${_id}`)} />
+                                }
                               />
                               <IconButton
                                 aria-label="delete admin"

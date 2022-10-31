@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
 import {
   Button,
   FormControl,
@@ -13,7 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { useCreateAdminMutation } from "@/redux/api/adminApi";
-import AdminSchema from "@/components/AdminForm/AdminSchema";
+import AdminSchema from "@/components/Admin/AdminForm/AdminSchema";
+import { routeHandler } from "@/utils/routeHandler";
 
 const AddNewAdmin = () => {
   const router = useRouter();
@@ -81,9 +81,9 @@ const AddNewAdmin = () => {
                 )}
               </Field>
               <Flex justifyContent="center">
-                <Link href="/admin" passHref>
-                  <Button margin={4}>Cancel</Button>
-                </Link>
+                <Button margin={4} onClick={() => routeHandler("admin")}>
+                  Cancel
+                </Button>
                 <Button margin={4} isLoading={props.isSubmitting} type="submit">
                   Submit
                 </Button>

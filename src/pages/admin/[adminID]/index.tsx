@@ -1,26 +1,16 @@
-import {
-  Text,
-  Button,
-  Flex,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Tr,
-  useToast,
-} from "@chakra-ui/react";
+import AdminForm from "@/components/Admin/AdminForm";
+import { Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { idRouteHandler, routeHandler } from "@/utils/routeHandler";
-import { headerCellGenerator } from "@/utils/headerCellGenerator";
-import { RiArrowLeftSLine, RiEdit2Line } from "react-icons/ri";
 import { useGetAdminByIdQuery } from "@/redux/api/adminApi";
+import { skipToken } from "@reduxjs/toolkit/query/react";
+import { IAdmin } from "@/interfaces/adminData";
+import { useEffect } from "react";
 
-const AdminDetail = () => {
+const EditAdmin = () => {
   const router = useRouter();
   const adminId = router.query.adminID as string;
   const toast = useToast();
-  const { data: adminData, isError, isLoading, error } = useGetAdminByIdQuery(adminId);
+  const { data: adminData, isError, isLoading, error } = useGetAdminByIdQuery(adminId ?? skipToken);
   useEffect(() => {
     if (isError && error && "data" in error)
       toast({
@@ -35,46 +25,10 @@ const AdminDetail = () => {
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
-  return (
-    <Flex flexDirection="column" width="600px" margin="0 auto">
-      <Flex justifyContent="space-between">
-        <Button
-          width="100px"
-          marginRight="10px"
-          marginY="50px"
-          leftIcon={<RiArrowLeftSLine />}
-          onClick={() => routeHandler("admin")}
-        >
-          Back
-        </Button>
-        <Button
-          width="100px"
-          marginRight="10px"
-          marginY="50px"
-          leftIcon={<RiEdit2Line />}
-          onClick={() => idRouteHandler(`${adminId}/edit`)}
-        >
-          Edit
-        </Button>
-      </Flex>
-      <TableContainer width="600px" marginY="20px">
-        <Table variant="simple">
-          <Tbody>
-            {adminData &&
-              Object.entries(adminData).map(([key, value]) => {
-                const headerCellContent = headerCellGenerator(key);
-                return (
-                  <Tr key={key}>
-                    <Td>{headerCellContent}</Td>
-                    <Td>{value}</Td>
-                  </Tr>
-                );
-              })}
-          </Tbody>
-        </Table>
-      </TableContainer>
-    </Flex>
-  );
+
+  if (isError) return null;
+
+  return <AdminForm header="Edit Admin Information" adminData={adminData as IAdmin} />;
 };
 
-export default AdminDetail;
+export default EditAdmin;
