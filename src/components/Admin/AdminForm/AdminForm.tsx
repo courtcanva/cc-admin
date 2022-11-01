@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { IAdmin } from "../../../interfaces/adminData";
-import AdminSchema from "./AdminSchema";
+import updateAdminSchema from "./updateAdminSchema";
 import { useUpdateAdminMutation } from "@/redux/api/adminApi";
 
 type Props = {
@@ -32,7 +32,7 @@ const AdminForm: React.FC<Props> = ({ header, adminData }) => {
   return (
     <Formik
       initialValues={{ ...displayAdminData }}
-      validationSchema={AdminSchema}
+      validationSchema={updateAdminSchema}
       onSubmit={(values, actions) => {
         updateAdmin({ ...adminData, ...values });
         actions.setSubmitting(false);
