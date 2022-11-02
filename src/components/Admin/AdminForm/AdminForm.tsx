@@ -33,8 +33,12 @@ const AdminForm: React.FC<Props> = ({ header, adminData }) => {
     <Formik
       initialValues={{ ...displayAdminData }}
       validationSchema={updateAdminSchema}
-      onSubmit={(values, actions) => {
-        updateAdmin({ ...adminData, ...values });
+      onSubmit={async (values, actions) => {
+        await updateAdmin({ ...adminData, ...values })
+          .unwrap()
+          .catch((_err) => {
+            alert("Whoops! This account cannot be updated, please try again!");
+          });
         actions.setSubmitting(false);
         routeHandler("admin");
       }}
