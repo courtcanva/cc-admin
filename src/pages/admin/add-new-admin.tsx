@@ -28,8 +28,12 @@ const AddNewAdmin = () => {
         permission: "",
       }}
       validationSchema={AdminSchema}
-      onSubmit={({ name, email, password, permission }, actions) => {
-        createAdmin({ name, email, password, permission });
+      onSubmit={async ({ name, email, password, permission }, actions) => {
+        await createAdmin({ name, email, password, permission })
+          .unwrap()
+          .catch((_err) => {
+            alert("Whoops! Account of this email cannot be created, please try again!");
+          });
         actions.setSubmitting(false);
         router.push("/admin");
       }}
