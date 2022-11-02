@@ -18,7 +18,7 @@ import { routeHandler } from "@/utils/routeHandler";
 const AddNewAdmin = () => {
   const router = useRouter();
   const [createAdmin] = useCreateAdminMutation();
-
+  
   return (
     <Formik
       initialValues={{
@@ -29,9 +29,15 @@ const AddNewAdmin = () => {
       }}
       validationSchema={AdminSchema}
       onSubmit={({ name, email, password, permission }, actions) => {
-        createAdmin({ name, email, password, permission });
-        actions.setSubmitting(false);
-        router.push("/admin");
+        createAdmin({ name, email, password, permission })
+        .unwrap()
+        .then(() => router.push("/admin"))
+        .catch((error) => {
+          if (error?.data?.message && error.data?.statusCode === 409) {
+            actions.setFieldError('email', error?.data?.message)
+          }
+        })
+        .finally(() => actions.setSubmitting(false));
       }}
     >
       {(props) => (
