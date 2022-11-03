@@ -33,8 +33,8 @@ const AddNewAdmin = () => {
           .unwrap()
           .then(() => router.push("/admin"))
           .catch((error) => {
-            if (error?.data?.message && error.data?.statusCode === 409) {
-              actions.setFieldError("email", error?.data?.message);
+            if (error.data?.message && error.data?.statusCode === 409) {
+              actions.setFieldError("email", error.data?.message);
             }
           })
           .finally(() => actions.setSubmitting(false));

@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 const AdminSchema = Yup.object().shape({
   name: Yup.string()
-    .min(1, "Name should contain at least 1 character")
+    .min(3, "Name should contain at least 3 character")
     .max(20, "Name should be no more than 20 characters")
     .required("Required"),
   email: Yup.string().email().max(50, "please input a valid email").required("Required"),
