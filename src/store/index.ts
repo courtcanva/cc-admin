@@ -1,13 +1,16 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import counterReducer from "./reducer/counterSlice";
+import { adminApi } from "../redux/api/adminApi";
 import { courtsApi } from "../redux/api/courtsApi";
 export const makeStore = () =>
   configureStore({
     reducer: {
       counter: counterReducer,
+      [adminApi.reducerPath]: adminApi.reducer,
       [courtsApi.reducerPath]: courtsApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(courtsApi.middleware),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(adminApi.middleware, courtsApi.middleware),
   });
 
 export const store = makeStore();

@@ -59,112 +59,116 @@ const AddNewTile = () => {
     >
       {(props) => (
         <Container>
-          <Text fontSize="4xl">Add a new tile</Text>
-          <Form>
-            <Field name="name">
-              {({ field, form }: any) => (
-                <FormControl isInvalid={form.errors.name && form.touched.name}>
-                  <FormLabel htmlFor="name">Tile Name</FormLabel>
-                  <Input {...field} id="name" />
-                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                </FormControl>
-              )}
-            </Field>
-            <Field name="length">
-              {({ field, form }: any) => (
-                <FormControl isInvalid={form.errors.length && form.touched.length}>
-                  <FormLabel htmlFor="length">Tile Length (mm)</FormLabel>
-                  <Input {...field} type="number" id="length" />
-                  <FormErrorMessage>{form.errors.length}</FormErrorMessage>
-                </FormControl>
-              )}
-            </Field>
-            <Field name="width">
-              {({ field, form }: any) => (
-                <FormControl isInvalid={form.errors.width && form.touched.width}>
-                  <FormLabel htmlFor="width">Tile Width (mm)</FormLabel>
-                  <Input {...field} type="number" id="width" />
-                  <FormErrorMessage>{form.errors.width}</FormErrorMessage>
-                </FormControl>
-              )}
-            </Field>
-            <Field name="height">
-              {({ field, form }: any) => (
-                <FormControl isInvalid={form.errors.height && form.touched.height}>
-                  <FormLabel htmlFor="height">Tile Height (mm)</FormLabel>
-                  <Input {...field} type="number" id="height" />
-                  <FormErrorMessage>{form.errors.height}</FormErrorMessage>
-                </FormControl>
-              )}
-            </Field>
-            <FormLabel htmlFor="colors">Tile Color</FormLabel>
-            <FieldArray name="colors">
-              {({ remove, push }) => (
-                <Box>
-                  {props.values.colors.length > 0 &&
-                    props.values.colors.map((color, index: number) => (
-                      <Flex key={index} justifyContent="space-between">
-                        <Field name={`colors[${index}].name`}>
-                          {({ field }: any) => (
-                            <FormControl marginRight={4} marginBottom={4}>
-                              <Input
-                                {...field}
-                                id={`colors[${index}].name`}
-                                placeholder="Color Name"
-                              />
-                              <Text color="#E53E3E">
-                                <ErrorMessage name={`colors[${index}].name`} />
-                              </Text>
-                            </FormControl>
-                          )}
-                        </Field>
-                        <Field name={`colors[${index}].value`} validate={validateColorValue}>
-                          {({ field }: any) => (
-                            <FormControl marginRight={4} marginBottom={4}>
-                              <Input
-                                {...field}
-                                id={`colors[${index}].value`}
-                                placeholder="Color Value"
-                              />
-                              <Text color="#E53E3E">
-                                <ErrorMessage name={`colors[${index}].value`} />
-                              </Text>
-                            </FormControl>
-                          )}
-                        </Field>
-                        <Box
-                          width="38px"
-                          height="38px"
-                          padding="20px"
-                          background={color.value}
-                          borderRadius="10px"
-                          marginRight={4}
-                        ></Box>
+          <Flex flexDirection="column">
+            <Text fontSize="4xl" marginY="50px">
+              Add a new tile
+            </Text>
+            <Form>
+              <Field name="name">
+                {({ field, form }: any) => (
+                  <FormControl isInvalid={form.errors.name && form.touched.name}>
+                    <FormLabel htmlFor="name">Tile Name</FormLabel>
+                    <Input {...field} id="name" />
+                    <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <Field name="length">
+                {({ field, form }: any) => (
+                  <FormControl isInvalid={form.errors.length && form.touched.length}>
+                    <FormLabel htmlFor="length">Tile Length (mm)</FormLabel>
+                    <Input {...field} type="number" id="length" />
+                    <FormErrorMessage>{form.errors.length}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <Field name="width">
+                {({ field, form }: any) => (
+                  <FormControl isInvalid={form.errors.width && form.touched.width}>
+                    <FormLabel htmlFor="width">Tile Width (mm)</FormLabel>
+                    <Input {...field} type="number" id="width" />
+                    <FormErrorMessage>{form.errors.width}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <Field name="height">
+                {({ field, form }: any) => (
+                  <FormControl isInvalid={form.errors.height && form.touched.height}>
+                    <FormLabel htmlFor="height">Tile Height (mm)</FormLabel>
+                    <Input {...field} type="number" id="height" />
+                    <FormErrorMessage>{form.errors.height}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <FormLabel htmlFor="colors">Tile Color</FormLabel>
+              <FieldArray name="colors">
+                {({ remove, push }) => (
+                  <Box>
+                    {props.values.colors.length > 0 &&
+                      props.values.colors.map((color, index: number) => (
+                        <Flex key={index} justifyContent="space-between">
+                          <Field name={`colors[${index}].name`}>
+                            {({ field }: any) => (
+                              <FormControl marginRight={4} marginBottom={4}>
+                                <Input
+                                  {...field}
+                                  id={`colors[${index}].name`}
+                                  placeholder="Color Name"
+                                />
+                                <Text color="#E53E3E">
+                                  <ErrorMessage name={`colors[${index}].name`} />
+                                </Text>
+                              </FormControl>
+                            )}
+                          </Field>
+                          <Field name={`colors[${index}].value`} validate={validateColorValue}>
+                            {({ field }: any) => (
+                              <FormControl marginRight={4} marginBottom={4}>
+                                <Input
+                                  {...field}
+                                  id={`colors[${index}].value`}
+                                  placeholder="Color Value"
+                                />
+                                <Text color="#E53E3E">
+                                  <ErrorMessage name={`colors[${index}].value`} />
+                                </Text>
+                              </FormControl>
+                            )}
+                          </Field>
+                          <Box
+                            width="38px"
+                            height="38px"
+                            padding="20px"
+                            background={color.value}
+                            borderRadius="10px"
+                            marginRight={4}
+                          ></Box>
 
-                        <Button type="button" className="secondary" onClick={() => remove(index)}>
-                          X
-                        </Button>
-                      </Flex>
-                    ))}
-                  <Button
-                    type="button"
-                    className="secondary"
-                    onClick={() => push({ name: "", value: "" })}
-                  >
-                    Add color
-                  </Button>
-                </Box>
-              )}
-            </FieldArray>
-            <Flex justifyContent="center">
-              <Link href="/tiles" passHref>
-                <Button margin={4}>Cancel</Button>
-              </Link>
-              <Button margin={4} colorScheme="teal" isLoading={props.isSubmitting} type="submit">
-                Submit
-              </Button>
-            </Flex>
-          </Form>
+                          <Button type="button" className="secondary" onClick={() => remove(index)}>
+                            X
+                          </Button>
+                        </Flex>
+                      ))}
+                    <Button
+                      type="button"
+                      className="secondary"
+                      onClick={() => push({ name: "", value: "" })}
+                    >
+                      Add color
+                    </Button>
+                  </Box>
+                )}
+              </FieldArray>
+              <Flex justifyContent="center">
+                <Link href="/tiles" passHref>
+                  <Button margin={4}>Cancel</Button>
+                </Link>
+                <Button margin={4} colorScheme="teal" isLoading={props.isSubmitting} type="submit">
+                  Submit
+                </Button>
+              </Flex>
+            </Form>
+          </Flex>
         </Container>
       )}
     </Formik>

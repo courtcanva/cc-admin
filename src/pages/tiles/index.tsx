@@ -1,6 +1,6 @@
 import TilesTable from "@/components/TilesTable";
 import { Button, Flex, Heading } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import { RiMenuAddFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { api } from "@/utils/axios";
 import { useRouter } from "next/router";
@@ -40,7 +40,7 @@ const Tiles = () => {
         alignSelf="flex-end"
         marginRight="10px"
         marginY="20px"
-        leftIcon={<AddIcon />}
+        leftIcon={<RiMenuAddFill />}
         onClick={addNewHandler}
       >
         New
