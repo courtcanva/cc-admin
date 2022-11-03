@@ -7,6 +7,8 @@ describe("PaginationButton", () => {
     setOffSet: jest.fn(),
     isFetching: false,
     totalPages: 5,
+    page: 2,
+    setPage: jest.fn(),
   };
   it("each button should render the 'icon' correctly", () => {
     render(
@@ -14,6 +16,8 @@ describe("PaginationButton", () => {
         setOffSet={props.setOffSet}
         isFetching={props.isFetching}
         totalPages={props.totalPages}
+        page={props.page}
+        setPage={props.setPage}
       />
     );
     const arrowBackElement = screen.getByTestId("arrow-back-label");
@@ -29,11 +33,13 @@ describe("PaginationButton", () => {
         setOffSet={props.setOffSet}
         isFetching={props.isFetching}
         totalPages={props.totalPages}
+        page={props.page}
+        setPage={props.setPage}
       />
     );
     const arrowBackBtn = screen.getByRole("button", { name: "arrow back" });
     userEvent.click(arrowBackBtn);
-    expect(props.setOffSet).not.toBeCalled();
+    expect(props.setOffSet).toBeCalled();
   });
   it("arrow forward button should be called when click the arrow forward button", () => {
     render(
@@ -41,6 +47,8 @@ describe("PaginationButton", () => {
         setOffSet={props.setOffSet}
         isFetching={props.isFetching}
         totalPages={props.totalPages}
+        page={props.page}
+        setPage={props.setPage}
       />
     );
     const arrowForwardBtn = screen.getByRole("button", { name: "arrow forward" });
@@ -54,9 +62,11 @@ describe("PaginationButton", () => {
         setOffSet={props.setOffSet}
         isFetching={props.isFetching}
         totalPages={props.totalPages}
+        page={props.page}
+        setPage={props.setPage}
       />
     );
-    const pageAndTotalPagesElement = screen.getByText("1 / 5");
+    const pageAndTotalPagesElement = screen.getByText("2 / 5");
     expect(pageAndTotalPagesElement).toBeInTheDocument();
   });
 });

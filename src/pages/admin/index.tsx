@@ -7,8 +7,6 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Th,
-  Thead,
   Tr,
   Text,
   useDisclosure,
@@ -30,6 +28,8 @@ import {
 } from "@/redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
 import DropDownFilter from "@/components/Admin/DropDownFilter";
+import { ADMIN_TABLE_HEADER } from "../../constants/tabelHeaders";
+import TableHeader from "../../components/TableHeader";
 
 interface FilterType {
   isActive: boolean;
@@ -72,16 +72,6 @@ const AdminAccounts = () => {
       });
   }, [isError, error]);
 
-  const adminTableHeader = [
-    "Admin Name",
-    "Email",
-    "Created At",
-    "Updated At",
-    "Permission",
-    "Status",
-    "Operation",
-  ];
-
   return (
     <Flex flexDirection="column">
       <Heading marginY="50px">Admin Accounts</Heading>
@@ -98,15 +88,7 @@ const AdminAccounts = () => {
       </Button>
       <TableContainer>
         <Table variant="simple">
-          <Thead>
-            <Tr>
-              {adminTableHeader.map((header) => (
-                <Th key={header} textAlign="center">
-                  {header}
-                </Th>
-              ))}
-            </Tr>
-          </Thead>
+          <TableHeader tableHeaderData={ADMIN_TABLE_HEADER} />
           <Tbody>
             {adminAccData
               ?.filter((admin: IAdmin) => {

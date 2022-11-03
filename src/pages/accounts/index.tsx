@@ -16,18 +16,18 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useListUsersQuery } from "../../redux/api/usersAccountApi";
-import UsersTableHeader from "@/components/UsersTable";
+import TableHeader from "@/components/TableHeader";
 import { IUser } from "@/interfaces/userData";
 import PaginationButton from "@/components/PaginationButton.tsx";
 import { LIMIT, OFFSET } from "@/constants/paginationData";
+import { USERS_TABLE_HEADER } from "@/constants/tabelHeaders";
 
 const Accounts = () => {
   const [offset, setOffSet] = useState<number>(OFFSET);
+  const [page, setPage] = useState<number>(1);
   const limit = LIMIT;
 
   const { data: usersAccountData, isLoading, isFetching } = useListUsersQuery({ offset, limit });
-  console.log(usersAccountData);
-
   return (
     <Flex height="100vh" flexDirection="column" justifyContent="space-between">
       <Box>
@@ -41,7 +41,7 @@ const Accounts = () => {
         <Flex flexDirection="column" maxWidth="1000" margin="20px auto">
           <TableContainer>
             <Table variant="simple">
-              <UsersTableHeader />
+              <TableHeader tableHeaderData={USERS_TABLE_HEADER} />
               <Tbody>
                 {isLoading && (
                   <Center paddingTop="30px">
@@ -92,6 +92,8 @@ const Accounts = () => {
           setOffSet={setOffSet}
           isFetching={isFetching}
           totalPages={usersAccountData?.totalPages}
+          page={page}
+          setPage={setPage}
         />
       </Box>
     </Flex>

@@ -18,7 +18,8 @@ import { CgDetailsMore } from "react-icons/cg";
 import { useGetAllCourtQuery } from "../../redux/api/courtsApi";
 import { useUpdateCourtMutation } from "../../redux/api/courtsApi";
 import formatDate from "@/utils/formatDate";
-import TableHeader from "@/components/CourtsTable";
+import TableHeader from "@/components/TableHeader";
+import { COURTS_TABLE_HEADER } from "@/constants/tabelHeaders";
 import SwitchButton from "@/components/SwitchButton/SwitchButton";
 import { routeHandler } from "@/utils/routeHandler";
 
@@ -68,7 +69,7 @@ const courts = () => {
       </Button>
       <TableContainer>
         <Table variant="simple">
-          <TableHeader />
+          <TableHeader tableHeaderData={COURTS_TABLE_HEADER} />
           <Tbody>
             {isLoading && <Text>Please wait while the courts data are loading...</Text>}
             {courtsData?.map((court: ICourt) => {

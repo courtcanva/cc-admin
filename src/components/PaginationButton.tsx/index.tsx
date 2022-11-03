@@ -1,16 +1,16 @@
 import { Button, HStack, Icon, Box, Center } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 import { LIMIT } from "@/constants/paginationData";
 interface Props {
   setOffSet: Dispatch<SetStateAction<number>>;
   isFetching: boolean;
   totalPages: number | undefined;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
 }
 
-const PaginationButton = ({ setOffSet, isFetching, totalPages }: Props) => {
-  const [page, setPage] = useState<number>(1);
-
+const PaginationButton = ({ setOffSet, isFetching, totalPages, page, setPage }: Props) => {
   const arrowBackHandle = () => {
     setOffSet((prevOffSet) => prevOffSet - LIMIT);
     setPage((prevPage) => prevPage - 1);
