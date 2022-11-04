@@ -26,8 +26,9 @@ const Accounts = () => {
   const [offset, setOffSet] = useState<number>(OFFSET);
   const [page, setPage] = useState<number>(1);
   const limit = LIMIT;
-
   const { data: usersAccountData, isLoading, isFetching } = useListUsersQuery({ offset, limit });
+  const totalPages = usersAccountData && Math.ceil(usersAccountData?.total / limit);
+
   return (
     <Flex height="100vh" flexDirection="column" justifyContent="space-between">
       <Box>
@@ -91,7 +92,7 @@ const Accounts = () => {
         <PaginationButton
           setOffSet={setOffSet}
           isFetching={isFetching}
-          totalPages={usersAccountData?.totalPages}
+          totalPages={totalPages}
           page={page}
           setPage={setPage}
         />
