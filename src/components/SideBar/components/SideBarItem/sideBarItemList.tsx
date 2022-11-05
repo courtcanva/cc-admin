@@ -2,6 +2,7 @@ import { AiFillHome, AiOutlineKey } from "react-icons/ai";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { CgMicrosoft } from "react-icons/cg";
 import { TbRectangle } from "react-icons/tb";
+import { HiOutlineShoppingCart } from "react-icons/hi";
 import { ISideBarItem } from "../../../../interfaces/navigationItem";
 
 const sideBarItemList: ISideBarItem[] = [
@@ -34,6 +35,12 @@ const sideBarItemList: ISideBarItem[] = [
     title: "Admin",
     icon: <AiOutlineKey />,
     href: "/admin",
+  },
+  {
+    id: 6,
+    title: "Quotation",
+    icon: <HiOutlineShoppingCart />,
+    href: "/quotation",
   },
 ];
 export default sideBarItemList;
