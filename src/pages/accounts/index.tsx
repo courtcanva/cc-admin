@@ -31,7 +31,6 @@ const Accounts = () => {
     !usersAccountData || usersAccountData?.total === 0
       ? 1
       : Math.ceil(usersAccountData?.total / limit);
-  console.log(usersAccountData);
 
   return (
     <Flex height="100vh" flexDirection="column" justifyContent="space-between">
@@ -48,28 +47,6 @@ const Accounts = () => {
             <Table variant="simple">
               <TableHeader tableHeaderData={USERS_TABLE_HEADER} />
               <Tbody>
-                {(isLoading || !usersAccountData) && (
-                  <Center paddingTop="100px">
-                    <Text fontWeight="bold" fontSize="2xl">
-                      Loading...
-                    </Text>
-                    <Spinner
-                      marginLeft="30px"
-                      thickness="4px"
-                      speed="0.65s"
-                      emptyColor="background.tertiary"
-                      color="fontcolor.tertiary"
-                      size="lg"
-                    />
-                  </Center>
-                )}
-                {usersAccountData?.data.length === 0 && (
-                  <Center paddingTop="30px">
-                    <Text fontWeight="bold" fontSize="3xl">
-                      No User
-                    </Text>
-                  </Center>
-                )}
                 {usersAccountData?.data.map((user: IUser) => {
                   const { _id, firstName, lastName, email } = user;
                   return (
@@ -90,6 +67,28 @@ const Accounts = () => {
               </Tbody>
             </Table>
           </TableContainer>
+          {(isLoading || !usersAccountData) && (
+            <Center paddingTop="30px">
+              <Text fontWeight="bold" fontSize="2xl">
+                Loading...
+              </Text>
+              <Spinner
+                marginLeft="30px"
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="background.tertiary"
+                color="fontcolor.tertiary"
+                size="lg"
+              />
+            </Center>
+          )}
+          {usersAccountData?.data.length === 0 && (
+            <Center paddingTop="30px">
+              <Text fontWeight="bold" fontSize="3xl">
+                No User
+              </Text>
+            </Center>
+          )}
         </Flex>
       </Box>
       <Box marginBottom="20px">
