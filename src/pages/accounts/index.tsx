@@ -43,14 +43,13 @@ const Accounts = () => {
             <StatNumber>{`${usersAccountData?.total || 0}`}</StatNumber>
           </Stat>
         </Flex>
-
         <Flex flexDirection="column" maxWidth="1000" margin="20px auto">
           <TableContainer>
             <Table variant="simple">
               <TableHeader tableHeaderData={USERS_TABLE_HEADER} />
               <Tbody>
                 {(isLoading || !usersAccountData) && (
-                  <Center paddingTop="100px" justifyContent="center">
+                  <Center paddingTop="100px">
                     <Text fontWeight="bold" fontSize="2xl">
                       Loading...
                     </Text>
