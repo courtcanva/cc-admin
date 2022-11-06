@@ -5,8 +5,10 @@ import { IQuotation, IQuotationDetail } from "@/interfaces/quotation";
 import _ from "lodash";
 import { LIMIT } from "@/constants/pagination";
 import { IPagination } from "@/interfaces/pagination";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Test } from "@/components/DisplayDataTable/test";
+import { useState } from "react";
+import Loading from "@/components/Loading";
+import Error from "@/components/Error";
+import { Center } from "@chakra-ui/react";
 
 interface Quotation {
   user_id: string;
@@ -17,34 +19,11 @@ interface Quotation {
 }
 
 const quotation = () => {
-  const [pageCount, setPageCount] = useState(0);
-  const [data, setData] = useState<Quotation[]>();
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
     pageSize: LIMIT[0],
   });
-
-  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  useEffect(() => {
-    console.log("------sx-----");
-    const { data, isLoading } = useGetAllQuotationQuery({
-      offset: pageIndex * pageSize,
-      limit: pageSize,
-    });
-    console.log("-----------");
-    console.log(data);
-    let quotationData = [];
-    if (!isLoading) {
-      quotationData = data?.map((item) => {
-        return {
-          ..._.omit(item, ["_id", "image", "design", "isDeleted", "createdAt", "updatedAt", "__v"]),
-          quotationName: item.design.designName,
-        };
-      });
-    }
-    setData(quotationData);
-  }, [pageIndex]);
 
   const _handleSearch = _.debounce(
     (search) => {
@@ -76,43 +55,40 @@ const quotation = () => {
     }),
   ];
 
-  // const a = useGetAllQuotationQuery({ offset: 0, limit: LIMIT[0] });
-  // let quotationData = [];
-  // if (!a.isLoading) {
-  //   quotationData = a.data?.map((item) => {
-  //     return {
-  //       ..._.omit(item, ["_id", "image", "design", "isDeleted", "createdAt", "updatedAt", "__v"]),
-  //       quotationName: item.design.designName,
-  //     };
-  //   });
-  // }
+  const { data, isLoading, isError } = useGetAllQuotationQuery({
+    offset: pageIndex * pageSize,
+    limit: pageSize,
+  });
 
-  // const fetchData = ({ offset, limit }: IPagination) => {
-  //   const { data, isLoading } = useGetAllQuotationQuery({ offset, limit });
-  //   console.log(data);
-  //   let quotationData = [];
-  //   if (!isLoading) {
-  //     quotationData = data?.map((item) => {
-  //       return {
-  //         ..._.omit(item, ["_id", "image", "design", "isDeleted", "createdAt", "updatedAt", "__v"]),
-  //         quotationName: item.design.designName,
-  //       };
-  //     });
-  //   }
-  //   return quotation;
-  // };
+  let quotationData = [];
+  if (!isLoading) {
+    quotationData = data?.data.map((item) => {
+      return {
+        ..._.omit(item, ["_id", "image", "design", "isDeleted", "createdAt", "updatedAt", "__v"]),
+        quotationName: item.design.designName,
+      };
+    });
+  }
 
   return (
-    <Test></Test>
-    // <DisplayDataTable
-    //   tableTitle="Quotation"
-    //   columns={columns}
-    //   // data={quotationData as Quotation[]}
-    //   data={data}
-    //   fetchData={fetchData}
-    //   pageIndex={pageIndex}
-    //   pageSize={pageSize}
-    // ></DisplayDataTable>
+    <Center height="100vh">
+      {isLoading && <Loading loadingText="Please wait while the quotation is loading..."></Loading>}
+      {isError && (
+        <Error
+          errorTitle="Sorry, something wrong"
+          errorDescription="Your request was not sent successfully, please try again or contact IT support."
+        ></Error>
+      )}
+      <DisplayDataTable
+        tableTitle="Quotation"
+        columns={columns}
+        data={quotationData as Quotation[]}
+        setPagination={setPagination}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+        pageCount={Math.ceil(data?.total / pageSize)}
+      ></DisplayDataTable>
+    </Center>
   );
 };
 

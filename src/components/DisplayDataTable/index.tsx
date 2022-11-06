@@ -37,9 +37,10 @@ interface Props<Data extends object> {
   tableTitle: string;
   columns: ColumnDef<Data, any>[];
   data: Data[];
-  fetchData: any;
+  setPagination: any;
   pageIndex: number;
   pageSize: number;
+  pageCount: number;
   // showTotalQuantity: boolean;
 }
 
@@ -47,19 +48,15 @@ function DisplayDataTable<Data extends object>({
   tableTitle,
   columns,
   data,
-  fetchData,
+  setPagination,
   pageIndex,
   pageSize,
+  pageCount,
 }: Props<Data>) {
-  // const [data, setData] = useState<Data[]>();
-  // const pagination = useMemo(() => {
-  //   setData(fetchData({ offset: pageIndex * pageSize, limit: pageSize }));
-  //   return {
-  //     pageIndex,
-  //     pageSize,
-  //   };
-  // }, [pageIndex, pageSize]);
-
+  const fetchDataOptions = {
+    pageIndex,
+    pageSize,
+  };
   const pagination = useMemo(
     () => ({
       pageIndex,
@@ -69,21 +66,17 @@ function DisplayDataTable<Data extends object>({
   );
 
   useEffect(() => {
-    fetchData({ pageIndex, pageSize });
+    setPagination({ pageIndex, pageSize });
   }, [pageIndex, pageSize]);
-
-  // const dataQuery = useQuery(["data", fetchDataOptions], () => fetchData(fetchDataOptions), {
-  //   keepPreviousData: true,
-  // });
 
   const table = useReactTable({
     data,
     columns,
-    pageCount: 2,
+    pageCount,
     state: {
       pagination,
     },
-    // onPaginationChange: setPagination,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });

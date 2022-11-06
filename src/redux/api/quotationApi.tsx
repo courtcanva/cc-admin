@@ -8,7 +8,10 @@ export const quotationApi = createApi({
     baseUrl: environment.apiBaseUrl,
   }),
   endpoints: (builder) => ({
-    getAllQuotation: builder.query<IQuotation[], { offset: number | void; limit: number | void }>({
+    getAllQuotation: builder.query<
+      { data: IQuotation[]; total: number; sx: string },
+      { offset: number | void; limit: number | void }
+    >({
       query: ({ offset, limit }) => `/shopping-cart?offset=${offset}&limit=${limit}`,
     }),
   }),

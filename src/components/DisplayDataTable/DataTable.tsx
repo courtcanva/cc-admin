@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useReactTable } from "@tanstack/react-table";
 
 const DataTable = () => {
-  //const table = useReactTable(options)
+  // const table = useReactTable(options)
 
   return (
     // -   <div>
