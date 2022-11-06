@@ -2,8 +2,6 @@ import { useState } from "react";
 import {
   Flex,
   Heading,
-  Center,
-  Text,
   Stat,
   StatLabel,
   StatNumber,
