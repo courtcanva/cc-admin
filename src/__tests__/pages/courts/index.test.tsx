@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import CourtsPage from "../../../pages/courts";
 import renderWithMockedProvider from "../../utils";
 

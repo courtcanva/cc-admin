@@ -1,11 +1,13 @@
-import { courtsTableHeader } from "@/constants/courtsTabelHeader";
 import { Th, Thead, Tr } from "@chakra-ui/react";
+interface Props {
+  tableHeaderData: string[];
+}
 
-const TableHeader = () => {
+const TableHeader = ({ tableHeaderData }: Props) => {
   return (
     <Thead>
       <Tr>
-        {courtsTableHeader.map((item) => (
+        {tableHeaderData.map((item) => (
           <Th key={item} textAlign="center">
             {item}
           </Th>
