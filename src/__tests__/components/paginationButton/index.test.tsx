@@ -5,7 +5,6 @@ import PaginationButton from "../../../components/PaginationButton.tsx";
 describe("PaginationButton", () => {
   const props = {
     setOffSet: jest.fn(),
-    isFetching: false,
     totalPages: 5,
     page: 2,
     setPage: jest.fn(),
@@ -14,7 +13,6 @@ describe("PaginationButton", () => {
     render(
       <PaginationButton
         setOffSet={props.setOffSet}
-        isFetching={props.isFetching}
         totalPages={props.totalPages}
         page={props.page}
         setPage={props.setPage}
@@ -31,7 +29,6 @@ describe("PaginationButton", () => {
     render(
       <PaginationButton
         setOffSet={props.setOffSet}
-        isFetching={props.isFetching}
         totalPages={props.totalPages}
         page={props.page}
         setPage={props.setPage}
@@ -45,7 +42,6 @@ describe("PaginationButton", () => {
     render(
       <PaginationButton
         setOffSet={props.setOffSet}
-        isFetching={props.isFetching}
         totalPages={props.totalPages}
         page={props.page}
         setPage={props.setPage}
@@ -60,7 +56,6 @@ describe("PaginationButton", () => {
     render(
       <PaginationButton
         setOffSet={props.setOffSet}
-        isFetching={props.isFetching}
         totalPages={props.totalPages}
         page={props.page}
         setPage={props.setPage}

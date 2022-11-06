@@ -4,13 +4,12 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 import { LIMIT } from "@/constants/paginationData";
 interface Props {
   setOffSet: Dispatch<SetStateAction<number>>;
-  isFetching: boolean;
   totalPages: number | undefined;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
 }
 
-const PaginationButton = ({ setOffSet, isFetching, totalPages, page, setPage }: Props) => {
+const PaginationButton = ({ setOffSet, totalPages, page, setPage }: Props) => {
   const arrowBackHandle = () => {
     setOffSet((prevOffSet) => prevOffSet - LIMIT);
     setPage((prevPage) => prevPage - 1);
@@ -23,17 +22,11 @@ const PaginationButton = ({ setOffSet, isFetching, totalPages, page, setPage }: 
   return (
     <Center>
       <HStack spacing="14px">
-        <Button
-          onClick={arrowBackHandle}
-          isLoading={isFetching}
-          disabled={page === 1}
-          aria-label="arrow back"
-        >
+        <Button onClick={arrowBackHandle} disabled={page === 1} aria-label="arrow back">
           <Icon as={MdArrowBack} data-testid="arrow-back-label" />
         </Button>
         <Button
           onClick={arrowForwardHandle}
-          isLoading={isFetching}
           disabled={page === totalPages}
           aria-label="arrow forward"
         >

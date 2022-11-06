@@ -24,7 +24,7 @@ const Accounts = () => {
   const [offset, setOffSet] = useState<number>(OFFSET);
   const [page, setPage] = useState<number>(1);
   const limit = LIMIT;
-  const { data: usersAccountData, isLoading, isFetching } = useListUsersQuery({ offset, limit });
+  const { data: usersAccountData, isLoading } = useListUsersQuery({ offset, limit });
   const totalPages =
     !usersAccountData || usersAccountData?.total === 0
       ? 1
@@ -73,7 +73,6 @@ const Accounts = () => {
       <Box marginBottom="20px">
         <PaginationButton
           setOffSet={setOffSet}
-          isFetching={isFetching}
           totalPages={totalPages}
           page={page}
           setPage={setPage}
