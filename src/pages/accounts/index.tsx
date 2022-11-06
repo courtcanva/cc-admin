@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Flex,
   Heading,
-  Spinner,
   Center,
   Text,
   Stat,
@@ -21,6 +20,7 @@ import { IUser } from "@/interfaces/userData";
 import PaginationButton from "@/components/PaginationButton.tsx";
 import { LIMIT, OFFSET } from "@/constants/paginationData";
 import { USERS_TABLE_HEADER } from "@/constants/tabelHeaders";
+import { IsLoading, NoData } from "@/components/IsLoadingOrNoData.tsx";
 
 const Accounts = () => {
   const [offset, setOffSet] = useState<number>(OFFSET);
@@ -31,6 +31,7 @@ const Accounts = () => {
     !usersAccountData || usersAccountData?.total === 0
       ? 1
       : Math.ceil(usersAccountData?.total / limit);
+  const title = "User";
 
   return (
     <Flex height="100vh" flexDirection="column" justifyContent="space-between">
@@ -67,28 +68,8 @@ const Accounts = () => {
               </Tbody>
             </Table>
           </TableContainer>
-          {(isLoading || !usersAccountData) && (
-            <Center paddingTop="30px">
-              <Text fontWeight="bold" fontSize="2xl">
-                Loading...
-              </Text>
-              <Spinner
-                marginLeft="30px"
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="background.tertiary"
-                color="fontcolor.tertiary"
-                size="lg"
-              />
-            </Center>
-          )}
-          {usersAccountData?.data.length === 0 && (
-            <Center paddingTop="30px">
-              <Text fontWeight="bold" fontSize="3xl">
-                No User
-              </Text>
-            </Center>
-          )}
+          {(isLoading || !usersAccountData) && <IsLoading />}
+          {usersAccountData?.data.length === 0 && <NoData text={title} />}
         </Flex>
       </Box>
       <Box marginBottom="20px">
