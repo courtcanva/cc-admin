@@ -60,15 +60,13 @@ const quotation = () => {
     limit: pageSize,
   });
 
-  let quotationData = [];
-  if (!isLoading) {
-    quotationData = data?.data.map((item) => {
-      return {
-        ..._.omit(item, ["_id", "image", "design", "isDeleted", "createdAt", "updatedAt", "__v"]),
-        quotationName: item.design.designName,
-      };
-    });
-  }
+  // if (!isLoading) {
+  const quotationData = data?.data.map((item) => {
+    return {
+      ..._.omit(item, ["_id", "image", "design", "isDeleted", "createdAt", "updatedAt", "__v"]),
+      quotationName: item.design.designName,
+    };
+  });
 
   return (
     <Center height="100vh">
@@ -86,7 +84,7 @@ const quotation = () => {
         setPagination={setPagination}
         pageIndex={pageIndex}
         pageSize={pageSize}
-        pageCount={Math.ceil(data?.total / pageSize)}
+        pageCount={data?.total ? Math.ceil(data?.total / pageSize) : 1}
       ></DisplayDataTable>
     </Center>
   );
