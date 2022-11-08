@@ -2,11 +2,19 @@ import { IAdmin, INewAdmin } from "@/interfaces/adminData";
 import formatDate from "@/utils/formatDate";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { environment } from "../../constants/environment";
+import UserTokenService from "../../components/Login/helpers/TokenService";
 import _ from "lodash";
 
 export const adminApi = createApi({
   reducerPath: "admin",
-  baseQuery: fetchBaseQuery({ baseUrl: environment.apiBaseUrl }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: environment.apiBaseUrl,
+    prepareHeaders: (headers, { getState } ) => {
+      const accessToken = UserTokenService.getLocalAccessToken();
+      headers.set("authorization", accessToken ? `Bearer ${UserTokenService.getLocalAccessToken()}` : "");
+      return headers;
+    }
+   }),
   tagTypes: ["admin"],
   endpoints: (builder) => ({
     getAllAdmin: builder.query<Omit<IAdmin, "__v" | "password" | "hashedRefreshToken">[], void>({
@@ -31,6 +39,17 @@ export const adminApi = createApi({
     updateAdmin: builder.mutation({
       query: (admin: IAdmin) => ({
         url: `/admin/${admin._id}`,
+        method: "PATCH",
+        body: admin,
+      }),
+      invalidatesTags: (_1, _2, admin) => [
+        { type: "admin", id: admin._id },
+        { type: "admin", id: "LIST" },
+      ],
+    }),
+    setAdminPermission: builder.mutation({
+      query: (admin: IAdmin) => ({
+        url: `/admin/${admin._id}/setPermission`,
         method: "PATCH",
         body: admin,
       }),
@@ -70,4 +89,4 @@ export const adminApi = createApi({
   }),
 });
 
-export const { useGetAllAdminQuery, useGetAdminByIdQuery, useUpdateAdminMutation, useDeleteAdminMutation, useRestoreAdminMutation, useCreateAdminMutation } = adminApi;
+export const { useGetAllAdminQuery, useGetAdminByIdQuery, useUpdateAdminMutation, useSetAdminPermissionMutation, useDeleteAdminMutation, useRestoreAdminMutation, useCreateAdminMutation } = adminApi;
