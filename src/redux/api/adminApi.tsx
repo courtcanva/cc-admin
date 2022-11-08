@@ -9,7 +9,7 @@ export const adminApi = createApi({
   reducerPath: "admin",
   baseQuery: fetchBaseQuery({ 
     baseUrl: environment.apiBaseUrl,
-    prepareHeaders: (headers, { getState } ) => {
+    prepareHeaders: (headers) => {
       const accessToken = UserTokenService.getLocalAccessToken();
       headers.set("authorization", accessToken ? `Bearer ${UserTokenService.getLocalAccessToken()}` : "");
       return headers;
