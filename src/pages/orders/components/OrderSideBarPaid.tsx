@@ -3,6 +3,7 @@ import { Flex, Text } from "@chakra-ui/react";
 interface PropsType {
   depositePaid: string;
 }
+
 const OrderSideBarPaid = ({ depositePaid }: PropsType) => {
   return (
     <Flex

@@ -6,24 +6,22 @@ interface PropsType {
 }
 
 const OrderSideBarState = ({ status }: PropsType) => {
-  const [statusColor, setStatusColor] = useState("red");
+  const [statusColor, setStatusColor] = useState("");
 
   useEffect(() => {
     if (status == "unpaid") {
-      setStatusColor("red");
+      setStatusColor("#C13D46");
     }
     if (status == "completed") {
-      setStatusColor("DarkGreen");
+      setStatusColor("#44BC84");
     }
     if (status == "processing") {
-      setStatusColor("blue");
+      setStatusColor("#7C9FDF");
     }
     if (status == "cancelled") {
       setStatusColor("gray");
     }
   }, [status]);
-
-  console.log("statusColor", statusColor);
 
   return (
     <Flex
@@ -35,14 +33,13 @@ const OrderSideBarState = ({ status }: PropsType) => {
       borderWidth="0px 1px 1px 0px"
     >
       <Box
-        color="#ffffff"
+        color="#FFFFFF"
         fontSize="14px"
         fontWeight="700"
         backgroundColor={statusColor}
-        border="#1A202C solid 1px"
-        width="90px"
-        height="30px"
-        borderRadius="15px"
+        width="80px"
+        height="25px"
+        borderRadius="5"
         display="flex"
         justifyContent="center"
         alignItems="center"

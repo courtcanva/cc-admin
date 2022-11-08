@@ -1,42 +1,45 @@
 import { useState } from "react";
-import { Heading, InputGroup, Input, Button, Flex } from "@chakra-ui/react";
-import { AiOutlineCaretDown } from "react-icons/ai";
+import { Heading, InputGroup, Input, Button, Flex, Box } from "@chakra-ui/react";
 import { useGetAllOrdersQuery } from "../../redux/api/ordersApi";
 import OrderContainer from "./components/OrderContainer";
 import OrderStatusDropdownFilter from "./components/OrderStatusDropdownFilter";
-
-interface FilterType {
-  isUnpaid: boolean;
-  isProcessing: boolean;
-  isCompleted: boolean;
-  isCancelled: boolean;
-}
+import PaginationButton from "@/components/PaginationButton.tsx";
+import { LIMIT, OFFSET } from "@/constants/paginationData";
+import { FilterType } from "./components/OrderStatusDropdownFilter";
+import { IOrder } from "@/interfaces/orderData";
 
 const orders = () => {
-  const { data: orders, isLoading, isFetching, isError } = useGetAllOrdersQuery(0);
-  const [searchField, setSearchField] = useState("");
-  const [filterdOrders, setFilterdOrders] = useState<any>();
-  const [filterStatus, setFilterStatus] = useState<any>();
+  const [page, setPage] = useState<number>(1);
+  const [offset, setOffSet] = useState<number>(OFFSET);
+  const limit = LIMIT;
+  const { data: orders, isLoading, isFetching, isError } = useGetAllOrdersQuery({ limit, offset });
+  const { data: ordersLength } = useGetAllOrdersQuery({});
+  const [searchField, setSearchField] = useState<string>("");
+  const [filterdOrders, setFilterdOrders] = useState<IOrder>();
+  const [filterStatus, setFilterStatus] = useState<FilterType>();
+
+  const totalPages = Math.ceil((ordersLength || []).length / limit);
 
   if (isFetching && !orders) return null;
 
-  const handleSearchChange = (e: any) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchField(e.target.value);
   };
 
-  const handleSearchClick = (searchField: any) => {
+  const handleSearchClick = (searchField: string) => {
     const result = (orders || []).filter(
-      (order: any) =>
+      (order: IOrder) =>
         order._id.toLowerCase().includes(searchField.toLowerCase()) ||
         order.user_id.toLowerCase().includes(searchField.toLowerCase())
     );
     setFilterdOrders(result);
   };
 
-  const handleValueChange = (value: any) => {
+  const handleValueChange = (value: FilterType) => {
     setFilterStatus(value);
   };
-
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
   return (
     <Flex flexDirection="column">
       <Heading marginY="50px">Orders</Heading>
@@ -96,7 +99,7 @@ const orders = () => {
       {/* search orderID and user ID filter */}
       {(filterdOrders || orders || [])
         // order status filter
-        .filter((order: any) => {
+        .filter((order: IOrder) => {
           if (!filterStatus) return true;
           return (
             (filterStatus.isUnpaid && order.status == "unpaid") ||
@@ -114,9 +117,19 @@ const orders = () => {
               !(order.status == "processing"))
           );
         })
-        .map((order: any) => (
+        // render each item
+        .map((order: IOrder) => (
           <OrderContainer order={order} key={order._id} />
         ))}
+      {/* pagination button */}
+      <Box marginBottom="20px">
+        <PaginationButton
+          setOffSet={setOffSet}
+          totalPages={totalPages}
+          page={page}
+          setPage={setPage}
+        />
+      </Box>
     </Flex>
   );
 };

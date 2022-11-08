@@ -1,4 +1,5 @@
 import { Flex, Text } from "@chakra-ui/react";
+import formatDate from "@/utils/formatDate";
 
 interface PropsType {
   updateTime: string;
@@ -14,7 +15,7 @@ const OrderItemFooter = ({ updateTime, totalQuatation, depositePaid }: PropsType
           Update time:
         </Text>
         <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-          {updateTime}
+          {formatDate(updateTime)}
         </Text>
       </Flex>
       <Flex flex="2.8">

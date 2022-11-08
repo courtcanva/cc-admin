@@ -1,20 +1,17 @@
-import { Heading, InputGroup, Input, Button, Flex, Image, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import OrderHeader from "./OrderHeader";
 import OrderItem from "./OrderItem";
 import OrderItemFooter from "./OrderItemFooter";
 import OrderSideBarPaid from "./OrderSideBarPaid";
 import OrderSideBarState from "./OrderSideBarState";
 import _ from "lodash";
+import { IOrder, IOrderItem } from "@/interfaces/orderData";
 
-interface PropTypes {
-  _id: string;
-  createdAt: string;
-  user_id: string;
-  updatedAt: string;
-  status: string;
+interface OrderContainerProps {
+  order: IOrder;
 }
 
-const OrderContainer = ({ order }: any) => {
+const OrderContainer = ({ order }: OrderContainerProps) => {
   return (
     <Flex key={order._id} flexDirection="column">
       {/* Order Header blue bar */}
@@ -24,7 +21,7 @@ const OrderContainer = ({ order }: any) => {
 
       <Flex marginBottom="20px">
         <Flex flex="79" flexDirection="column">
-          {(order.items || []).map((item: any, index: number) => (
+          {(order.items || []).map((item: IOrderItem, index: number) => (
             <OrderItem
               key={index}
               image={item.image}
@@ -44,7 +41,7 @@ const OrderContainer = ({ order }: any) => {
           {/* item block left part footer */}
           <OrderItemFooter
             updateTime={order.updatedAt}
-            totalQuatation={_.sumBy(order.items, function (o: any) {
+            totalQuatation={_.sumBy(order.items, function (o: IOrderItem) {
               return parseFloat(o.quotation);
             }).toLocaleString()}
             depositePaid={`$A 1,000`}

@@ -1,11 +1,11 @@
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
-
+import { IOrderItemQutationDetail } from "@/interfaces/orderData";
 interface PropsType {
   image: string;
   designName: string;
   courtType: string;
   quotation: string;
-  quationDetials: any[];
+  quationDetials: IOrderItemQutationDetail[];
   length: number;
   width: number;
   courtName: string;
@@ -69,8 +69,9 @@ const OrderItem = ({
           </Text>
           <Flex flexWrap="wrap">
             {quationDetials
-              .filter((detail) => detail.quantity !== 0)
-              .map((detail, index) => (
+              // delete purple tiles, which is 0 quantity
+              .filter((detail: IOrderItemQutationDetail) => detail.quantity !== 0)
+              .map((detail: IOrderItemQutationDetail, index: number) => (
                 <Flex key={index}>
                   <Box
                     marginLeft="3px"
@@ -96,7 +97,6 @@ const OrderItem = ({
             Court Size:
           </Text>
           <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-            {" "}
             {length} * {width} {courtName}
           </Text>
         </Flex>
@@ -132,7 +132,7 @@ const OrderItem = ({
             Shipping Address:
           </Text>
           <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-            {shippingAddress}{" "}
+            {shippingAddress}
           </Text>
         </Flex>
       </Flex>

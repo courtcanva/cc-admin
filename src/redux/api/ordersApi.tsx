@@ -1,19 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { environment } from "../../constants/environment";
-import formatDate from "@/utils/formatDate";
 
 export const ordersApi = createApi({
   reducerPath: "ordersApi",
   baseQuery: fetchBaseQuery({ baseUrl: environment.apiBaseUrl }),
-  tagTypes: ["Orders"],
+  tagTypes: ["orders"],
   endpoints: (builder) => ({
     getAllOrders: builder.query({
-      query: () => "orders",
-      transformResponse: (response: any) =>
-        response.map((item: any) => {
-          item.updatedAt = formatDate(item.updatedAt);
-          return item;
-        }),
+      query: ({ limit = 10, offset = 0 }) => `orders?limit=${limit}&offset=${offset}`,
+      providesTags: [{ type: "orders", id: "LIST" }],
     }),
   }),
 });

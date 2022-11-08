@@ -4,7 +4,7 @@ import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import { useCheckboxGroup } from "@chakra-ui/react";
 import { RiArrowDownSLine } from "react-icons/ri";
 
-interface FilterType {
+export interface FilterType {
   isUnpaid: boolean;
   isProcessing: boolean;
   isCompleted: boolean;
