@@ -8,7 +8,7 @@ import { LIMIT, OFFSET } from "@/constants/paginationData";
 import { FilterType } from "./components/OrderStatusDropdownFilter";
 import { IOrder } from "@/interfaces/orderData";
 
-const orders = () => {
+const Orders = () => {
   const [page, setPage] = useState<number>(1);
   const [offset, setOffSet] = useState<number>(OFFSET);
   const limit = LIMIT;
@@ -134,4 +134,4 @@ const orders = () => {
   );
 };
 
-export default orders;
+export default Orders;
