@@ -1,4 +1,5 @@
 import { Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
+import { RiCloseCircleLine } from "react-icons/ri";
 
 interface Props {
   errorTitle?: string;
@@ -19,7 +20,7 @@ const Error = ({ errorTitle, errorDescription }: Props) => {
       borderRadius="10px"
       boxShadow="0px 4px 24px rgba(242, 153, 74, 0.4)"
     >
-      <AlertIcon boxSize="50px" />
+      <AlertIcon as={RiCloseCircleLine} boxSize="50px" />
       <AlertTitle marginTop={4} marginBottom={1} fontSize="lg">
         {errorTitle}
       </AlertTitle>

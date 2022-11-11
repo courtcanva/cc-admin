@@ -9,10 +9,11 @@ export const quotationApi = createApi({
   }),
   endpoints: (builder) => ({
     getAllQuotation: builder.query<
-      { data: IQuotation[]; total: number; sx: string },
-      { offset: number | void; limit: number | void }
+      { data: IQuotation[]; total: number },
+      { offset: number; limit: number; optionalQuery: string }
     >({
-      query: ({ offset, limit }) => `/shopping-cart?offset=${offset}&limit=${limit}`,
+      query: ({ offset, limit, optionalQuery }) =>
+        `/shopping-cart/admin?offset=${offset}&limit=${limit}${optionalQuery}`,
     }),
   }),
 });

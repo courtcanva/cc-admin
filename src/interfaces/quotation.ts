@@ -1,6 +1,6 @@
 import { IDesign } from "@/interfaces/design";
 
-export interface IQuotation extends Object {
+export interface IQuotation {
   _id: string;
   quotation: string;
   image: string;
@@ -10,7 +10,7 @@ export interface IQuotation extends Object {
   design: IDesign;
 }
 
-export interface IQuotationDetail {
+interface IQuotationDetail {
   color: string;
   quantity: number;
 }

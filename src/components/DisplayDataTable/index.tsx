@@ -1,4 +1,17 @@
 import { LIMIT } from "@/constants/pagination";
+import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/router";
+import _ from "lodash";
+import Search from "./Search";
+import Loading from "@/components/Loading";
+import InformationAlert from "../InformationAlert";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  SortingState,
+} from "@tanstack/react-table";
 import {
   Flex,
   Text,
@@ -8,7 +21,6 @@ import {
   Tr,
   Th,
   Td,
-  chakra,
   Tooltip,
   IconButton,
   NumberInput,
@@ -17,209 +29,303 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Select,
+  Center,
+  Badge,
+  Button,
+  Icon,
+  Box,
 } from "@chakra-ui/react";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  PaginationState,
-} from "@tanstack/react-table";
-import { useState, useMemo, useEffect } from "react";
 import {
   HiOutlineChevronDoubleLeft,
   HiOutlineChevronDoubleRight,
   HiOutlineChevronLeft,
   HiOutlineChevronRight,
+  HiChevronDown,
+  HiChevronUp,
+  HiPlus,
 } from "react-icons/hi";
 
 interface Props<Data extends object> {
-  tableTitle: string;
   columns: ColumnDef<Data, any>[];
   data: Data[];
-  setPagination: any;
   pageIndex: number;
   pageSize: number;
-  pageCount: number;
-  // showTotalQuantity: boolean;
+  setPagination: Dispatch<
+    SetStateAction<{
+      pageIndex: number;
+      pageSize: number;
+    }>
+  >;
+  sorting: SortingState;
+  setSorting: Dispatch<SetStateAction<SortingState>>;
+  totalCount: number;
+  tableTitle?: string;
+  showTotalQuantity?: boolean;
+  tableSearch?: Search;
+  createLink?: string;
+}
+
+interface Search {
+  searchPlaceholder: string;
+  searchValue: string;
+  setSearchValue: Dispatch<SetStateAction<string>>;
+  searchLoading: boolean;
+  searchLoadingText: string;
 }
 
 function DisplayDataTable<Data extends object>({
-  tableTitle,
   columns,
   data,
-  setPagination,
   pageIndex,
   pageSize,
-  pageCount,
+  setPagination,
+  sorting,
+  setSorting,
+  totalCount,
+  tableTitle,
+  showTotalQuantity,
+  tableSearch,
+  createLink,
 }: Props<Data>) {
-  const fetchDataOptions = {
-    pageIndex,
-    pageSize,
-  };
-  const pagination = useMemo(
-    () => ({
-      pageIndex,
-      pageSize,
-    }),
-    [pageIndex, pageSize]
-  );
-
-  useEffect(() => {
-    setPagination({ pageIndex, pageSize });
-  }, [pageIndex, pageSize]);
-
+  const router = useRouter();
   const table = useReactTable({
     data,
     columns,
-    pageCount,
+    pageCount: totalCount ? Math.ceil(totalCount / pageSize) : 1,
     state: {
-      pagination,
+      pagination: {
+        pageIndex,
+        pageSize,
+      },
+      sorting,
     },
-    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
+    onPaginationChange: setPagination,
+    manualSorting: true,
+    onSortingChange: setSorting,
   });
 
   return (
-    <>
-      <Flex paddingTop="40px" paddingBottom="20px" flexDirection="column">
-        <Text fontSize="24px" fontWeight="700" color="#000000">
-          {tableTitle}
-        </Text>
-        <Table marginTop="24px">
-          <Thead backgroundColor="#f5f5f5">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  // see https://tanstack.com/table/v8/docs/api/core/column-def#meta to type this correctly
-                  // const meta: any = header.column.columnDef.meta;
-                  return (
-                    <Th
-                      key={header.id}
-                      color="#747474"
-                      fontSize="12px"
-                      // onClick={header.column.getToggleSortingHandler()}
-                      // isNumeric={meta?.isNumeric}
-                    >
-                      {flexRender(header.column.columnDef.header, header.getContext())}
+    <Flex flexDirection="column">
+      {/* Table title / Data total count */}
+      <Flex alignItems="center">
+        {tableTitle && (
+          <Text
+            marginRight="14px"
+            fontSize="24px"
+            fontWeight="700"
+            color="#000000"
+            data-testid="table-title"
+          >
+            {tableTitle}
+          </Text>
+        )}
+        {showTotalQuantity && (
+          <Badge
+            padding="4px 12px"
+            borderRadius="25px"
+            backgroundColor="#2C4E8A"
+            color="#FFFFFF"
+            data-testid="total-count"
+          >
+            {totalCount}
+          </Badge>
+        )}
+      </Flex>
 
-                      {/* <chakra.span pl="4">
-                        {header.column.getIsSorted() ? (
-                          header.column.getIsSorted() === "desc" ? (
-                            <TriangleDownIcon aria-label="sorted descending" />
-                          ) : (
-                            <TriangleUpIcon aria-label="sorted ascending" />
-                          )
-                        ) : null}
-                      </chakra.span> */}
-                    </Th>
-                  );
-                })}
-              </Tr>
-            ))}
-          </Thead>
-          <Tbody>
-            {table.getRowModel().rows.map((row) => (
-              <Tr key={row.id}>
-                {row.getVisibleCells().map((cell) => {
-                  // see https://tanstack.com/table/v8/docs/api/core/column-def#meta to type this correctly
-                  const meta: any = cell.column.columnDef.meta;
-                  return (
-                    <Td key={cell.id} isNumeric={meta?.isNumeric} borderBottomColor="#D9D9D9">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </Td>
-                  );
-                })}
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-        <Flex justifyContent="space-between" m={4} alignItems="center">
+      {/* Search / Filter Button / Create Button */}
+      {(tableSearch || createLink) && (
+        <Flex
+          marginTop="16px"
+          justifyContent={tableSearch !== undefined ? "space-between" : "flex-end"}
+        >
+          {tableSearch && (
+            <Box width="fit-content" data-testid="table-search">
+              <Search
+                searchPlaceholder={tableSearch.searchPlaceholder}
+                searchValue={tableSearch.searchValue as string}
+                setSearchValue={tableSearch.setSearchValue as Dispatch<SetStateAction<string>>}
+              ></Search>
+            </Box>
+          )}
           <Flex>
-            <Tooltip label="First Page">
-              <IconButton
-                aria-label="First Page"
-                onClick={() => table.setPageIndex(0)}
-                disabled={!table.getCanPreviousPage()}
-                icon={<HiOutlineChevronDoubleLeft />}
-                mr={4}
-              />
-            </Tooltip>
-            <Tooltip label="Previous Page">
-              <IconButton
-                aria-label="Previous Page"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-                icon={<HiOutlineChevronLeft />}
-              />
-            </Tooltip>
-          </Flex>
-          <Flex alignItems="center">
-            <Text mr={8}>
-              Page{" "}
-              <Text fontWeight="700" as="span">
-                {table.getState().pagination.pageIndex + 1} of{" "}
-              </Text>
-              <Text fontWeight="700" as="span">
-                {table.getPageCount()}
-              </Text>
-            </Text>
-            <Text>Go to page:</Text>{" "}
-            <NumberInput
-              ml={2}
-              mr={8}
-              w={28}
-              min={1}
-              max={table.getPageCount()}
-              defaultValue={table.getState().pagination.pageIndex + 1}
-              // onChange={(e) => {
-              //   const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              //   table.setPageIndex(page);
-              // }}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-            <Select
-              w={32}
-              value={table.getState().pagination.pageSize}
-              onChange={(e) => {
-                table.setPageSize(Number(e.target.value));
+            {/* Todo: filter function */}
+            {/* <Button
+              leftIcon={<HiViewGridAdd />}
+              backgroundColor="#2C4E8A"
+              color="#FFFFFF"
+              _hover={{
+                backgroundColor: "#7088B1",
+                color: "#F3F2F7",
               }}
             >
-              {LIMIT.map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </Select>
-          </Flex>
-          <Flex>
-            <Tooltip label="Next Page">
-              <IconButton
-                aria-label="Next Page"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-                icon={<HiOutlineChevronRight />}
-              />
-            </Tooltip>
-            <Tooltip label="Last Page">
-              <IconButton
-                aria-label="Last Page"
-                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                disabled={!table.getCanNextPage()}
-                icon={<HiOutlineChevronDoubleRight />}
-                ml={4}
-              />
-            </Tooltip>
+              Add Filter
+            </Button> */}
+            {createLink && (
+              <Button
+                leftIcon={<HiPlus />}
+                marginLeft="10px"
+                backgroundColor="#2C4E8A"
+                color="#FFFFFF"
+                _hover={{
+                  backgroundColor: "#7088B1",
+                  color: "#F3F2F7",
+                }}
+                onClick={() => {
+                  router.push(createLink as string);
+                }}
+                data-testid="create-button"
+              >
+                Create
+              </Button>
+            )}
           </Flex>
         </Flex>
-      </Flex>
-    </>
+      )}
+
+      {/* Table */}
+      {tableSearch?.searchLoading ? (
+        <Center height="100vh">
+          <Loading loadingText={tableSearch?.searchLoadingText}></Loading>
+        </Center>
+      ) : totalCount ? (
+        <>
+          <Table marginTop="24px" variant="striped">
+            <Thead backgroundColor="#2C4E8A">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <Th
+                        key={header.id}
+                        fontSize="12px"
+                        color="#FFFFFF"
+                        cursor={header.column.getCanSort() ? "pointer" : "default"}
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        <Flex alignItems="center">
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {header.column.getIsSorted() &&
+                            (header.column.getIsSorted() === "desc" ? (
+                              <Icon as={HiChevronDown} marginLeft="4px" boxSize="18px" />
+                            ) : (
+                              <Icon as={HiChevronUp} marginLeft="4px" boxSize="18px" />
+                            ))}
+                        </Flex>
+                      </Th>
+                    );
+                  })}
+                </Tr>
+              ))}
+            </Thead>
+            <Tbody>
+              {table.getRowModel().rows.map((row) => (
+                <Tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => {
+                    const meta: any = cell.column.columnDef.meta;
+                    return (
+                      <Td key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+
+          {/* Pagination */}
+          <Flex marginTop="24px" justifyContent="space-between" alignItems="center">
+            <Flex>
+              <Tooltip label="First Page">
+                <IconButton
+                  marginRight="10px"
+                  aria-label="First Page"
+                  icon={<HiOutlineChevronDoubleLeft />}
+                  disabled={!table.getCanPreviousPage()}
+                  onClick={() => table.setPageIndex(0)}
+                  data-testid="first-page-button"
+                />
+              </Tooltip>
+              <Tooltip label="Previous Page">
+                <IconButton
+                  aria-label="Previous Page"
+                  icon={<HiOutlineChevronLeft />}
+                  disabled={!table.getCanPreviousPage()}
+                  onClick={() => table.previousPage()}
+                  data-testid="previous-button"
+                />
+              </Tooltip>
+            </Flex>
+            <Flex alignItems="center">
+              <Text marginRight="20px">
+                Page
+                <Text fontWeight="700" as="span">
+                  {` ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}
+                </Text>
+              </Text>
+              <Text marginRight="2px">Go to page:</Text>
+              <NumberInput
+                marginRight="20px"
+                maxWidth="80px"
+                min={1}
+                max={table.getPageCount()}
+                defaultValue={table.getState().pagination.pageIndex + 1}
+                allowMouseWheel
+                onChange={(e) => {
+                  table.setPageIndex(/^[1-9]\d*$/.test(e) ? Number(e) - 1 : 0);
+                }}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+              <Select
+                maxWidth="110px"
+                value={table.getState().pagination.pageSize}
+                onChange={(e) => {
+                  table.setPageSize(Number(e.target.value));
+                }}
+              >
+                {LIMIT.map((item) => (
+                  <option key={item} value={item}>
+                    Show {item}
+                  </option>
+                ))}
+              </Select>
+            </Flex>
+            <Flex>
+              <Tooltip label="Next Page">
+                <IconButton
+                  marginRight="10px"
+                  aria-label="Next Page"
+                  icon={<HiOutlineChevronRight />}
+                  disabled={!table.getCanNextPage()}
+                  onClick={() => table.nextPage()}
+                  data-testid="next-button"
+                />
+              </Tooltip>
+              <Tooltip label="Last Page">
+                <IconButton
+                  aria-label="Last Page"
+                  icon={<HiOutlineChevronDoubleRight />}
+                  disabled={!table.getCanNextPage()}
+                  onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                  data-testid="last-page-button"
+                />
+              </Tooltip>
+            </Flex>
+          </Flex>
+        </>
+      ) : (
+        <Center height="100vh">
+          <InformationAlert informationText="No quotation data found"></InformationAlert>
+        </Center>
+      )}
+    </Flex>
   );
 }
 

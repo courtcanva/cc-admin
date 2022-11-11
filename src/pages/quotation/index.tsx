@@ -1,42 +1,52 @@
-import { createColumnHelper } from "@tanstack/react-table";
-import { useGetAllQuotationQuery } from "@/redux/api/quotationApi";
-import DisplayDataTable from "@/components/DisplayDataTable";
-import { IQuotation, IQuotationDetail } from "@/interfaces/quotation";
-import _ from "lodash";
 import { LIMIT } from "@/constants/pagination";
-import { IPagination } from "@/interfaces/pagination";
-import { useState } from "react";
-import Loading from "@/components/Loading";
+import { useCallback, useEffect, useState } from "react";
+import { createColumnHelper, SortingState } from "@tanstack/react-table";
+import { useGetAllQuotationQuery } from "../../redux/api/quotationApi";
+import _ from "lodash";
+import { IDesign } from "@/interfaces/design";
 import Error from "@/components/Error";
-import { Center } from "@chakra-ui/react";
+import DisplayDataTable from "@/components/DisplayDataTable";
+import TableBadge from "@/components/DisplayDataTable/TableBadge";
+import { Box, Center, HStack } from "@chakra-ui/react";
 
 interface Quotation {
   user_id: string;
   quotationName: string;
   quotation: string;
-  quotationDetails: IQuotationDetail[];
+  design: IDesign;
   isExpired: boolean;
 }
 
-const quotation = () => {
+const Quotation = () => {
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
     pageSize: LIMIT[0],
   });
-  const [searchTerm, setSearchTerm] = useState("");
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [optionalQuery, setOptionalQuery] = useState(`&user_id=${searchValue}`);
 
-  const _handleSearch = _.debounce(
-    (search) => {
-      setSearchTerm(search);
-    },
-    1500,
-    {
-      maxWait: 1500,
-    }
+  useEffect(() => {
+    setOptionalQuery(
+      `&user_id=${searchValue}&sort=${sorting[0]?.id}&desc=${sorting[0]?.desc ? -1 : 1}`
+    );
+  }, [sorting]);
+
+  useEffect(() => {
+    setSearchLoading(true);
+    handleSearch(searchValue);
+  }, [searchValue]);
+
+  const handleSearch = useCallback(
+    _.debounce((searchValue) => {
+      setOptionalQuery(`&user_id=${searchValue}`);
+      setSearchLoading(false);
+    }, 2000),
+    []
   );
 
   const columnHelper = createColumnHelper<Quotation>();
-
   const columns = [
     columnHelper.accessor("user_id", {
       header: "ACCOUNT ID",
@@ -46,48 +56,91 @@ const quotation = () => {
     }),
     columnHelper.accessor("quotation", {
       header: "QUOTATION",
+      enableSorting: false,
     }),
-    columnHelper.accessor("quotationDetails", {
+    columnHelper.accessor("design", {
       header: "QUOTATION DETAIL",
+      enableSorting: false,
+      cell: (item) => {
+        return (
+          <HStack>
+            <TableBadge colorScheme="orange" text={item.getValue().courtSize.name}></TableBadge>
+            <TableBadge
+              colorScheme="purple"
+              text={item.getValue().courtSize.length + "*" + item.getValue().courtSize.width}
+            ></TableBadge>
+          </HStack>
+        );
+      },
     }),
     columnHelper.accessor("isExpired", {
       header: "QUOTATION STATUS",
+      cell: (item) => {
+        return item.getValue() ? (
+          <TableBadge colorScheme="red" text="expired"></TableBadge>
+        ) : (
+          <TableBadge colorScheme="green" text="available"></TableBadge>
+        );
+      },
     }),
   ];
 
-  const { data, isLoading, isError } = useGetAllQuotationQuery({
+  const { data, isError, isSuccess } = useGetAllQuotationQuery({
     offset: pageIndex * pageSize,
     limit: pageSize,
+    optionalQuery,
   });
 
-  // if (!isLoading) {
   const quotationData = data?.data.map((item) => {
     return {
-      ..._.omit(item, ["_id", "image", "design", "isDeleted", "createdAt", "updatedAt", "__v"]),
+      ..._.omit(item, [
+        "_id",
+        "image",
+        "quotationDetails",
+        "isDeleted",
+        "createdAt",
+        "updatedAt",
+        "__v",
+      ]),
       quotationName: item.design.designName,
     };
   });
 
+  const tableSearch = {
+    searchPlaceholder: "Search account ID",
+    searchValue: searchValue,
+    setSearchValue: setSearchValue,
+    searchLoading: searchLoading,
+    searchLoadingText: "Please wait while the quotation data is loading...",
+  };
+
   return (
-    <Center height="100vh">
-      {isLoading && <Loading loadingText="Please wait while the quotation is loading..."></Loading>}
+    <Box paddingTop="40px" paddingBottom="20px">
       {isError && (
-        <Error
-          errorTitle="Sorry, something wrong"
-          errorDescription="Your request was not sent successfully, please try again or contact IT support."
-        ></Error>
+        <Center height="100vh">
+          <Error
+            errorTitle="Sorry, failed to get quotation data"
+            errorDescription="Your request was not sent successfully, please try again or contact IT support."
+          ></Error>
+        </Center>
       )}
-      <DisplayDataTable
-        tableTitle="Quotation"
-        columns={columns}
-        data={quotationData as Quotation[]}
-        setPagination={setPagination}
-        pageIndex={pageIndex}
-        pageSize={pageSize}
-        pageCount={data?.total ? Math.ceil(data?.total / pageSize) : 1}
-      ></DisplayDataTable>
-    </Center>
+      {isSuccess && (
+        <DisplayDataTable
+          columns={columns}
+          data={quotationData as Quotation[]}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          setPagination={setPagination}
+          sorting={sorting}
+          setSorting={setSorting}
+          totalCount={data.total}
+          tableTitle="Quotation"
+          showTotalQuantity
+          tableSearch={tableSearch}
+        ></DisplayDataTable>
+      )}
+    </Box>
   );
 };
 
-export default quotation;
+export default Quotation;
