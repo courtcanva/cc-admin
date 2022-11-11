@@ -1,7 +1,6 @@
 import { LIMIT } from "@/constants/pagination";
 import { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/router";
-import _ from "lodash";
 import Search from "./Search";
 import Loading from "@/components/Loading";
 import InformationAlert from "../InformationAlert";
@@ -223,7 +222,6 @@ function DisplayDataTable<Data extends object>({
               {table.getRowModel().rows.map((row) => (
                 <Tr key={row.id}>
                   {row.getVisibleCells().map((cell) => {
-                    const meta: any = cell.column.columnDef.meta;
                     return (
                       <Td key={cell.id}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
