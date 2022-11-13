@@ -18,7 +18,6 @@ const OrderContainer = ({ order }: OrderContainerProps) => {
       <OrderHeader createdAt={order.createdAt} _id={order._id} userId={order.user_id} />
 
       {/* item block */}
-
       <Flex marginBottom="20px">
         <Flex flex="79" flexDirection="column">
           {(order.items || []).map((item: IOrderItem, index: number) => (
@@ -28,14 +27,18 @@ const OrderContainer = ({ order }: OrderContainerProps) => {
               designName={item.design.designName}
               courtType={"Basketball"}
               quotation={item.quotation}
-              quationDetials={item.quotationDetails}
+              quotationDetials={item.quotationDetails}
               length={item.design.courtSize.length}
               width={item.design.courtSize.width}
               courtName={item.design.courtSize.name}
-              consigneeName={"Tom Jerry"}
-              consigneePhone={"0420678345"}
-              consigneeEmail={"tomJerry@gmail.com"}
-              shippingAddress={"7 Randall St, Brighton 3178, VIC "}
+              consigneeName={order.paymentInfo?.name}
+              consigneePhone={order.paymentInfo?.phone}
+              consigneeEmail={order.paymentInfo?.email}
+              shippingAddress={`${order.paymentInfo?.billingAddress.line2 || " "} ${
+                order.paymentInfo?.billingAddress.line1 || " "
+              } ${order.paymentInfo?.billingAddress.city || " "} ${
+                order.paymentInfo?.billingAddress.postalCode || "N/A"
+              }`}
             />
           ))}
           {/* item block left part footer */}
@@ -43,12 +46,28 @@ const OrderContainer = ({ order }: OrderContainerProps) => {
             updateTime={order.updatedAt}
             totalQuatation={_.sumBy(order.items, function (o: IOrderItem) {
               return parseFloat(o.quotation);
-            }).toLocaleString()}
-            depositePaid={`$A 1,000`}
+            }).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+            depositeRate={order.depositRatio}
           />
         </Flex>
         {/* Right */}
-        <OrderSideBarPaid depositePaid={`$A 1,000`} />
+        <OrderSideBarPaid
+          depositePaid={
+            order.status === "unpaid"
+              ? "N/A"
+              : (
+                  _.sumBy(order.items, function (o: IOrderItem) {
+                    return parseFloat(o.quotation);
+                  }) * order.depositRatio
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
+          }
+        />
         <OrderSideBarState status={order.status} />
       </Flex>
     </Flex>

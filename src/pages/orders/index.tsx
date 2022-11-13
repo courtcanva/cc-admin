@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Heading, InputGroup, Input, Button, Flex, Box } from "@chakra-ui/react";
+import { useState, useMemo, useCallback } from "react";
+import { Heading, InputGroup, Input, InputLeftElement, Flex, Box } from "@chakra-ui/react";
+import { AiOutlineSearch } from "react-icons/ai";
 import { useGetAllOrdersQuery } from "../../redux/api/ordersApi";
 import OrderContainer from "./components/OrderContainer";
 import OrderStatusDropdownFilter from "./components/OrderStatusDropdownFilter";
@@ -7,37 +8,46 @@ import PaginationButton from "@/components/PaginationButton.tsx";
 import { LIMIT, OFFSET } from "@/constants/paginationData";
 import { FilterType } from "./components/OrderStatusDropdownFilter";
 import { IOrder } from "@/interfaces/orderData";
+import _ from "lodash";
 
 const Orders = () => {
   const [page, setPage] = useState<number>(1);
   const [offset, setOffSet] = useState<number>(OFFSET);
   const limit = LIMIT;
   const { data: orders, isLoading, isFetching, isError } = useGetAllOrdersQuery({ limit, offset });
-  const { data: ordersLength } = useGetAllOrdersQuery({});
-  const [searchField, setSearchField] = useState<string>("");
   const [filterdOrders, setFilterdOrders] = useState<IOrder>();
   const [filterStatus, setFilterStatus] = useState<FilterType>();
 
-  const totalPages = Math.ceil((ordersLength || []).length / limit);
+  const totalPages = Math.ceil((orders?.total || []) / limit);
+
+  // deboubce set search bar value
+  const debouncedChangeHandler = useMemo(
+    () =>
+      _.debounce((userInput) => {
+        const result = (orders?.data || []).filter(
+          (order: IOrder) =>
+            order._id.toLowerCase().includes(userInput.toLowerCase()) ||
+            order.user_id.toLowerCase().includes(userInput.toLowerCase())
+        );
+        setFilterdOrders(result);
+      }, 500),
+    []
+  );
+
+  // handle search bar value
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedChangeHandler(e.target.value || "");
+  }, []);
+
+  // handle order status filter value
+  const handleValueChange = useCallback(
+    (value: FilterType) => {
+      setFilterStatus(value);
+    },
+    [setFilterStatus]
+  );
 
   if (isFetching && !orders) return null;
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchField(e.target.value);
-  };
-
-  const handleSearchClick = (searchField: string) => {
-    const result = (orders || []).filter(
-      (order: IOrder) =>
-        order._id.toLowerCase().includes(searchField.toLowerCase()) ||
-        order.user_id.toLowerCase().includes(searchField.toLowerCase())
-    );
-    setFilterdOrders(result);
-  };
-
-  const handleValueChange = (value: FilterType) => {
-    setFilterStatus(value);
-  };
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
   return (
@@ -45,24 +55,18 @@ const Orders = () => {
       <Heading marginY="50px">Orders</Heading>
       {/* Search bar */}
       <InputGroup>
+        <InputLeftElement pointerEvents="none">
+          <AiOutlineSearch color="#3C3C3C" />
+        </InputLeftElement>
         <Input
           placeholder="Search order ID or user ID ..."
           _placeholder={{ color: "D9D9D9" }}
-          height="35px"
+          height="40px"
           width="200px"
           fontSize="12px"
+          aria-label="search-input"
           onChange={handleSearchChange}
-          onKeyPress={() => handleSearchClick(searchField)}
         />
-        <Button
-          height="35px"
-          size="xs"
-          color="#1A202C"
-          width="75px"
-          onClick={() => handleSearchClick(searchField)}
-        >
-          Search
-        </Button>
       </InputGroup>
 
       {/* Page Header */}
@@ -97,7 +101,7 @@ const Orders = () => {
         </Heading>
       </Flex>
       {/* search orderID and user ID filter */}
-      {(filterdOrders || orders || [])
+      {(filterdOrders || orders.data || [])
         // order status filter
         .filter((order: IOrder) => {
           if (!filterStatus) return true;

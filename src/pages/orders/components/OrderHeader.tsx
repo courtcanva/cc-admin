@@ -17,14 +17,14 @@ const OrderHeader = ({ createdAt, _id, userId }: PropsType) => {
     >
       <Flex gap="18px" marginLeft="18px">
         <Text fontSize="14px" fontWeight="700" color="#1A202C" paddingLeft="10px">
-          Create Date: {createdAt.split("T")[0]}
+          {`Create Date: ${createdAt.split("T")[0]}`}
         </Text>
-        <Text fontSize="14px" fontWeight="700" color="#1A202C" marginLeft="50px">
-          Order #: {_id}
+        <Text fontSize="14px" fontWeight="700" color="#1A202C" marginLeft="135px">
+          {`Order #: ${_id}`}
         </Text>
       </Flex>
       <Text fontSize="14px" fontWeight="700" color="#1A202C" marginRight="18px">
-        Account ID : {userId}
+        {`Account ID: ${userId}`}
       </Text>
     </Flex>
   );

@@ -49,6 +49,7 @@
     "react-redux": "^8.0.1",
     "shortid": "^2.2.16",
     "styled-components": "^5.3.5",
+    "whatwg-fetch": "^3.6.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {

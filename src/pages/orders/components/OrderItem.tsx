@@ -1,32 +1,33 @@
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
-import { IOrderItemQutationDetail } from "@/interfaces/orderData";
+import { IOrderItemQuotationDetail } from "@/interfaces/orderData";
 interface PropsType {
   image: string;
   designName: string;
   courtType: string;
   quotation: string;
-  quationDetials: IOrderItemQutationDetail[];
+  quotationDetials: IOrderItemQuotationDetail[];
   length: number;
   width: number;
   courtName: string;
-  consigneeName: string;
-  consigneePhone: string;
-  consigneeEmail: string;
-  shippingAddress: string;
+  consigneeName?: string;
+  consigneePhone?: string;
+  consigneeEmail?: string;
+  shippingAddress?: string;
 }
+
 const OrderItem = ({
   image,
   designName,
   courtType,
   quotation,
-  quationDetials,
+  quotationDetials,
   length,
   width,
   courtName,
-  consigneeName,
-  consigneePhone,
-  consigneeEmail,
-  shippingAddress,
+  consigneeName = "N/A",
+  consigneePhone = "N/A",
+  consigneeEmail = "N/A",
+  shippingAddress = "N/A",
 }: PropsType) => {
   return (
     <Flex border="#D9D9D9 solid 1px" borderWidth="0px 1px 1px 1px" padding="0px 0px 20px 10px">
@@ -56,22 +57,24 @@ const OrderItem = ({
         </Flex>
         <Flex>
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
-            Quatation Price:
+            Quotation Price:
           </Text>
           <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-            {" "}
-            {Number(quotation).toLocaleString()}
+            {`$${Number(quotation).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}`}
           </Text>
         </Flex>
         <Flex flexWrap="wrap" alignItems="center">
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
-            Quatation Details:
+            Quotation Details:
           </Text>
           <Flex flexWrap="wrap">
-            {quationDetials
+            {quotationDetials
               // delete purple tiles, which is 0 quantity
-              .filter((detail: IOrderItemQutationDetail) => detail.quantity !== 0)
-              .map((detail: IOrderItemQutationDetail, index: number) => (
+              .filter((detail: IOrderItemQuotationDetail) => detail.quantity !== 0)
+              .map((detail: IOrderItemQuotationDetail, index: number) => (
                 <Flex key={index}>
                   <Box
                     marginLeft="3px"
@@ -97,7 +100,7 @@ const OrderItem = ({
             Court Size:
           </Text>
           <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-            {length} * {width} {courtName}
+            {`${length}(L) * ${width}(W) ${courtName}`}
           </Text>
         </Flex>
       </Flex>
@@ -107,7 +110,13 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Consignee Name:
           </Text>
-          <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
+          <Text
+            color="#1A202C"
+            fontSize="14px"
+            fontWeight="400"
+            paddingLeft="10px"
+            data-testid="consignee-name"
+          >
             {consigneeName}
           </Text>
         </Flex>
@@ -115,7 +124,13 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Consignee Phone:
           </Text>
-          <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
+          <Text
+            color="#1A202C"
+            fontSize="14px"
+            fontWeight="400"
+            paddingLeft="10px"
+            data-testid="consignee-phone"
+          >
             {consigneePhone}
           </Text>
         </Flex>
@@ -123,7 +138,13 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Consignee Email:
           </Text>
-          <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
+          <Text
+            color="#1A202C"
+            fontSize="14px"
+            fontWeight="400"
+            paddingLeft="10px"
+            data-testid="consignee-email"
+          >
             {consigneeEmail}
           </Text>
         </Flex>
@@ -131,7 +152,13 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Shipping Address:
           </Text>
-          <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
+          <Text
+            color="#1A202C"
+            fontSize="14px"
+            fontWeight="400"
+            paddingLeft="10px"
+            data-testid="shipping-address"
+          >
             {shippingAddress}
           </Text>
         </Flex>

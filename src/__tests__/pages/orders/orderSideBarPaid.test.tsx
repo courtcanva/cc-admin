@@ -1,0 +1,14 @@
+import { screen } from "@testing-library/react";
+import renderWithMockedProvider from "../../utils";
+import OrderSideBarPaid from "../../../pages/orders/components/OrderSideBarPaid";
+
+const OrderSideBarPaidInfoMockData = {
+  depositePaid: "1296.11",
+};
+
+describe("<OrderSideBarPaid />", () => {
+  it("should render paid money correctly", () => {
+    renderWithMockedProvider(<OrderSideBarPaid {...OrderSideBarPaidInfoMockData} />);
+    expect(screen.getByText("$1296.11")).toBeVisible();
+  });
+});
