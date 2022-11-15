@@ -138,10 +138,7 @@ function DisplayDataTable<Data extends object>({
 
       {/* Search / Filter Button / Create Button */}
       {(tableSearch || createLink) && (
-        <Flex
-          marginTop="16px"
-          justifyContent={tableSearch !== undefined ? "space-between" : "flex-end"}
-        >
+        <Flex marginTop="16px" justifyContent={tableSearch ? "space-between" : "flex-end"}>
           {tableSearch && (
             <Box width="fit-content" data-testid="table-search">
               <Search
@@ -191,7 +188,11 @@ function DisplayDataTable<Data extends object>({
         <Center flexGrow={1}>
           <Loading loadingText={tableSearch?.searchLoadingText}></Loading>
         </Center>
-      ) : totalCount ? (
+      ) : totalCount === 0 ? (
+        <Center flexGrow={1}>
+          <InformationAlert informationText="No quotation data found"></InformationAlert>
+        </Center>
+      ) : (
         <>
           <Table marginTop="24px" variant="striped">
             <Thead backgroundColor="#2C4E8A">
@@ -323,10 +324,6 @@ function DisplayDataTable<Data extends object>({
             </Flex>
           </Flex>
         </>
-      ) : (
-        <Center flexGrow={1}>
-          <InformationAlert informationText="No quotation data found"></InformationAlert>
-        </Center>
       )}
     </Flex>
   );

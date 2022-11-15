@@ -24,7 +24,7 @@ const Quotation = () => {
     pageSize: LIMIT[0],
   });
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [searchValue, setSearchValue] = useState("0");
+  const [searchValue, setSearchValue] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
   const [optionalQuery, setOptionalQuery] = useState(`&user_id=${searchValue}`);
 
@@ -61,7 +61,6 @@ const Quotation = () => {
     }),
     columnHelper.accessor("quotation", {
       header: "QUOTATION",
-      enableSorting: false,
       cell: (item) => {
         return formatCurrency(item.getValue());
       },
@@ -75,7 +74,9 @@ const Quotation = () => {
             <TableBadge colorScheme="orange" text={item.getValue().courtSize.name}></TableBadge>
             <TableBadge
               colorScheme="purple"
-              text={item.getValue().courtSize.length + "*" + item.getValue().courtSize.width}
+              text={`L: ${item.getValue().courtSize.length / 1000}m W:${
+                item.getValue().courtSize.width / 1000
+              }m`}
             ></TableBadge>
           </HStack>
         );
@@ -85,9 +86,9 @@ const Quotation = () => {
       header: "QUOTATION STATUS",
       cell: (item) => {
         return item.getValue() ? (
-          <TableBadge colorScheme="red" text="expired"></TableBadge>
+          <TableBadge colorScheme="red" text="Expired"></TableBadge>
         ) : (
-          <TableBadge colorScheme="green" text="available"></TableBadge>
+          <TableBadge colorScheme="green" text="Available"></TableBadge>
         );
       },
     }),
@@ -99,20 +100,17 @@ const Quotation = () => {
     optionalQuery,
   });
 
-  const quotationData = data?.data.map((item) => {
-    return {
-      ..._.omit(item, [
-        "_id",
-        "image",
-        "quotationDetails",
-        "isDeleted",
-        "createdAt",
-        "updatedAt",
-        "__v",
-      ]),
-      quotationName: item.design.designName,
-    };
-  });
+  const quotationData = data
+    ? data.data.map((item) => {
+        return {
+          user_id: item.user_id,
+          quotationName: item.design.designName,
+          quotation: item.quotation,
+          design: item.design,
+          isExpired: item.isExpired,
+        };
+      })
+    : [];
 
   const tableSearch = {
     searchPlaceholder: "Search account ID",
@@ -136,7 +134,7 @@ const Quotation = () => {
         <Box paddingTop="40px" paddingBottom="20px">
           <DisplayDataTable
             columns={columns}
-            data={quotationData as Quotation[]}
+            data={quotationData}
             pageIndex={pageIndex}
             pageSize={pageSize}
             setPagination={setPagination}
