@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { InputGroup, InputLeftElement, Input, InputRightElement } from "@chakra-ui/react";
 import { HiOutlineSearch, HiOutlineX } from "react-icons/hi";
 
@@ -9,8 +9,12 @@ interface Props {
 }
 
 const Search = ({ searchPlaceholder, searchValue, setSearchValue }: Props) => {
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSearchChange = () => {
+    if (searchInputRef.current) {
+      setSearchValue(searchInputRef.current.value);
+    }
   };
 
   const handleRemoveSearch = () => {
@@ -25,10 +29,11 @@ const Search = ({ searchPlaceholder, searchValue, setSearchValue }: Props) => {
         _placeholder={{ color: "#B6B6B6" }}
         placeholder={searchPlaceholder}
         value={searchValue}
+        ref={searchInputRef}
         onChange={handleSearchChange}
         data-testid="search-input"
       />
-      {searchValue.length !== 0 && (
+      {searchValue && (
         <InputRightElement
           children={<HiOutlineX color="#2C4E8A" />}
           onClick={handleRemoveSearch}

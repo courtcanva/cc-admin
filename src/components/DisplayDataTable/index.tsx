@@ -106,7 +106,10 @@ function DisplayDataTable<Data extends object>({
   });
 
   return (
-    <Flex flexDirection="column" height="100%">
+    <Flex
+      flexDirection="column"
+      height={tableSearch?.searchLoading || totalCount === 0 ? "80vh" : ""}
+    >
       {/* Table title / Data total count */}
       <Flex alignItems="center">
         {tableTitle && (
@@ -205,12 +208,14 @@ function DisplayDataTable<Data extends object>({
                       >
                         <Flex alignItems="center">
                           {flexRender(header.column.columnDef.header, header.getContext())}
-                          {header.column.getIsSorted() &&
-                            (header.column.getIsSorted() === "desc" ? (
-                              <Icon as={HiChevronDown} marginLeft="4px" boxSize="18px" />
-                            ) : (
-                              <Icon as={HiChevronUp} marginLeft="4px" boxSize="18px" />
-                            ))}
+                          <Flex marginLeft="4px" boxSize="18px" alignItems="center">
+                            {header.column.getIsSorted() &&
+                              (header.column.getIsSorted() === "desc" ? (
+                                <Icon as={HiChevronDown} width="100%" height="100%" />
+                              ) : (
+                                <Icon as={HiChevronUp} width="100%" height="100%" />
+                              ))}
+                          </Flex>
                         </Flex>
                       </Th>
                     );

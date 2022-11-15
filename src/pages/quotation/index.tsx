@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { createColumnHelper, SortingState } from "@tanstack/react-table";
 import { useGetAllQuotationQuery } from "../../redux/api/quotationApi";
 import _ from "lodash";
+import formatCurrency from "@/utils/formatCurrency";
 import { IDesign } from "@/interfaces/design";
 import Error from "@/components/Error";
 import DisplayDataTable from "@/components/DisplayDataTable";
@@ -23,7 +24,7 @@ const Quotation = () => {
     pageSize: LIMIT[0],
   });
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState("0");
   const [searchLoading, setSearchLoading] = useState(false);
   const [optionalQuery, setOptionalQuery] = useState(`&user_id=${searchValue}`);
 
@@ -41,6 +42,10 @@ const Quotation = () => {
   const handleSearch = useCallback(
     _.debounce((searchValue) => {
       setOptionalQuery(`&user_id=${searchValue}`);
+      setPagination({
+        pageIndex: 0,
+        pageSize: LIMIT[0],
+      });
       setSearchLoading(false);
     }, 2000),
     []
@@ -57,6 +62,9 @@ const Quotation = () => {
     columnHelper.accessor("quotation", {
       header: "QUOTATION",
       enableSorting: false,
+      cell: (item) => {
+        return formatCurrency(item.getValue());
+      },
     }),
     columnHelper.accessor("design", {
       header: "QUOTATION DETAIL",
@@ -115,9 +123,9 @@ const Quotation = () => {
   };
 
   return (
-    <Box height="100%" paddingTop="40px" paddingBottom="20px">
+    <>
       {isError && (
-        <Center height="100%">
+        <Center height="100vh">
           <Error
             errorTitle="Sorry, failed to get quotation data"
             errorDescription="Your request was not sent successfully, please try again or contact IT support."
@@ -125,21 +133,23 @@ const Quotation = () => {
         </Center>
       )}
       {isSuccess && (
-        <DisplayDataTable
-          columns={columns}
-          data={quotationData as Quotation[]}
-          pageIndex={pageIndex}
-          pageSize={pageSize}
-          setPagination={setPagination}
-          sorting={sorting}
-          setSorting={setSorting}
-          totalCount={data.total}
-          tableTitle="Quotation"
-          showTotalQuantity
-          tableSearch={tableSearch}
-        ></DisplayDataTable>
+        <Box paddingTop="40px" paddingBottom="20px">
+          <DisplayDataTable
+            columns={columns}
+            data={quotationData as Quotation[]}
+            pageIndex={pageIndex}
+            pageSize={pageSize}
+            setPagination={setPagination}
+            sorting={sorting}
+            setSorting={setSorting}
+            totalCount={data.total}
+            tableTitle="Quotation"
+            showTotalQuantity
+            tableSearch={tableSearch}
+          ></DisplayDataTable>
+        </Box>
       )}
-    </Box>
+    </>
   );
 };
 
