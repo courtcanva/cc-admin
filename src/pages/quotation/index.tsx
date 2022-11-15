@@ -115,9 +115,9 @@ const Quotation = () => {
   };
 
   return (
-    <Box paddingTop="40px" paddingBottom="20px">
+    <Box height="100%" paddingTop="40px" paddingBottom="20px">
       {isError && (
-        <Center height="100vh">
+        <Center height="100%">
           <Error
             errorTitle="Sorry, failed to get quotation data"
             errorDescription="Your request was not sent successfully, please try again or contact IT support."

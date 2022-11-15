@@ -106,7 +106,7 @@ function DisplayDataTable<Data extends object>({
   });
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" height="100%">
       {/* Table title / Data total count */}
       <Flex alignItems="center">
         {tableTitle && (
@@ -185,7 +185,7 @@ function DisplayDataTable<Data extends object>({
 
       {/* Table */}
       {tableSearch?.searchLoading ? (
-        <Center height="100vh">
+        <Center flexGrow={1}>
           <Loading loadingText={tableSearch?.searchLoadingText}></Loading>
         </Center>
       ) : totalCount ? (
@@ -319,7 +319,7 @@ function DisplayDataTable<Data extends object>({
           </Flex>
         </>
       ) : (
-        <Center height="100vh">
+        <Center flexGrow={1}>
           <InformationAlert informationText="No quotation data found"></InformationAlert>
         </Center>
       )}
