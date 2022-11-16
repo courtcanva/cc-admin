@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-  depositRatio: number
+  depositRatio: number;
 };
 
 const ConfirmWindow = (props: Props) => {

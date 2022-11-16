@@ -1,9 +1,7 @@
-type Props = {
-  depositRatio: number;
+import DepositBar from "@/components/Deposit";
+
+const Deposit = () => {
+  return <DepositBar />;
 };
 
-const index = (props: Props) => {
-  return <div>index</div>;
-};
-
-export default index;
+export default Deposit;

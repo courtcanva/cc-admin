@@ -3,6 +3,7 @@ import counterReducer from "./reducer/counterSlice";
 import { adminApi } from "../redux/api/adminApi";
 import { courtsApi } from "../redux/api/courtsApi";
 import { usersAccountApi } from "../redux/api/usersAccountApi";
+import { depositApi } from "../redux/api/depositApi";
 export const makeStore = () =>
   configureStore({
     reducer: {
@@ -10,12 +11,14 @@ export const makeStore = () =>
       [adminApi.reducerPath]: adminApi.reducer,
       [courtsApi.reducerPath]: courtsApi.reducer,
       [usersAccountApi.reducerPath]: usersAccountApi.reducer,
+      [depositApi.reducerPath]: depositApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
         adminApi.middleware,
         courtsApi.middleware,
-        usersAccountApi.middleware
+        usersAccountApi.middleware,
+        depositApi.middleware
       ),
   });
 
