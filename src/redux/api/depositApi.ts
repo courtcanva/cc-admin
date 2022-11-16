@@ -1,5 +1,6 @@
 import { environment } from "@/constants/environment";
 import { IUpdateDeposit } from "@/interfaces/depositData";
+import formatDate from "@/utils/formatDate";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import _ from "lodash";
 import UserTokenService from "../../components/Login/helpers/TokenService";
@@ -19,7 +20,10 @@ export const depositApi = createApi({
     getDeposit: builder.query<any, void>({
       query: () => `/deposit`,
       providesTags: ["deposit"],
-      transformResponse: (result: any, _err, _arg) => _.omit(result, ["createdAt", "_id"])
+      transformResponse: (result: any, _err, _arg) => { 
+        result.updatedAt = formatDate(result.updatedAt);
+        return _.omit(result, ["createdAt", "_id"]) 
+      }
     }),
     updateDeposit: builder.mutation<any, IUpdateDeposit>({
       query: (deposit) => ({
@@ -33,6 +37,6 @@ export const depositApi = createApi({
 });
 
 export const {
-  useGetDepositQuery,
+  useLazyGetDepositQuery,
   useUpdateDepositMutation,
 } = depositApi;

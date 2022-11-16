@@ -1,18 +1,26 @@
 import { DEPOSIT_TABLE_HEADER } from "@/constants/tabelHeaders";
 import { IDeposit } from "@/interfaces/depositData";
-import { useGetDepositQuery } from "../../redux/api/depositApi";
+import { useLazyGetDepositQuery } from "../../redux/api/depositApi";
 import { Box, Text, Table, Tr, Tbody, IconButton, Td, useDisclosure } from "@chakra-ui/react";
 import { FaPen } from "react-icons/fa";
 import TableHeader from "../TableHeader";
 import EditComfirmModal from "./EditComfirmModal";
+import { useEffect, useState } from "react";
 
 const DepositBar = () => {
-  const { data: depositData } = useGetDepositQuery();
-  const dataCopy = { ...depositData } as IDeposit;
-  console.log(dataCopy["updatedAt"]);
-  // dataCopy["updatedAt"] = formatDate(dataCopy.updatedAt);
-  const { updatedAt, depositRate } = dataCopy;
+  const [trigger, {data: depositData}] = useLazyGetDepositQuery();
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const [{ updatedAt, depositRate }, setDepositdata] = useState({ updatedAt: "", depositRate: 0});
+
+  useEffect(() => {
+    trigger()
+  }, [])
+
+  useEffect(() => {
+    const dataCopy = { ...depositData } as IDeposit;
+    const { updatedAt, depositRate } = dataCopy;
+    setDepositdata({updatedAt, depositRate});
+  }, [depositData])
 
   return (
     <>
