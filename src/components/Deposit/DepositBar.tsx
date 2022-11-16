@@ -8,19 +8,19 @@ import EditComfirmModal from "./EditComfirmModal";
 import { useEffect, useState } from "react";
 
 const DepositBar = () => {
-  const [trigger, {data: depositData}] = useLazyGetDepositQuery();
+  const [trigger, { data: depositData }] = useLazyGetDepositQuery();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const [{ updatedAt, depositRate }, setDepositdata] = useState({ updatedAt: "", depositRate: 0});
+  const [{ updatedAt, depositRate }, setDepositdata] = useState({ updatedAt: "", depositRate: 0 });
 
   useEffect(() => {
-    trigger()
-  }, [])
+    trigger();
+  }, []);
 
   useEffect(() => {
     const dataCopy = { ...depositData } as IDeposit;
     const { updatedAt, depositRate } = dataCopy;
-    setDepositdata({updatedAt, depositRate});
-  }, [depositData])
+    setDepositdata({ updatedAt, depositRate });
+  }, [depositData]);
 
   return (
     <>
