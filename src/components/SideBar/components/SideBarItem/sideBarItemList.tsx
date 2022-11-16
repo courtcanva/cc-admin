@@ -2,6 +2,7 @@ import { AiFillHome, AiOutlineKey } from "react-icons/ai";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { CgMicrosoft } from "react-icons/cg";
 import { TbRectangle } from "react-icons/tb";
+import { HiOutlineShoppingCart } from "react-icons/hi";
 import { ISideBarItem } from "../../../../interfaces/navigationItem";
 import { RiPercentLine } from "react-icons/ri";
 
@@ -38,6 +39,12 @@ const sideBarItemList: ISideBarItem[] = [
   },
   {
     id: 6,
+    title: "Quotation",
+    icon: <HiOutlineShoppingCart />,
+    href: "/quotation",
+  },
+  {
+    id: 7,
     title: "Deposit",
     icon: <RiPercentLine />,
     href: "/deposit",

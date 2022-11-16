@@ -1,6 +1,6 @@
 export interface ISideBarItem {
   id: number;
   title: string;
-  icon: element;
+  icon: JSX.Element;
   href: string;
 }
