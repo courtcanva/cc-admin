@@ -21,7 +21,7 @@ export const makeStore = () =>
         courtsApi.middleware,
         quotationApi.middleware,
         usersAccountApi.middleware,
-        depositApi.middleware,
+        depositApi.middleware
       ),
   });
 
