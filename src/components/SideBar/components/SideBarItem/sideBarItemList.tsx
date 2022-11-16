@@ -35,5 +35,11 @@ const sideBarItemList: ISideBarItem[] = [
     icon: <AiOutlineKey />,
     href: "/admin",
   },
+  {
+    id: 6,
+    title: "Deposit",
+    icon: <AiOutlineKey />,
+    href: "/deposit",
+  },
 ];
 export default sideBarItemList;
