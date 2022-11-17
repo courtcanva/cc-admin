@@ -31,7 +31,6 @@ const EditConfirmModal = (props: Props) => {
 
   const onConfirm = async () => {
     const newDeposit = ref.current?.value;
-    console.log("1", newDeposit);
     if (!newDeposit || Number(newDeposit) === currentDeposit) return;
     const newDepositRate = { depositRate: Number(newDeposit) } as IUpdateDeposit;
     await updateDeposit(newDepositRate)

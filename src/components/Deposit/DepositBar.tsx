@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 const DepositBar = () => {
   const [trigger, { data: depositData }] = useLazyGetDepositQuery();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const [{ updatedAt, depositRate }, setDepositdata] = useState({ updatedAt: "", depositRate: 0 });
+  const [{ updatedAt, depositRate }, setDepositData] = useState({ updatedAt: "", depositRate: 0 });
 
   useEffect(() => {
     trigger();
@@ -19,7 +19,7 @@ const DepositBar = () => {
   useEffect(() => {
     const dataCopy = { ...depositData } as IDeposit;
     const { updatedAt, depositRate } = dataCopy;
-    setDepositdata({ updatedAt, depositRate });
+    setDepositData({ updatedAt, depositRate });
   }, [depositData]);
 
   return (
