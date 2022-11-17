@@ -4,7 +4,7 @@ import { useLazyGetDepositQuery } from "../../redux/api/depositApi";
 import { Box, Text, Table, Tr, Tbody, IconButton, Td, useDisclosure } from "@chakra-ui/react";
 import { FaPen } from "react-icons/fa";
 import TableHeader from "../TableHeader";
-import EditComfirmModal from "./EditComfirmModal";
+import EditConfirmModal from "./EditConfirmModal";
 import { useEffect, useState } from "react";
 
 const DepositBar = () => {
@@ -44,7 +44,7 @@ const DepositBar = () => {
           </Tr>
         </Tbody>
       </Table>
-      <EditComfirmModal onClose={onClose} isOpen={isOpen} currentDeposit={depositRate} />
+      <EditConfirmModal onClose={onClose} isOpen={isOpen} currentDeposit={depositRate} />
     </>
   );
 };

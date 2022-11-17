@@ -23,7 +23,7 @@ interface Props {
   currentDeposit: number;
 }
 
-const EditComfirmModal = (props: Props) => {
+const EditConfirmModal = (props: Props) => {
   const ref = useRef<HTMLInputElement | null>(null);
   const { onClose, isOpen, currentDeposit } = props;
   const toast = useToast();
@@ -36,14 +36,13 @@ const EditComfirmModal = (props: Props) => {
     const newDepositRate = { depositRate: Number(newDeposit) } as IUpdateDeposit;
     await updateDeposit(newDepositRate)
       .unwrap()
-      .then((res) => {
+      .then((_res) => {
         onClose();
       })
       .catch((err) => {
-        console.log("err: ", err);
         return toast({
-          title: `Failed to get input number`,
-          description: "Try again or contact IT support",
+          title: `Oops`,
+          description: `Error: ${err}`,
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -58,8 +57,8 @@ const EditComfirmModal = (props: Props) => {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody textAlign="center" marginTop="60px">
-            <NumberInput defaultValue={currentDeposit} precision={2} step={0.01} max={1} min={0}>
-              <NumberInputField ref={ref} />
+            <NumberInput defaultValue={currentDeposit} precision={2} step={0.01} max={1} min={0} >
+              <NumberInputField ref={ref} data-testid="numberInput" />
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
@@ -80,4 +79,4 @@ const EditComfirmModal = (props: Props) => {
   );
 };
 
-export default EditComfirmModal;
+export default EditConfirmModal;
