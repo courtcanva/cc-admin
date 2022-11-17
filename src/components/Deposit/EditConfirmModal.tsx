@@ -57,7 +57,7 @@ const EditConfirmModal = (props: Props) => {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody textAlign="center" marginTop="60px">
-            <NumberInput defaultValue={currentDeposit} precision={2} step={0.01} max={1} min={0} >
+            <NumberInput defaultValue={currentDeposit} precision={2} step={0.01} max={1} min={0}>
               <NumberInputField ref={ref} data-testid="numberInput" />
               <NumberInputStepper>
                 <NumberIncrementStepper />
