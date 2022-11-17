@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Heading, InputGroup, Input, InputLeftElement, Flex, Box } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useGetAllOrdersQuery } from "../../redux/api/ordersApi";
@@ -6,50 +6,77 @@ import OrderContainer from "./components/OrderContainer";
 import OrderStatusDropdownFilter from "./components/OrderStatusDropdownFilter";
 import PaginationButton from "@/components/PaginationButton.tsx";
 import { LIMIT, OFFSET } from "@/constants/paginationData";
-import { FilterType } from "./components/OrderStatusDropdownFilter";
 import { IOrder } from "@/interfaces/orderData";
+import { FilterObjectType, FilterKey } from "./components/OrderStatusDropdownFilter";
 import _ from "lodash";
 
+// util for status filtering
+const getFilterQueryString = (filter: FilterObjectType) => {
+  const keys = Object.keys(filter) as FilterKey[];
+  return keys
+    .reduce((acc: string[], key: FilterKey) => {
+      const filterValue = filter[key];
+      return filterValue ? [...acc, `status=${key}`] : acc;
+    }, [])
+    .join("&");
+};
+
+// util for search
+const userIdQueryString = (userId?: string) => {
+  return userId ? `&user_id=${userId}` : "";
+};
+
 const Orders = () => {
+  // pagination attributes
   const [page, setPage] = useState<number>(1);
   const [offset, setOffSet] = useState<number>(OFFSET);
   const limit = LIMIT;
-  const { data: orders, isLoading, isFetching, isError } = useGetAllOrdersQuery({ limit, offset });
-  const [filterdOrders, setFilterdOrders] = useState<IOrder>();
-  const [filterStatus, setFilterStatus] = useState<FilterType>();
+  // Loading
+  const [Loading, setLoading] = useState<boolean>(false);
+  // this is for store user_id
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  // this is for store status filter
+  const [optionalQuery, setOptionalQuery] = useState<string>("");
 
-  const totalPages = Math.ceil((orders?.total || []) / limit);
+  // get data from back-end by using toolkits query
+  const {
+    data: orders,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetAllOrdersQuery({ limit, offset, optionalQuery, searchQuery });
 
-  // deboubce set search bar value
-  const debouncedChangeHandler = useMemo(
-    () =>
-      _.debounce((userInput) => {
-        const result = (orders?.data || []).filter(
-          (order: IOrder) =>
-            order._id.toLowerCase().includes(userInput.toLowerCase()) ||
-            order.user_id.toLowerCase().includes(userInput.toLowerCase())
-        );
-        setFilterdOrders(result);
-      }, 500),
+  // this is for status filter check box use
+  const [filterStatus, setFilterStatus] = useState<FilterObjectType>({});
+
+  // calculate total page for pagination use, should move to the backend in the future
+  const totalPages = Math.ceil(orders?.total / limit);
+
+  // use util method to get optionalQuery
+  const filterStatusQuery = getFilterQueryString(filterStatus);
+
+  useEffect(() => {
+    setOptionalQuery(filterStatusQuery);
+  }, [filterStatusQuery]);
+
+  const handleSearch = useCallback(
+    _.debounce(
+      (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(userIdQueryString(e.target.value)),
+      800
+    ),
     []
   );
 
-  // handle search bar value
-  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedChangeHandler(e.target.value || "");
-  }, []);
-
   // handle order status filter value
   const handleValueChange = useCallback(
-    (value: FilterType) => {
-      setFilterStatus(value);
-    },
+    (value: FilterObjectType) => setFilterStatus(value),
     [setFilterStatus]
   );
 
   if (isFetching && !orders) return null;
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
+
   return (
     <Flex flexDirection="column">
       <Heading marginY="50px">Orders</Heading>
@@ -65,7 +92,7 @@ const Orders = () => {
           width="200px"
           fontSize="12px"
           aria-label="search-input"
-          onChange={handleSearchChange}
+          onChange={handleSearch}
         />
       </InputGroup>
 
@@ -100,31 +127,10 @@ const Orders = () => {
           <OrderStatusDropdownFilter handleValueChange={handleValueChange} />
         </Heading>
       </Flex>
-      {/* search orderID and user ID filter */}
-      {(filterdOrders || orders.data || [])
-        // order status filter
-        .filter((order: IOrder) => {
-          if (!filterStatus) return true;
-          return (
-            (filterStatus.isUnpaid && order.status == "unpaid") ||
-            (filterStatus.isProcessing &&
-              !(order.status == "unpaid") &&
-              !(order.status == "completed") &&
-              !(order.status == "cancelled")) ||
-            (filterStatus.isCompleted &&
-              !(order.status == "unpaid") &&
-              !(order.status == "processing") &&
-              !(order.status == "cancelled")) ||
-            (filterStatus.isCancelled &&
-              !(order.status == "unpaid") &&
-              !(order.status == "completed") &&
-              !(order.status == "processing"))
-          );
-        })
-        // render each item
-        .map((order: IOrder) => (
-          <OrderContainer order={order} key={order._id} />
-        ))}
+      {/* search user ID filter result */}
+      {(orders.data || []).map((order: IOrder) => (
+        <OrderContainer order={order} key={order._id} />
+      ))}
       {/* pagination button */}
       <Box marginBottom="20px">
         <PaginationButton

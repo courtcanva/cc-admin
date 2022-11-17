@@ -1,4 +1,5 @@
 import { Flex, Text } from "@chakra-ui/react";
+import formatDate from "@/utils/formatDate";
 
 interface PropsType {
   createdAt: string;
@@ -14,12 +15,13 @@ const OrderHeader = ({ createdAt, _id, userId }: PropsType) => {
       alignItems="center"
       justifyContent="space-between"
       border="#D9D9D9 solid 0.5px"
+      min-width="75%"
     >
       <Flex gap="18px" marginLeft="18px">
         <Text fontSize="14px" fontWeight="700" color="#1A202C" paddingLeft="10px">
-          {`Create Date: ${createdAt.split("T")[0]}`}
+          {`Create Date: ${formatDate(createdAt)}`}
         </Text>
-        <Text fontSize="14px" fontWeight="700" color="#1A202C" marginLeft="135px">
+        <Text fontSize="14px" fontWeight="700" color="#1A202C" marginLeft="120px">
           {`Order #: ${_id}`}
         </Text>
       </Flex>

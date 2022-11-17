@@ -5,7 +5,7 @@ import OrderItemFooter from "../../../pages/orders/components/OrderItemFooter";
 const OrderFooterInfoMockData = {
   updateTime: "2022-11-12 20:26:55",
   totalQuatation: "13,030.60",
-  depositeRate: 0.02,
+  depositRate: 0.02,
 };
 
 describe("<OrderItemFooter />", () => {

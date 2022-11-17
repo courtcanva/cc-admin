@@ -22,6 +22,7 @@ export interface IOrder {
     designName:string
     courtSize:IOrderItemDesignCourtSize
     tileColor:IOrderItemDesignTileColor[]
+    courtType:string
   }
 
   export interface IOrderItemQuotationDetail {

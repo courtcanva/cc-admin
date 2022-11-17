@@ -4,10 +4,10 @@ import formatDate from "@/utils/formatDate";
 interface PropsType {
   updateTime: string;
   totalQuatation: string;
-  depositeRate: number;
+  depositRate: number;
 }
 
-const OrderItemFooter = ({ updateTime, totalQuatation, depositeRate }: PropsType) => {
+const OrderItemFooter = ({ updateTime, totalQuatation, depositRate }: PropsType) => {
   return (
     <Flex border="#D9D9D9 solid 1px" borderWidth="0px 1px 1px 1px" padding="10px 0px">
       <Flex flex="2.2">
@@ -31,7 +31,7 @@ const OrderItemFooter = ({ updateTime, totalQuatation, depositeRate }: PropsType
           Deposite Rate:
         </Text>
         <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-          {depositeRate}
+          {depositRate}
         </Text>
       </Flex>
     </Flex>

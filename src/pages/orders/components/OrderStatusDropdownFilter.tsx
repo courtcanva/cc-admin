@@ -4,15 +4,11 @@ import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import { useCheckboxGroup } from "@chakra-ui/react";
 import { RiArrowDownSLine } from "react-icons/ri";
 
-export interface FilterType {
-  isUnpaid: boolean;
-  isProcessing: boolean;
-  isCompleted: boolean;
-  isCancelled: boolean;
-}
+export type FilterKey = "unpaid" | "processing" | "completed" | "cancelled";
+export type FilterObjectType = { [key in FilterKey]?: boolean };
 
 interface PropsType {
-  handleValueChange: (value: FilterType) => void;
+  handleValueChange: (value: FilterObjectType) => void;
 }
 
 const FILTER_VALUES: string[] = ["unpaid", "processing", "completed", "cancelled"];
@@ -24,10 +20,10 @@ const OrderStatusDropdownFilter = ({ handleValueChange }: PropsType) => {
 
   useEffect(() => {
     handleValueChange({
-      isUnpaid: value.includes("unpaid"),
-      isProcessing: value.includes("processing"),
-      isCompleted: value.includes("completed"),
-      isCancelled: value.includes("cancelled"),
+      unpaid: value.includes("unpaid"),
+      processing: value.includes("processing"),
+      completed: value.includes("completed"),
+      cancelled: value.includes("cancelled"),
     });
   }, [value]);
 

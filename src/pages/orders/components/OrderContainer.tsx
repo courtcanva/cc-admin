@@ -25,7 +25,7 @@ const OrderContainer = ({ order }: OrderContainerProps) => {
               key={index}
               image={item.image}
               designName={item.design.designName}
-              courtType={"Basketball"}
+              courtType={item.design.courtType}
               quotation={item.quotation}
               quotationDetials={item.quotationDetails}
               length={item.design.courtSize.length}
@@ -50,12 +50,12 @@ const OrderContainer = ({ order }: OrderContainerProps) => {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}
-            depositeRate={order.depositRatio}
+            depositRate={order.depositRatio}
           />
         </Flex>
         {/* Right */}
         <OrderSideBarPaid
-          depositePaid={
+          depositPaid={
             order.status === "unpaid"
               ? "N/A"
               : (

@@ -1,10 +1,10 @@
 import { Flex, Text } from "@chakra-ui/react";
 
 interface PropsType {
-  depositePaid: string;
+  depositPaid: string;
 }
 
-const OrderSideBarPaid = ({ depositePaid }: PropsType) => {
+const OrderSideBarPaid = ({ depositPaid }: PropsType) => {
   return (
     <Flex
       flex="10"
@@ -14,7 +14,7 @@ const OrderSideBarPaid = ({ depositePaid }: PropsType) => {
       borderWidth="0px 1px 1px 0px"
     >
       <Text color="#1A202C" fontSize="14px" fontWeight="700">
-        {`$${depositePaid}`}
+        {`$${depositPaid}`}
       </Text>
     </Flex>
   );

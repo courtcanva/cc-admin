@@ -5,22 +5,18 @@ interface PropsType {
   status: string;
 }
 
+const STATUS_COLOR_MAP: { [key: string]: string } = {
+  unpaid: "#C13D46",
+  completed: "#44BC84",
+  processing: "#7C9FDF",
+  cancelled: "gray",
+};
+
 const OrderSideBarState = ({ status }: PropsType) => {
   const [statusColor, setStatusColor] = useState("");
 
   useEffect(() => {
-    if (status == "unpaid") {
-      setStatusColor("#C13D46");
-    }
-    if (status == "completed") {
-      setStatusColor("#44BC84");
-    }
-    if (status == "processing") {
-      setStatusColor("#7C9FDF");
-    }
-    if (status == "cancelled") {
-      setStatusColor("gray");
-    }
+    setStatusColor(STATUS_COLOR_MAP[status]);
   }, [status]);
 
   return (

@@ -3,7 +3,7 @@ import renderWithMockedProvider from "../../utils";
 import OrderSideBarPaid from "../../../pages/orders/components/OrderSideBarPaid";
 
 const OrderSideBarPaidInfoMockData = {
-  depositePaid: "1296.11",
+  depositPaid: "1296.11",
 };
 
 describe("<OrderSideBarPaid />", () => {
