@@ -17,7 +17,7 @@ import TableHeader from "@/components/TableHeader";
 import { IUser } from "@/interfaces/userData";
 import PaginationButton from "@/components/PaginationButton.tsx";
 import { LIMIT, OFFSET } from "@/constants/paginationData";
-import { USERS_TABLE_HEADER } from "@/constants/tabelHeaders";
+import { USERS_TABLE_HEADER } from "@/constants/tableHeaders";
 import { IsLoading, NoData } from "@/components/IsLoadingOrNoData.tsx";
 
 const Accounts = () => {

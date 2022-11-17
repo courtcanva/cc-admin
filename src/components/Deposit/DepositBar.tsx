@@ -1,4 +1,4 @@
-import { DEPOSIT_TABLE_HEADER } from "@/constants/tabelHeaders";
+import { DEPOSIT_TABLE_HEADER } from "@/constants/tableHeaders";
 import { IDeposit } from "@/interfaces/depositData";
 import { useLazyGetDepositQuery } from "../../redux/api/depositApi";
 import { Box, Text, Table, Tr, Tbody, IconButton, Td, useDisclosure } from "@chakra-ui/react";
