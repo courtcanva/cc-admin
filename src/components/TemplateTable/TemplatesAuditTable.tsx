@@ -1,5 +1,5 @@
 import { ITemplateDataDb } from "@/interfaces/template";
-import { TableContainer, Table, Thead, Tr, Th, Text, Tbody } from "@chakra-ui/react";
+import { TableContainer, Table, Thead, Tr, Th, Text } from "@chakra-ui/react";
 import TemplatesAuditItem from "./TemplatesAuditItem";
 import { TemplateAuditHeads } from "../../constants/TemplatesHeads";
 

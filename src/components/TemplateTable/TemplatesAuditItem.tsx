@@ -58,7 +58,7 @@ const TemplatesAuditItem = (prop: Prop) => {
 
   return (
     <>
-      <Tbody>
+      <Tbody data-testid="template audit item">
         <Tr>
           {/* template preview */}
           <Td>
@@ -105,7 +105,7 @@ const TemplatesAuditItem = (prop: Prop) => {
       </Tbody>
       <Modal isOpen={isConfirmOpen} onClose={onConfirmClose} isCentered={true} size="xs">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent data-testid="confirmation-modal">
           <ModalHeader>Confirm the operation</ModalHeader>
           <ModalBody>
             <Text>{confirmationAlertText}</Text>

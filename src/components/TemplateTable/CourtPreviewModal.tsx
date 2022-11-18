@@ -9,10 +9,10 @@ interface Prop {
 
 const CourtPreviewModal = (props: Prop) => {
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered={true} size="4xl">
+    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered={true} size="4xl" >
       <ModalOverlay />
-      <ModalContent>
-        <ModalBody>
+      <ModalContent >
+        <ModalBody data-testid="court-preview">
           <Box width="full" height="550px" position="relative">
             <Image src={props.image} layout="fill" objectFit="contain" />
           </Box>

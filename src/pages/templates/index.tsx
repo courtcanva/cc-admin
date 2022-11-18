@@ -1,6 +1,6 @@
 import TemplatesAuditTable from "@/components/TemplateTable/TemplatesAuditTable";
 import TemplatesListTable from "@/components/TemplateTable/TemplatesListTable";
-import { useGetTemplatesQuery } from "@/redux/api/templateApi";
+import { useGetTemplatesQuery } from "../../redux/api/templateApi";
 import { Text, Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { BiListCheck } from "react-icons/bi";

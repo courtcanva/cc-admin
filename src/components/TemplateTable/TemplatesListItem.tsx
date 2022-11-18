@@ -30,16 +30,17 @@ const TemplatesListItem = (prop: Prop) => {
           <Td minWidth="150px" maxWidth="400px" whiteSpace="pre-line">
             {description}
           </Td>
-
           {/* publisher */}
           <Td>{design.designer}</Td>
-
+          {/* status */}
           <Td>
             <Tag>{status}</Tag>
           </Td>
+          {/* submit date */}
           <Td>{submitTime.toLocaleString()}</Td>
+          {/* court type */}
           <Td>{tags.CourtType}</Td>
-          {/* <Td>{tags.CourtCategory}</Td> */}
+          {/* court size */}
           <Td whiteSpace="pre-wrap">{`Length:${design.courtSize.length}mm
           Width:${design.courtSize.width}mm`}</Td>
         </Tr>

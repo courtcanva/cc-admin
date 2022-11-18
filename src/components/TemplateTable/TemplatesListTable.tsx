@@ -7,7 +7,7 @@ interface Prop {
   templates: Omit<ITemplateDataDb, "__v" | "isDeleted">[] | undefined;
 }
 
-const TemplatesTable = (props: Prop) => {
+const TemplatesListTable = (props: Prop) => {
   return (
     <>
       <TableContainer>
@@ -27,4 +27,4 @@ const TemplatesTable = (props: Prop) => {
     </>
   );
 };
-export default TemplatesTable;
+export default TemplatesListTable;
