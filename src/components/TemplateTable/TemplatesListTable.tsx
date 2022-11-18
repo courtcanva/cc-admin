@@ -11,20 +11,21 @@ const TemplatesListTable = (props: Prop) => {
   const templateEmpty = props.templates?.length === 0;
   return (
     <>
-      {!templateEmpty ? (<TableContainer>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              {TemplatesListHeads.map((item) => {
-                return <Th key={item.id}>{item.title}</Th>;
-              })}
-            </Tr>
-          </Thead>
-          {props.templates?.map((template) => (
-            <TemplatesListItem key={template._id} template={template}></TemplatesListItem>
-          ))}
-        </Table>
-      </TableContainer>
+      {!templateEmpty ? (
+        <TableContainer>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                {TemplatesListHeads.map((item) => {
+                  return <Th key={item.id}>{item.title}</Th>;
+                })}
+              </Tr>
+            </Thead>
+            {props.templates?.map((template) => (
+              <TemplatesListItem key={template._id} template={template}></TemplatesListItem>
+            ))}
+          </Table>
+        </TableContainer>
       ) : (
         <Text> There is no template in the database!</Text>
       )}
