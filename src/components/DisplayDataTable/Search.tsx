@@ -23,7 +23,9 @@ const Search = ({ searchPlaceholder, searchValue, setSearchValue }: Props) => {
 
   return (
     <InputGroup>
-      <InputLeftElement pointerEvents="none" color="#B6B6B6" children={<HiOutlineSearch />} />
+      <InputLeftElement pointerEvents="none" color="#B6B6B6">
+        <HiOutlineSearch />
+      </InputLeftElement>
       <Input
         focusBorderColor="#2C4E8A"
         _placeholder={{ color: "#B6B6B6" }}
@@ -34,11 +36,9 @@ const Search = ({ searchPlaceholder, searchValue, setSearchValue }: Props) => {
         data-testid="search-input"
       />
       {searchValue && (
-        <InputRightElement
-          children={<HiOutlineX color="#2C4E8A" />}
-          onClick={handleRemoveSearch}
-          data-testid="remove-icon"
-        />
+        <InputRightElement onClick={handleRemoveSearch} data-testid="remove-icon">
+          <HiOutlineX color="#2C4E8A" />
+        </InputRightElement>
       )}
     </InputGroup>
   );

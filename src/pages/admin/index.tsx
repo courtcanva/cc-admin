@@ -28,7 +28,7 @@ import {
 } from "@/redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
 import DropDownFilter from "@/components/Admin/DropDownFilter";
-import { ADMIN_TABLE_HEADER } from "../../constants/tabelHeaders";
+import { ADMIN_TABLE_HEADER } from "../../constants/tableHeaders";
 import TableHeader from "../../components/TableHeader";
 
 interface FilterType {

@@ -15,3 +15,4 @@ export const ADMIN_TABLE_HEADER = [
   "Status",
   "Operation",
 ];
+export const DEPOSIT_TABLE_HEADER = ["Deposit Rate", "Updated At", "Operation"]

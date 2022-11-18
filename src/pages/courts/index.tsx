@@ -19,7 +19,7 @@ import { useGetAllCourtQuery } from "../../redux/api/courtsApi";
 import { useUpdateCourtMutation } from "../../redux/api/courtsApi";
 import formatDate from "@/utils/formatDate";
 import TableHeader from "@/components/TableHeader";
-import { COURTS_TABLE_HEADER } from "@/constants/tabelHeaders";
+import { COURTS_TABLE_HEADER } from "@/constants/tableHeaders";
 import SwitchButton from "@/components/SwitchButton/SwitchButton";
 import { routeHandler } from "@/utils/routeHandler";
 

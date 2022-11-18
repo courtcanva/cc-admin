@@ -149,7 +149,8 @@ describe("DisplayDataTable", () => {
       />
     );
     expect(screen.getAllByRole("option").length).toBe(5);
-    expect(screen.getByRole("option", { name: "Show 10" }).selected).toBe(true);
+    const option: HTMLOptionElement = screen.getByRole("option", { name: "Show 10" });
+    expect(option.selected).toBe(true);
   });
 
   it("Click next button should change the page index", () => {
