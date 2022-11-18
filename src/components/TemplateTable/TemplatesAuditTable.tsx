@@ -24,7 +24,6 @@ const TemplatesAuditTable = (props: Prop) => {
             {props.templates?.map((template) => (
               <TemplatesAuditItem key={template._id} template={template}></TemplatesAuditItem>
             ))}
-            {/* {props.templates?.map((template) => <TemplatesAuditItem key={template._id} template={template}></TemplatesAuditItem>)} */}
           </Table>
         </TableContainer>
       ) : (
