@@ -1,5 +1,5 @@
 import { ITemplateDataDb } from "@/interfaces/template";
-import { TableContainer, Table, Thead, Tr, Th } from "@chakra-ui/react";
+import { TableContainer, Table, Thead, Tr, Th, Text } from "@chakra-ui/react";
 import { TemplatesListHeads } from "../../constants/TemplatesHeads";
 import TemplatesListItem from "./TemplatesListItem";
 
@@ -8,9 +8,10 @@ interface Prop {
 }
 
 const TemplatesListTable = (props: Prop) => {
+  const templateEmpty = props.templates?.length === 0;
   return (
     <>
-      <TableContainer>
+      {!templateEmpty ? (<TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
@@ -24,6 +25,9 @@ const TemplatesListTable = (props: Prop) => {
           ))}
         </Table>
       </TableContainer>
+      ) : (
+        <Text> There is no template in the database!</Text>
+      )}
     </>
   );
 };
