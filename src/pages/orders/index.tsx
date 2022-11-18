@@ -2,30 +2,17 @@ import { useState, useCallback, useEffect } from "react";
 import { Heading, InputGroup, Input, InputLeftElement, Flex, Box, Center } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useGetAllOrdersQuery } from "../../redux/api/ordersApi";
-import OrderContainer from "./components/OrderContainer";
-import OrderStatusDropdownFilter from "./components/OrderStatusDropdownFilter";
+import OrderContainer from "@/components/OrderComponents/OrderContainer";
+import OrderStatusDropdownFilter from "@/components/OrderComponents/OrderStatusDropdownFilter";
 import PaginationButton from "@/components/PaginationButton.tsx";
-import { LIMIT, OFFSET } from "@/constants/paginationData";
+import { LIMIT, OFFSET } from "@/constants/orderPagePaginationData";
 import { IOrder } from "@/interfaces/orderData";
-import { FilterObjectType, FilterKey } from "./components/OrderStatusDropdownFilter";
+import { FilterObjectType } from "@/components/OrderComponents/OrderStatusDropdownFilter";
 import _ from "lodash";
 import Error from "@/components/Error/index";
-
-// util for status filtering
-const getFilterQueryString = (filter: FilterObjectType) => {
-  const keys = Object.keys(filter) as FilterKey[];
-  return keys
-    .reduce((acc: string[], key: FilterKey) => {
-      const filterValue = filter[key];
-      return filterValue ? [...acc, `status=${key}`] : acc;
-    }, [])
-    .join("&");
-};
-
-// util for search
-const userIdQueryString = (userId?: string) => {
-  return userId ? `&user_id=${userId}` : "";
-};
+import getFilterQueryString from "./utils/getFilterQueryString";
+import userIdQueryString from "./utils/userIdQueryString";
+import Loading from "@/components/Loading";
 
 const Orders = () => {
   // pagination attributes
@@ -36,7 +23,6 @@ const Orders = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   // this is for store status filter
   const [optionalQuery, setOptionalQuery] = useState<string>("");
-
   // get data from back-end by using toolkits query
   const {
     data: orders,
@@ -77,14 +63,14 @@ const Orders = () => {
   );
 
   if (isFetching && !orders) return null;
-  if (isLoading) return <div>Loading...</div>;
 
   return (
     <>
+      {isLoading && <Loading loadingText="Loading" />}
       {isError && (
         <Center height="100vh">
           <Error
-            errorTitle="Sorry, failed to get quotation data"
+            errorTitle="Sorry, failed to get orders data"
             errorDescription="Your request was not sent successfully, please try again or contact IT support."
           ></Error>
         </Center>
@@ -97,7 +83,7 @@ const Orders = () => {
             <AiOutlineSearch color="#3C3C3C" />
           </InputLeftElement>
           <Input
-            placeholder="Search order ID or user ID ..."
+            placeholder="Search user ID ..."
             _placeholder={{ color: "D9D9D9" }}
             height="40px"
             width="200px"
@@ -115,18 +101,17 @@ const Orders = () => {
           height="42.5px"
           alignItems="center"
         >
-          <Heading fontSize="14px" fontWeight="700" color="#1A202C" flex="4.8">
+          <Heading fontSize="14px" color="#1A202C" flex="4.8">
             Orders Details
           </Heading>
-          <Heading fontSize="14px" fontWeight="700" color="#1A202C" flex="3.1">
+          <Heading fontSize="14px" color="#1A202C" flex="3.1">
             Shipping Information
           </Heading>
-          <Heading fontSize="14px" fontWeight="700" color="#1A202C" flex="1.0">
+          <Heading fontSize="14px" color="#1A202C" flex="1.0">
             Total Paid
           </Heading>
           <Heading
             fontSize="14px"
-            fontWeight="700"
             color="#1A202C"
             flex="1.0"
             display={"flex"}
@@ -138,7 +123,6 @@ const Orders = () => {
             <OrderStatusDropdownFilter handleValueChange={handleValueChange} />
           </Heading>
         </Flex>
-        {/* search user ID filter result */}
         {(orders.data || []).map((order: IOrder) => (
           <OrderContainer order={order} key={order._id} />
         ))}

@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import renderWithMockedProvider from "../../utils";
-import OrderHeader from "../../../pages/orders/components/OrderHeader";
+import OrderHeader from "@/components/OrderComponents/OrderHeader";
 
 // each order blue bar
 const OrderHeaderInfoMockData = {

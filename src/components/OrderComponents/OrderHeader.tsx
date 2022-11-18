@@ -15,10 +15,9 @@ const OrderHeader = ({ createdAt, _id, userId }: PropsType) => {
       alignItems="center"
       justifyContent="space-between"
       border="#D9D9D9 solid 0.5px"
-      min-width="75%"
     >
       <Flex gap="18px" marginLeft="18px">
-        <Text fontSize="14px" fontWeight="700" color="#1A202C" paddingLeft="10px">
+        <Text fontSize="14px" fontWeight="700" color="#1A202C" marginLeft="10px">
           {`Create Date: ${formatDate(createdAt)}`}
         </Text>
         <Text fontSize="14px" fontWeight="700" color="#1A202C" marginLeft="120px">

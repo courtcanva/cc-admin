@@ -1,4 +1,4 @@
-import { Menu, MenuButton, MenuList, Stack, IconButton, Text, Flex } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, Stack, IconButton, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import { useCheckboxGroup } from "@chakra-ui/react";

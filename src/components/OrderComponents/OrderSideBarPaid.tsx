@@ -14,7 +14,7 @@ const OrderSideBarPaid = ({ depositPaid }: PropsType) => {
       borderWidth="0px 1px 1px 0px"
     >
       <Text color="#1A202C" fontSize="14px" fontWeight="700">
-        {`$${depositPaid}`}
+        {`${depositPaid}`}
       </Text>
     </Flex>
   );

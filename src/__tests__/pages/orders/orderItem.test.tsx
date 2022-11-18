@@ -1,6 +1,6 @@
 import { screen, within } from "@testing-library/react";
 import renderWithMockedProvider from "../../utils";
-import OrderItem from "../../../pages/orders/components/OrderItem";
+import OrderItem from "@/components/OrderComponents/OrderItem";
 
 // has payment information
 const OrderDetailwithPaymentInfoMockData = {
@@ -32,11 +32,12 @@ const OrderDetailNoPaymentInfoMockData = {
 
 describe("<OrderItem />", () => {
   it("should render order item component correctly", () => {
-    renderWithMockedProvider(<OrderItem {...OrderDetailwithPaymentInfoMockData} />);
+    renderWithMockedProvider(
+      <OrderItem quotationDetails={[]} {...OrderDetailwithPaymentInfoMockData} />
+    );
     expect(screen.getByText("shawn")).toBeVisible();
     expect(screen.getByText("Basketball")).toBeVisible();
-    expect(screen.getByText("$9,000.00")).toBeVisible();
-    expect(screen.getByText("300")).toBeVisible();
+    expect(screen.getByText("A$9,000.00")).toBeVisible();
     expect(screen.getByText(`${10000}(L) * ${7000}(W) Medium Court`)).toBeVisible();
     expect(screen.getByText("wszwsz111")).toBeVisible();
     expect(screen.getByText("+61420369963")).toBeVisible();
@@ -45,11 +46,12 @@ describe("<OrderItem />", () => {
   });
 
   it("should render order item component correctly without shipping information", () => {
-    renderWithMockedProvider(<OrderItem {...OrderDetailNoPaymentInfoMockData} />);
+    renderWithMockedProvider(
+      <OrderItem quotationDetails={[]} {...OrderDetailNoPaymentInfoMockData} />
+    );
     expect(screen.getByText("shawn")).toBeVisible();
     expect(screen.getByText("Basketball")).toBeVisible();
-    expect(screen.getByText("$9,000.00")).toBeVisible();
-    expect(screen.getByText("300")).toBeVisible();
+    expect(screen.getByText("A$9,000.00")).toBeVisible();
     expect(screen.getByText(`${10000}(L) * ${7000}(W) Medium Court`)).toBeVisible();
     expect(within(screen.getByTestId("consignee-name")).getByText("N/A")).toBeVisible();
     expect(within(screen.getByTestId("consignee-email")).getByText("N/A")).toBeVisible();

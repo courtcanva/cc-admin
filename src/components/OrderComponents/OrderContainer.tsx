@@ -6,6 +6,7 @@ import OrderSideBarPaid from "./OrderSideBarPaid";
 import OrderSideBarState from "./OrderSideBarState";
 import _ from "lodash";
 import { IOrder, IOrderItem } from "@/interfaces/orderData";
+import formatCurrency from "@/utils/formatCurrency";
 
 interface OrderContainerProps {
   order: IOrder;
@@ -13,7 +14,7 @@ interface OrderContainerProps {
 
 const OrderContainer = ({ order }: OrderContainerProps) => {
   return (
-    <Flex key={order._id} flexDirection="column">
+    <Flex flexDirection="column">
       {/* Order Header blue bar */}
       <OrderHeader createdAt={order.createdAt} _id={order._id} userId={order.user_id} />
 
@@ -27,7 +28,7 @@ const OrderContainer = ({ order }: OrderContainerProps) => {
               designName={item.design.designName}
               courtType={item.design.courtType}
               quotation={item.quotation}
-              quotationDetials={item.quotationDetails}
+              quotationDetails={item.quotationDetails}
               length={item.design.courtSize.length}
               width={item.design.courtSize.width}
               courtName={item.design.courtSize.name}
@@ -44,12 +45,11 @@ const OrderContainer = ({ order }: OrderContainerProps) => {
           {/* item block left part footer */}
           <OrderItemFooter
             updateTime={order.updatedAt}
-            totalQuatation={_.sumBy(order.items, function (o: IOrderItem) {
-              return parseFloat(o.quotation);
-            }).toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
+            totalQuotation={formatCurrency(
+              _.sumBy(order.items, function (o: IOrderItem) {
+                return parseFloat(o.quotation);
+              })
+            )}
             depositRate={order.depositRatio}
           />
         </Flex>
@@ -58,14 +58,11 @@ const OrderContainer = ({ order }: OrderContainerProps) => {
           depositPaid={
             order.status === "unpaid"
               ? "N/A"
-              : (
+              : formatCurrency(
                   _.sumBy(order.items, function (o: IOrderItem) {
                     return parseFloat(o.quotation);
                   }) * order.depositRatio
-                ).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })
+                )
           }
         />
         <OrderSideBarState status={order.status} />

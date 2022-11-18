@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import renderWithMockedProvider from "../../utils";
-import OrderSideBarState from "../../../pages/orders/components/OrderSideBarState";
+import OrderSideBarState from "@/components/OrderComponents/OrderSideBarState";
 
 const OrderstatusUnpaidMockData = {
   status: "unpaid",

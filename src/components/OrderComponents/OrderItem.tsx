@@ -1,11 +1,13 @@
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { IOrderItemQuotationDetail } from "@/interfaces/orderData";
+import formatCurrency from "@/utils/formatCurrency";
+
 interface PropsType {
   image: string;
   designName: string;
   courtType: string;
   quotation: string;
-  quotationDetials: IOrderItemQuotationDetail[];
+  quotationDetails: IOrderItemQuotationDetail[];
   length: number;
   width: number;
   courtName: string;
@@ -20,7 +22,7 @@ const OrderItem = ({
   designName,
   courtType,
   quotation,
-  quotationDetials,
+  quotationDetails,
   length,
   width,
   courtName,
@@ -41,8 +43,7 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Design Name:
           </Text>
-          <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-            {" "}
+          <Text color="#1A202C" fontSize="14px" paddingLeft="10px">
             {designName}
           </Text>
         </Flex>
@@ -50,8 +51,7 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Court Type:
           </Text>
-          <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-            {" "}
+          <Text color="#1A202C" fontSize="14px" paddingLeft="10px">
             {courtType}
           </Text>
         </Flex>
@@ -59,11 +59,8 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Quotation Price:
           </Text>
-          <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
-            {`$${Number(quotation).toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}`}
+          <Text color="#1A202C" fontSize="14px" paddingLeft="10px">
+            {formatCurrency(quotation)}
           </Text>
         </Flex>
         <Flex flexWrap="wrap" alignItems="center">
@@ -71,7 +68,7 @@ const OrderItem = ({
             Quotation Details:
           </Text>
           <Flex flexWrap="wrap">
-            {quotationDetials
+            {quotationDetails
               // delete purple tiles, which is 0 quantity
               .filter((detail: IOrderItemQuotationDetail) => detail.quantity !== 0)
               .map((detail: IOrderItemQuotationDetail, index: number) => (
@@ -80,14 +77,13 @@ const OrderItem = ({
                     marginLeft="3px"
                     width={10}
                     height={5}
-                    bg={detail.color}
+                    backgroundColor={detail.color}
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
-                    fontSize="12px"
-                    fontWeight="700"
                     borderRadius="5"
                     border="#1A202C solid 1px"
+                    color="#FFFFFF"
                   >
                     {`${detail.quantity}`}
                   </Box>
@@ -99,7 +95,7 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Court Size:
           </Text>
-          <Text color="#1A202C" fontSize="14px" fontWeight="400" paddingLeft="10px">
+          <Text color="#1A202C" fontSize="14px" paddingLeft="10px">
             {`${length}(L) * ${width}(W) ${courtName}`}
           </Text>
         </Flex>
@@ -110,13 +106,7 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Consignee Name:
           </Text>
-          <Text
-            color="#1A202C"
-            fontSize="14px"
-            fontWeight="400"
-            paddingLeft="10px"
-            data-testid="consignee-name"
-          >
+          <Text color="#1A202C" fontSize="14px" paddingLeft="10px" data-testid="consignee-name">
             {consigneeName}
           </Text>
         </Flex>
@@ -124,13 +114,7 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Consignee Phone:
           </Text>
-          <Text
-            color="#1A202C"
-            fontSize="14px"
-            fontWeight="400"
-            paddingLeft="10px"
-            data-testid="consignee-phone"
-          >
+          <Text color="#1A202C" fontSize="14px" paddingLeft="10px" data-testid="consignee-phone">
             {consigneePhone}
           </Text>
         </Flex>
@@ -138,13 +122,7 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Consignee Email:
           </Text>
-          <Text
-            color="#1A202C"
-            fontSize="14px"
-            fontWeight="400"
-            paddingLeft="10px"
-            data-testid="consignee-email"
-          >
+          <Text color="#1A202C" fontSize="14px" paddingLeft="10px" data-testid="consignee-email">
             {consigneeEmail}
           </Text>
         </Flex>
@@ -152,13 +130,7 @@ const OrderItem = ({
           <Text fontSize="14px" fontWeight="700" color="#1A202C">
             Shipping Address:
           </Text>
-          <Text
-            color="#1A202C"
-            fontSize="14px"
-            fontWeight="400"
-            paddingLeft="10px"
-            data-testid="shipping-address"
-          >
+          <Text color="#1A202C" fontSize="14px" paddingLeft="10px" data-testid="shipping-address">
             {shippingAddress}
           </Text>
         </Flex>
