@@ -1,6 +1,6 @@
 import { AiFillHome, AiOutlineKey } from "react-icons/ai";
 import { IoPersonCircleSharp } from "react-icons/io5";
-import { CgMicrosoft } from "react-icons/cg";
+import { CgMicrosoft, CgTemplate } from "react-icons/cg";
 import { TbRectangle } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { ISideBarItem } from "../../../../interfaces/navigationItem";
@@ -48,6 +48,12 @@ const sideBarItemList: ISideBarItem[] = [
     title: "Deposit",
     icon: <RiPercentLine />,
     href: "/deposit",
+  },
+  {
+    id: 8,
+    title: "Templates",
+    icon: <CgTemplate />,
+    href: "/templates",
   },
 ];
 export default sideBarItemList;

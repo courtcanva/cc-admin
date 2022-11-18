@@ -5,6 +5,7 @@ import { courtsApi } from "../redux/api/courtsApi";
 import { quotationApi } from "../redux/api/quotationApi";
 import { usersAccountApi } from "../redux/api/usersAccountApi";
 import { depositApi } from "../redux/api/depositApi";
+import { templateApi } from "../redux/api/templateApi";
 export const makeStore = () =>
   configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const makeStore = () =>
       [courtsApi.reducerPath]: courtsApi.reducer,
       [quotationApi.reducerPath]: quotationApi.reducer,
       [usersAccountApi.reducerPath]: usersAccountApi.reducer,
+      [templateApi.reducerPath]: templateApi.reducer,
       [depositApi.reducerPath]: depositApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -21,6 +23,7 @@ export const makeStore = () =>
         courtsApi.middleware,
         quotationApi.middleware,
         usersAccountApi.middleware,
+        templateApi.middleware,
         depositApi.middleware
       ),
   });
