@@ -7,7 +7,8 @@ export const mockTemplateData: ITemplateDataDb[] = [
     design: {
       designer: "test designer",
       designName: "Small Court example",
-      image: "https://courtcanva-image-node.s3.ap-southeast-2.amazonaws.com/preview-image/1g6J0CR1fVV7OKQAWJ2CS.jpeg",
+      image:
+        "https://courtcanva-image-node.s3.ap-southeast-2.amazonaws.com/preview-image/1g6J0CR1fVV7OKQAWJ2CS.jpeg",
       courtSize: {
         name: "Small Court",
         length: 9000,
