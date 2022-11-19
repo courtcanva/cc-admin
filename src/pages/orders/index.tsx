@@ -11,7 +11,6 @@ import { FilterObjectType } from "@/components/OrderComponents/OrderStatusDropdo
 import _ from "lodash";
 import Error from "@/components/Error/index";
 import getFilterQueryString from "./utils/getFilterQueryString";
-import userIdQueryString from "./utils/userIdQueryString";
 import Loading from "@/components/Loading";
 
 const Orders = () => {
@@ -50,7 +49,7 @@ const Orders = () => {
 
   const handleSearch = useCallback(
     _.debounce(
-      (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(userIdQueryString(e.target.value)),
+      (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(`&user_id=${e.target.value}`),
       800
     ),
     []
