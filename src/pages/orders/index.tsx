@@ -5,7 +5,7 @@ import { useGetAllOrdersQuery } from "../../redux/api/ordersApi";
 import OrderContainer from "@/components/OrderComponents/OrderContainer";
 import OrderStatusDropdownFilter from "@/components/OrderComponents/OrderStatusDropdownFilter";
 import PaginationButton from "@/components/PaginationButton.tsx";
-import { LIMIT, OFFSET } from "@/constants/orderPagePaginationData";
+import { LIMIT, OFFSET } from "@/constants/paginationData";
 import { IOrder } from "@/interfaces/orderData";
 import { FilterObjectType } from "@/components/OrderComponents/OrderStatusDropdownFilter";
 import _ from "lodash";
@@ -21,14 +21,14 @@ const Orders = () => {
   // this is for store user_id
   const [searchQuery, setSearchQuery] = useState<string>("");
   // this is for store status filter
-  const [optionalQuery, setOptionalQuery] = useState<string>("");
+  const [statusQuery, setStatusQuery] = useState<string>("");
   // get data from back-end by using toolkits query
   const {
     data: orders,
     isLoading,
     isFetching,
     isError,
-  } = useGetAllOrdersQuery({ limit, offset, optionalQuery, searchQuery });
+  } = useGetAllOrdersQuery({ limit, offset, statusQuery, searchQuery });
 
   // this is for status filter check box use
   const [filterStatus, setFilterStatus] = useState<FilterObjectType>({});
@@ -41,9 +41,9 @@ const Orders = () => {
 
   useEffect(() => {
     if (!filterStatusQuery) {
-      setOptionalQuery(`status=''`);
+      setStatusQuery(`status=''`);
     } else {
-      setOptionalQuery(filterStatusQuery);
+      setStatusQuery(filterStatusQuery);
     }
   }, [filterStatusQuery]);
 

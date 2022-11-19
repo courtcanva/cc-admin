@@ -7,8 +7,8 @@ export const ordersApi = createApi({
   tagTypes: ["orders"],
   endpoints: (builder) => ({
     getAllOrders: builder.query({
-      query: ({ limit, offset, optionalQuery, searchQuery }) =>
-        `orders/admin?limit=${limit}&offset=${offset}&${optionalQuery}${searchQuery}`,
+      query: ({ limit, offset, statusQuery, searchQuery }) =>
+        `orders/admin?limit=${limit}&offset=${offset}&${statusQuery}${searchQuery}`,
       providesTags: [{ type: "orders", id: "LIST" }],
     }),
   }),
