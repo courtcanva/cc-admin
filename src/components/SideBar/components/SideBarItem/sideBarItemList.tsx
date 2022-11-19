@@ -49,7 +49,7 @@ const sideBarItemList: ISideBarItem[] = [
     title: "Deposit",
     icon: <RiPercentLine />,
     href: "/deposit",
-  }
+  },
   {
     id: 8,
     title: "Orders",
