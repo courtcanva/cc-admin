@@ -5,7 +5,7 @@ import SideBarItem from "./components/SideBarItem";
 
 const SideBar = () => {
   return (
-    <Box background="background.primary" width="326px" height="100vh" position="fixed" left="0">
+    <Box position="fixed" left="0" width="240px" height="100vh" background="#4A4A4A">
       <Grid
         templateAreas={`"logo"
                   "sideBarItem"
