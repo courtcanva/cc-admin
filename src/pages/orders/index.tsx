@@ -12,6 +12,7 @@ import _ from "lodash";
 import Error from "@/components/Error/index";
 import getFilterQueryString from "./utils/getFilterQueryString";
 import Loading from "@/components/Loading";
+import userIdQueryString from "./utils/userIdQueryString";
 
 const Orders = () => {
   // pagination attributes
@@ -49,7 +50,7 @@ const Orders = () => {
 
   const handleSearch = useCallback(
     _.debounce(
-      (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(`&user_id=${e.target.value}`),
+      (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(userIdQueryString(e.target.value)),
       800
     ),
     []
