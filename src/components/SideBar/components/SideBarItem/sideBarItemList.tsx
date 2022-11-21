@@ -61,6 +61,6 @@ const sideBarItemList: ISideBarItem[] = [
     title: "Templates",
     icon: <CgTemplate />,
     href: "/templates",
-  }
+  },
 ];
 export default sideBarItemList;

@@ -1,6 +1,7 @@
 import { screen, within } from "@testing-library/react";
 import renderWithMockedProvider from "../../utils";
 import OrderItem from "@/components/OrderComponents/OrderItem";
+import formatCurrency from "@/utils/formatCurrency";
 
 // has payment information
 const OrderDetailwithPaymentInfoMockData = {
@@ -37,7 +38,9 @@ describe("<OrderItem />", () => {
     );
     expect(screen.getByText("shawn")).toBeVisible();
     expect(screen.getByText("Basketball")).toBeVisible();
-    expect(screen.getByText("A$9,000.00")).toBeVisible();
+    expect(
+      screen.getByText(formatCurrency(OrderDetailwithPaymentInfoMockData.quotation))
+    ).toBeVisible();
     expect(screen.getByText(`${10000}(L) * ${7000}(W) Medium Court`)).toBeVisible();
     expect(screen.getByText("wszwsz111")).toBeVisible();
     expect(screen.getByText("+61420369963")).toBeVisible();
@@ -51,7 +54,9 @@ describe("<OrderItem />", () => {
     );
     expect(screen.getByText("shawn")).toBeVisible();
     expect(screen.getByText("Basketball")).toBeVisible();
-    expect(screen.getByText("A$9,000.00")).toBeVisible();
+    expect(
+      screen.getByText(formatCurrency(OrderDetailwithPaymentInfoMockData.quotation))
+    ).toBeVisible();
     expect(screen.getByText(`${10000}(L) * ${7000}(W) Medium Court`)).toBeVisible();
     expect(within(screen.getByTestId("consignee-name")).getByText("N/A")).toBeVisible();
     expect(within(screen.getByTestId("consignee-email")).getByText("N/A")).toBeVisible();
