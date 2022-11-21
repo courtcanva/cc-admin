@@ -4,13 +4,14 @@ import mockTemplateData from "@/components/MockDate/MockTemplateData";
 import TemplatesListTable from "@/components/TemplateTable/TemplatesListTable";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { TemplatesListHeads } from "@/constants/TemplatesHeads";
 
 describe("Template List table", () => {
   const mockTemplateDate = mockTemplateData;
   it("Should render all table heads", () => {
     renderWithMockedProvider(<TemplatesListTable templates={mockTemplateDate} />);
-    const tableHeads = screen.getAllByRole("columnheader");
-    tableHeads.map((header) => expect(header).toBeInTheDocument());
+    const tableHeads = TemplatesListHeads;
+    tableHeads.map((header) => expect(screen.getByText(header.title)).toBeInTheDocument());
   });
 
   it("Should correctly render the list data", () => {

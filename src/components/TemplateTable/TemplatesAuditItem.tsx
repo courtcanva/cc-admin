@@ -25,7 +25,7 @@ interface Prop {
 }
 
 const TemplatesAuditItem = (prop: Prop) => {
-  const [updateOperation, setupdateOperation] = useState<string>("");
+  const [updateOperation, setUpdateOperation] = useState<string>("");
   const { isOpen: isImageOpen, onOpen: onImageOpen, onClose: onImageClose } = useDisclosure();
   const { isOpen: isConfirmOpen, onOpen: onConfirmOpen, onClose: onConfirmClose } = useDisclosure();
   const { _id: templateId, user_id: userId, design, image, description } = prop.template;
@@ -42,16 +42,16 @@ const TemplatesAuditItem = (prop: Prop) => {
   };
 
   const handlePublishTemplate = () => {
-    setupdateOperation("Publish");
+    setUpdateOperation("Publish");
     onConfirmOpen();
   };
 
   const handleRejectTemplate = () => {
-    setupdateOperation("Reject");
+    setUpdateOperation("Reject");
     onConfirmOpen();
   };
 
-  const handleComfirmAudit = () => {
+  const handleConfirmAudit = () => {
     updateTemplateStatus(updateOperation);
     onConfirmClose();
   };
@@ -111,7 +111,7 @@ const TemplatesAuditItem = (prop: Prop) => {
             <Text>{confirmationAlertText}</Text>
           </ModalBody>
           <ModalFooter display="flex" justifyContent="center" gap="2rem">
-            <Button width="5rem" colorScheme="pink" variant="solid" onClick={handleComfirmAudit}>
+            <Button width="5rem" colorScheme="pink" variant="solid" onClick={handleConfirmAudit}>
               Confirm
             </Button>
             <Button width="5rem" colorScheme="teal" variant="outline" onClick={onConfirmClose}>

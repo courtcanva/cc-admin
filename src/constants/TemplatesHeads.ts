@@ -1,6 +1,6 @@
 export const TemplatesListHeads = [
   {
-    id: `acountIDList`,
+    id: `accountIDList`,
     title: "User",
   },  
   {
@@ -56,7 +56,7 @@ export const TemplateAuditHeads = [
     title: "Publisher",
   },
   {
-    id: "acountIDAudit",
+    id: "accountIDAudit",
     title: "User",
   },
 

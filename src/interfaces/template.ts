@@ -1,3 +1,10 @@
+import { ISaveDesign } from "./design";
+
+export interface ITags {
+  CourtType: string;
+  CourtCategory: string;
+}
+
 export interface ITemplate {
   _id: string;
   user_id: string;
@@ -14,10 +21,4 @@ export interface ITemplateDataDb extends ITemplate {
   isOfficial: boolean;
   isDeleted: boolean;
   __v: number;
-}
-
-export interface ITemplateManageTab {
-  id: string;
-  title: string;
-  icon: IconType;
 }
