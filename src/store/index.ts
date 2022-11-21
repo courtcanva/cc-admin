@@ -5,6 +5,8 @@ import { courtsApi } from "../redux/api/courtsApi";
 import { quotationApi } from "../redux/api/quotationApi";
 import { usersAccountApi } from "../redux/api/usersAccountApi";
 import { depositApi } from "../redux/api/depositApi";
+import { ordersApi } from "../redux/api/ordersApi";
+
 export const makeStore = () =>
   configureStore({
     reducer: {
@@ -14,6 +16,7 @@ export const makeStore = () =>
       [quotationApi.reducerPath]: quotationApi.reducer,
       [usersAccountApi.reducerPath]: usersAccountApi.reducer,
       [depositApi.reducerPath]: depositApi.reducer,
+      [ordersApi.reducerPath]: ordersApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
@@ -21,7 +24,8 @@ export const makeStore = () =>
         courtsApi.middleware,
         quotationApi.middleware,
         usersAccountApi.middleware,
-        depositApi.middleware
+        depositApi.middleware,
+        ordersApi.middleware
       ),
   });
 
