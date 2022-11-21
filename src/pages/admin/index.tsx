@@ -95,7 +95,7 @@ const AdminAccounts = () => {
                 if (!filterValue) return true;
                 return (
                   (filterValue.isDelete && admin.isDeleted) ||
-                  (!admin.isDeleted && filterValue.isActive)
+                  (filterValue.isActive && !admin.isDeleted)
                 );
               })
               .map((adminAcc: IAdmin) => {

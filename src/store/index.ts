@@ -6,6 +6,8 @@ import { quotationApi } from "../redux/api/quotationApi";
 import { usersAccountApi } from "../redux/api/usersAccountApi";
 import { depositApi } from "../redux/api/depositApi";
 import { templateApi } from "../redux/api/templateApi";
+import { ordersApi } from "../redux/api/ordersApi";
+
 export const makeStore = () =>
   configureStore({
     reducer: {
@@ -16,6 +18,7 @@ export const makeStore = () =>
       [usersAccountApi.reducerPath]: usersAccountApi.reducer,
       [templateApi.reducerPath]: templateApi.reducer,
       [depositApi.reducerPath]: depositApi.reducer,
+      [ordersApi.reducerPath]: ordersApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
@@ -25,6 +28,7 @@ export const makeStore = () =>
         usersAccountApi.middleware,
         templateApi.middleware,
         depositApi.middleware
+        ordersApi.middleware
       ),
   });
 

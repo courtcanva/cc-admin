@@ -21,7 +21,7 @@ import { USERS_TABLE_HEADER } from "@/constants/tableHeaders";
 import { IsLoading, NoData } from "@/components/IsLoadingOrNoData.tsx";
 
 const Accounts = () => {
-  const [offset, setOffSet] = useState<number>(OFFSET);
+  const [offset, setOffset] = useState<number>(OFFSET);
   const [page, setPage] = useState<number>(1);
   const limit = LIMIT;
   const { data: usersAccountData, isLoading } = useListUsersQuery({ offset, limit });
@@ -72,7 +72,7 @@ const Accounts = () => {
       </Box>
       <Box marginBottom="20px">
         <PaginationButton
-          setOffSet={setOffSet}
+          setOffSet={setOffset}
           totalPages={totalPages}
           page={page}
           setPage={setPage}

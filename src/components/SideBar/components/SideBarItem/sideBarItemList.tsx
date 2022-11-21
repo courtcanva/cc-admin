@@ -3,6 +3,7 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 import { CgMicrosoft, CgTemplate } from "react-icons/cg";
 import { TbRectangle } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
+import { CgNotes } from "react-icons/cg";
 import { ISideBarItem } from "../../../../interfaces/navigationItem";
 import { RiPercentLine } from "react-icons/ri";
 
@@ -51,9 +52,15 @@ const sideBarItemList: ISideBarItem[] = [
   },
   {
     id: 8,
+    title: "Orders",
+    icon: <CgNotes />,
+    href: "/orders",
+  },
+  {
+    id: 9,
     title: "Templates",
     icon: <CgTemplate />,
     href: "/templates",
-  },
+  }
 ];
 export default sideBarItemList;
