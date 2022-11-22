@@ -1,5 +1,5 @@
 import { ISideBarItem } from "@/interfaces/navigationItem";
-import { Box, Icon } from "@chakra-ui/react";
+import { Flex, Box, Icon, Badge } from "@chakra-ui/react";
 import Link from "next/link";
 import sideBarItemList from "./components/SideBarItem/sideBarItemList";
 
@@ -8,22 +8,36 @@ const SideBarItem = () => {
     <Box marginTop="40px">
       {sideBarItemList.map((sideBarItem: ISideBarItem) => {
         return (
-          <Link key={sideBarItem.id} href={sideBarItem.href} passHref>
-            <Box
-              width="full"
-              padding="10px 0px"
-              fontSize="16px"
-              fontWeight="500"
-              color="#FFFFFF"
-              cursor="pointer"
-              _hover={{ bg: "button.hover" }}
-            >
-              <Icon w="32px" h="32px" viewBox="0 0 20 20" paddingRight="8px">
-                {sideBarItem.icon}
-              </Icon>
-              <a>{sideBarItem.title}</a>
-            </Box>
-          </Link>
+          <Flex
+            key={sideBarItem.id}
+            padding="10px 5px"
+            justifyContent="space-between"
+            alignItems="center"
+            cursor="pointer"
+            _hover={{ bg: "button.hover" }}
+          >
+            <Link href={sideBarItem.href} passHref>
+              <Flex alignItems="center" fontSize="16px" fontWeight="500" color="#FFFFFF">
+                <Icon as={sideBarItem.icon} width="24px" height="24px" marginRight="8px"></Icon>
+                <a>{sideBarItem.title}</a>
+              </Flex>
+            </Link>
+            {sideBarItem.badge !== undefined && (
+              <Badge
+                minWidth="20px"
+                height="20px"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                marginLeft="5px"
+                borderRadius="9px"
+                backgroundColor="#2C4E8A"
+                color="#FFFFFF"
+              >
+                {sideBarItem.badge}
+              </Badge>
+            )}
+          </Flex>
         );
       })}
     </Box>

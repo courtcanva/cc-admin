@@ -1,6 +1,9 @@
+import { IconType } from "react-icons";
+
 export interface ISideBarItem {
   id: number;
   title: string;
-  icon: JSX.Element;
+  icon: IconType;
   href: string;
+  badge?: number;
 }
