@@ -8,7 +8,7 @@ import { IDesign } from "@/interfaces/design";
 import Error from "@/components/Error";
 import DisplayDataTable from "@/components/DisplayDataTable";
 import TableBadge from "@/components/DisplayDataTable/TableBadge";
-import { Box, Center, HStack } from "@chakra-ui/react";
+import { Center, HStack } from "@chakra-ui/react";
 
 interface Quotation {
   user_id: string;
@@ -131,21 +131,19 @@ const Quotation = () => {
         </Center>
       )}
       {isSuccess && (
-        <Box paddingTop="40px" paddingBottom="20px">
-          <DisplayDataTable
-            columns={columns}
-            data={quotationData}
-            pageIndex={pageIndex}
-            pageSize={pageSize}
-            setPagination={setPagination}
-            sorting={sorting}
-            setSorting={setSorting}
-            totalCount={data.total}
-            tableTitle="Quotation"
-            showTotalQuantity
-            tableSearch={tableSearch}
-          ></DisplayDataTable>
-        </Box>
+        <DisplayDataTable
+          columns={columns}
+          data={quotationData}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          setPagination={setPagination}
+          sorting={sorting}
+          setSorting={setSorting}
+          totalCount={data.total}
+          tableTitle="Quotation"
+          showTotalQuantity
+          tableSearch={tableSearch}
+        ></DisplayDataTable>
       )}
     </>
   );

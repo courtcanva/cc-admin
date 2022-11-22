@@ -1,49 +1,34 @@
-import { Flex, Box, Grid, GridItem } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
 import Logo from "./Logo";
 import Profile from "./Profile";
 import SideBarItem from "./SideBarItem";
+import { Flex, Box } from "@chakra-ui/react";
 
-const SideBar = () => {
+interface Props {
+  sidebarExpand: boolean;
+  setSidebarExpand: Dispatch<SetStateAction<boolean>>;
+}
+
+const SideBar = ({ sidebarExpand, setSidebarExpand }: Props) => {
   return (
     <Flex
+      as="aside"
       position="fixed"
       left="0"
-      width="220px"
+      width={sidebarExpand ? "240px" : "50px"}
       height="100vh"
-      padding="30px 16px"
+      paddingX={sidebarExpand ? "16px" : "6px"}
+      paddingY="20px"
       flexDirection="column"
       justifyContent="space-between"
-      background="#4A4A4A"
+      backgroundColor="#4A4A4A"
+      transition="linear 0.4s"
     >
       <Box>
-        <Logo />
-        <SideBarItem />
+        <Logo sidebarExpand={sidebarExpand} setSidebarExpand={setSidebarExpand} />
+        <SideBarItem sidebarExpand={sidebarExpand} />
       </Box>
-
-      <Profile />
-
-      {/* <Grid
-        templateAreas={`"logo"
-                  "sideBarItem"
-                  "divider"
-                  " Profile"`}
-        gridTemplateRows={"10vh 70vh 2vh"}
-        fontWeight="bold"
-        margin="20px"
-      >
-        <GridItem pl="2" area={"logo"}>
-          <Logo />
-        </GridItem>
-        <GridItem pl="2" area={"sideBarItem"}>
-          <SideBarItem />
-        </GridItem>
-        <GridItem pl="2" area={"divider"}>
-          <Divider />
-        </GridItem>
-        <GridItem pl="2" area={"Profile"}>
-          <Profile />
-        </GridItem>
-      </Grid> */}
+      <Profile sidebarExpand={sidebarExpand} />
     </Flex>
   );
 };
