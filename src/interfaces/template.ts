@@ -1,6 +1,6 @@
 import { ISaveDesign } from "./design";
 
-export interface ITags {
+interface ITags {
   CourtType: string;
   CourtCategory: string;
 }
