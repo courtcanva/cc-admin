@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import Logo from "./Logo";
 import Profile from "./Profile";
-import SideBarItem from "./SideBarItem";
+import SidebarItem from "./SidebarItem";
 import { Flex, Box } from "@chakra-ui/react";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   setSidebarExpand: Dispatch<SetStateAction<boolean>>;
 }
 
-const SideBar = ({ sidebarExpand, setSidebarExpand }: Props) => {
+const Sidebar = ({ sidebarExpand, setSidebarExpand }: Props) => {
   return (
     <Flex
       as="aside"
@@ -26,11 +26,11 @@ const SideBar = ({ sidebarExpand, setSidebarExpand }: Props) => {
     >
       <Box>
         <Logo sidebarExpand={sidebarExpand} setSidebarExpand={setSidebarExpand} />
-        <SideBarItem sidebarExpand={sidebarExpand} />
+        <SidebarItem sidebarExpand={sidebarExpand} />
       </Box>
       <Profile sidebarExpand={sidebarExpand} />
     </Flex>
   );
 };
 
-export default SideBar;
+export default Sidebar;

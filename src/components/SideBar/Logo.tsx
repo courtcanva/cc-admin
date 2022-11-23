@@ -38,6 +38,7 @@ const Logo = ({ sidebarExpand, setSidebarExpand }: Props) => {
             onClick={() => {
               setSidebarExpand(!sidebarExpand);
             }}
+            data-testid="toggle-icon"
           />
         </Flex>
       </Tooltip>

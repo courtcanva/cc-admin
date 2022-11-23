@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 
-export interface ISideBarItem {
+export interface ISidebarItem {
   id: number;
   title: string;
   icon: IconType;

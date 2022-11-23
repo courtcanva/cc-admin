@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
-import { Box, Flex } from "@chakra-ui/react";
 import Header from "./Header";
-import SideBar from "@/components/SideBar";
+import Sidebar from "@/components/Sidebar";
+import { Box, Flex } from "@chakra-ui/react";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarExpand, setSidebarExpand] = useState(true);
@@ -10,7 +10,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
     <>
       <Header />
       <Flex>
-        <SideBar sidebarExpand={sidebarExpand} setSidebarExpand={setSidebarExpand} />
+        <Sidebar sidebarExpand={sidebarExpand} setSidebarExpand={setSidebarExpand} />
         <Box
           as="main"
           flexGrow={1}

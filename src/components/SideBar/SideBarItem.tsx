@@ -1,16 +1,16 @@
-import { ISideBarItem } from "@/interfaces/navigationItem";
+import { ISidebarItem } from "@/interfaces/navigationItem";
 import { Flex, Box, Icon, Badge, Tooltip, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import sideBarItemList from "./SideBarItemList";
+import SidebarItemList from "./SidebarItemList";
 
 interface Props {
   sidebarExpand: boolean;
 }
 
-const SideBarItem = ({ sidebarExpand }: Props) => {
+const SidebarItem = ({ sidebarExpand }: Props) => {
   return (
     <Box as="nav" marginTop="40px">
-      {sideBarItemList.map((sideBarItem: ISideBarItem) => {
+      {SidebarItemList.map((sideBarItem: ISidebarItem) => {
         return (
           <Link href={sideBarItem.href} passHref key={sideBarItem.id}>
             <Flex
@@ -76,4 +76,4 @@ const SideBarItem = ({ sidebarExpand }: Props) => {
   );
 };
 
-export default SideBarItem;
+export default SidebarItem;

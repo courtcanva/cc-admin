@@ -4,10 +4,10 @@ import { CgMicrosoft, CgTemplate } from "react-icons/cg";
 import { TbRectangle } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { CgNotes } from "react-icons/cg";
-import { ISideBarItem } from "../../interfaces/navigationItem";
+import { ISidebarItem } from "../../interfaces/navigationItem";
 import { RiPercentLine } from "react-icons/ri";
 
-const SideBarItemList: ISideBarItem[] = [
+const SidebarItemList: ISidebarItem[] = [
   {
     id: 1,
     title: "Home",
@@ -63,4 +63,4 @@ const SideBarItemList: ISideBarItem[] = [
     href: "/templates",
   },
 ];
-export default SideBarItemList;
+export default SidebarItemList;
