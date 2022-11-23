@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { Box, Container, Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Header from "./Header";
 import SideBar from "@/components/SideBar";
 
