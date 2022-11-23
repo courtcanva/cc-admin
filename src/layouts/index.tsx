@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Box, Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Header from "./Header";
 import SideBar from "@/components/SideBar";
 

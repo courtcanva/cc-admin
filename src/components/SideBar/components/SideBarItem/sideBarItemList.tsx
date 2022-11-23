@@ -1,6 +1,6 @@
 import { AiFillHome, AiOutlineKey } from "react-icons/ai";
 import { IoPersonCircleSharp } from "react-icons/io5";
-import { CgMicrosoft } from "react-icons/cg";
+import { CgMicrosoft, CgTemplate } from "react-icons/cg";
 import { TbRectangle } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { CgNotes } from "react-icons/cg";
@@ -55,6 +55,12 @@ const sideBarItemList: ISideBarItem[] = [
     title: "Orders",
     icon: <CgNotes />,
     href: "/orders",
+  },
+  {
+    id: 9,
+    title: "Templates",
+    icon: <CgTemplate />,
+    href: "/templates",
   },
 ];
 export default sideBarItemList;

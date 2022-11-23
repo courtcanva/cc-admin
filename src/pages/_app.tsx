@@ -29,7 +29,6 @@ function CourtCanvaApp({ Component, pageProps }: AppPropsWithLayout) {
   const { updateToken } = useAuthRequest();
 
   updateToken(); // check user refresh token TODO: using axios interceptors instead
-  console.log("page props", pageProps);
   const cookies = pageProps.cookies;
   let accessToken: string | undefined;
   if (UserTokenService.getUserToken()) accessToken = UserTokenService.getUserToken()?.accessToken;

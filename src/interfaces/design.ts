@@ -22,3 +22,8 @@ interface ITileColor {
   location: string;
   color: string;
 }
+
+export interface ISaveDesign extends IDesign{
+  designer: string;
+  image: string;
+}
