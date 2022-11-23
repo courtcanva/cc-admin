@@ -2,6 +2,7 @@ import { LIMIT } from "@/constants/pagination";
 import { useCallback, useEffect, useState } from "react";
 import { createColumnHelper, SortingState } from "@tanstack/react-table";
 import { useGetAllQuotationQuery } from "../../redux/api/quotationApi";
+import { useGetDepositQuery } from "../../redux/api/depositApi";
 import _ from "lodash";
 import formatCurrency from "@/utils/formatCurrency";
 import { IDesign } from "@/interfaces/design";
@@ -14,6 +15,8 @@ interface Quotation {
   user_id: string;
   quotationName: string;
   quotation: string;
+  deposit: number;
+  depositRate: number;
   design: IDesign;
   isExpired: boolean;
 }
@@ -28,6 +31,13 @@ const Quotation = () => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [optionalQuery, setOptionalQuery] = useState(`&user_id=${searchValue}`);
 
+  const { data, isError, isSuccess } = useGetAllQuotationQuery({
+    offset: pageIndex * pageSize,
+    limit: pageSize,
+    optionalQuery,
+  });
+
+  const { data: depositData } = useGetDepositQuery();
   useEffect(() => {
     setOptionalQuery(
       `&user_id=${searchValue}&sort=${sorting[0]?.id}&desc=${sorting[0]?.desc ? -1 : 1}`
@@ -65,6 +75,15 @@ const Quotation = () => {
         return formatCurrency(item.getValue());
       },
     }),
+    columnHelper.accessor("depositRate", {
+      header: "DEPOSIT RATE",
+    }),
+    columnHelper.accessor("deposit", {
+      header: "DEPOSIT",
+      cell: (item) => {
+        return formatCurrency(item.getValue());
+      },
+    }),
     columnHelper.accessor("design", {
       header: "QUOTATION DETAIL",
       enableSorting: false,
@@ -94,24 +113,19 @@ const Quotation = () => {
     }),
   ];
 
-  const { data, isError, isSuccess } = useGetAllQuotationQuery({
-    offset: pageIndex * pageSize,
-    limit: pageSize,
-    optionalQuery,
-  });
-
   const quotationData = data
     ? data.data.map((item) => {
         return {
           user_id: item.user_id,
           quotationName: item.design.designName,
           quotation: item.quotation,
+          depositRate: depositData?.depositRate,
+          deposit: Number(item.quotation) * depositData?.depositRate,
           design: item.design,
           isExpired: item.isExpired,
         };
       })
     : [];
-
   const tableSearch = {
     searchPlaceholder: "Search account ID",
     searchValue: searchValue,
