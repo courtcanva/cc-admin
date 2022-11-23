@@ -2,7 +2,7 @@ import { LIMIT } from "@/constants/pagination";
 import { useCallback, useEffect, useState } from "react";
 import { createColumnHelper, SortingState } from "@tanstack/react-table";
 import { useGetAllQuotationQuery } from "../../redux/api/quotationApi";
-import { useLazyGetDepositQuery } from "../../redux/api/depositApi";
+import { useGetDepositQuery } from "../../redux/api/depositApi";
 import _ from "lodash";
 import formatCurrency from "@/utils/formatCurrency";
 import { IDesign } from "@/interfaces/design";
@@ -15,7 +15,7 @@ interface Quotation {
   user_id: string;
   quotationName: string;
   quotation: string;
-  deposit: string;
+  deposit: number;
   depositRate: number;
   design: IDesign;
   isExpired: boolean;
@@ -37,11 +37,7 @@ const Quotation = () => {
     optionalQuery,
   });
 
-  const [trigger, { data: depositData }] = useLazyGetDepositQuery();
-  useEffect(() => {
-    trigger();
-  }, []);
-
+  const { data: depositData } = useGetDepositQuery();
   useEffect(() => {
     setOptionalQuery(
       `&user_id=${searchValue}&sort=${sorting[0]?.id}&desc=${sorting[0]?.desc ? -1 : 1}`
@@ -124,7 +120,7 @@ const Quotation = () => {
           quotationName: item.design.designName,
           quotation: item.quotation,
           depositRate: depositData?.depositRate,
-          deposit: (Number(item.quotation) * depositData?.depositRate).toString(),
+          deposit: Number(item.quotation) * depositData?.depositRate,
           design: item.design,
           isExpired: item.isExpired,
         };
