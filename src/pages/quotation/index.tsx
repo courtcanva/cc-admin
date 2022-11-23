@@ -130,7 +130,6 @@ const Quotation = () => {
         };
       })
     : [];
-  console.log(quotationData);
   const tableSearch = {
     searchPlaceholder: "Search account ID",
     searchValue: searchValue,
