@@ -11,7 +11,7 @@ const OrderFooterInfoMockData = {
 describe("<OrderItemFooter />", () => {
   it("should render order Footer component correctly", () => {
     renderWithMockedProvider(<OrderItemFooter totalQuotation={""} {...OrderFooterInfoMockData} />);
-    // expect(screen.getByText("2022-11-12 20:26:55")).toBeVisible();
+    expect(screen.getByText("2022-11-12 20:26:55")).toBeVisible();
     expect(screen.getByText("0.02")).toBeVisible();
   });
 });
