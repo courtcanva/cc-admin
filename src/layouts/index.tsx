@@ -1,16 +1,26 @@
-import { ReactNode } from "react";
-import { Box } from "@chakra-ui/react";
+import { ReactNode, useState } from "react";
 import Header from "./Header";
-import SideBar from "@/components/SideBar";
+import Sidebar from "@/components/Sidebar";
+import { Box, Flex } from "@chakra-ui/react";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [sidebarExpand, setSidebarExpand] = useState(true);
+
   return (
     <>
       <Header />
-      <SideBar />
-      <Box as="main" marginLeft="326px" paddingX="50px">
-        {children}
-      </Box>
+      <Flex>
+        <Sidebar sidebarExpand={sidebarExpand} setSidebarExpand={setSidebarExpand} />
+        <Box
+          as="main"
+          flexGrow={1}
+          marginLeft={sidebarExpand ? "240px" : "50px"}
+          padding="20px 50px"
+          transition="linear 0.4s"
+        >
+          {children}
+        </Box>
+      </Flex>
     </>
   );
 };

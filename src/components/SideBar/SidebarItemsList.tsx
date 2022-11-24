@@ -4,63 +4,63 @@ import { CgMicrosoft, CgTemplate } from "react-icons/cg";
 import { TbRectangle } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { CgNotes } from "react-icons/cg";
-import { ISideBarItem } from "../../../../interfaces/navigationItem";
+import { ISidebarItem } from "../../interfaces/sidebarItem";
 import { RiPercentLine } from "react-icons/ri";
 
-const sideBarItemList: ISideBarItem[] = [
+const SidebarItemsList: ISidebarItem[] = [
   {
     id: 1,
     title: "Home",
-    icon: <AiFillHome />,
+    icon: AiFillHome,
     href: "/",
   },
   {
     id: 2,
     title: "Users",
-    icon: <IoPersonCircleSharp />,
+    icon: IoPersonCircleSharp,
     href: "/accounts",
   },
   {
     id: 3,
     title: "Tiles",
-    icon: <CgMicrosoft />,
+    icon: CgMicrosoft,
     href: "/tiles",
   },
   {
     id: 4,
     title: "Courts",
-    icon: <TbRectangle />,
+    icon: TbRectangle,
     href: "/courts",
   },
   {
     id: 5,
     title: "Admin",
-    icon: <AiOutlineKey />,
+    icon: AiOutlineKey,
     href: "/admin",
   },
   {
     id: 6,
     title: "Quotation",
-    icon: <HiOutlineShoppingCart />,
+    icon: HiOutlineShoppingCart,
     href: "/quotation",
   },
   {
     id: 7,
     title: "Deposit",
-    icon: <RiPercentLine />,
+    icon: RiPercentLine,
     href: "/deposit",
   },
   {
     id: 8,
     title: "Orders",
-    icon: <CgNotes />,
+    icon: CgNotes,
     href: "/orders",
   },
   {
     id: 9,
     title: "Templates",
-    icon: <CgTemplate />,
+    icon: CgTemplate,
     href: "/templates",
   },
 ];
-export default sideBarItemList;
+export default SidebarItemsList;
