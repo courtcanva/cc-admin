@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import renderWithMockedProvider from "../../utils";
-import OrderItemFooter from "@/components/OrderComponents/OrderItemFooter";
+import OrderItemFooter from "../../../components/OrderComponents/OrderItemFooter";
 
 const OrderFooterInfoMockData = {
   updateTime: "2022-11-12 20:26:55",

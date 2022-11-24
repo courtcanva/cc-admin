@@ -7,36 +7,36 @@ import UserTokenService from "../../components/Login/helpers/TokenService";
 
 export const depositApi = createApi({
   reducerPath: "deposit",
-  baseQuery: fetchBaseQuery({ 
+  baseQuery: fetchBaseQuery({
     baseUrl: environment.apiBaseUrl,
     prepareHeaders: (headers) => {
       const accessToken = UserTokenService.getLocalAccessToken();
-      headers.set("authorization", accessToken ? `Bearer ${UserTokenService.getLocalAccessToken()}` : "");
+      headers.set(
+        "authorization",
+        accessToken ? `Bearer ${UserTokenService.getLocalAccessToken()}` : ""
+      );
       return headers;
-    }
+    },
   }),
   tagTypes: ["deposit"],
   endpoints: (builder) => ({
     getDeposit: builder.query<any, void>({
       query: () => `/deposit`,
       providesTags: ["deposit"],
-      transformResponse: (result: any, _err, _arg) => { 
+      transformResponse: (result: any, _err, _arg) => {
         result.updatedAt = formatDate(result.updatedAt);
-        return _.omit(result, ["createdAt", "_id"]) 
-      }
+        return _.omit(result, ["createdAt", "_id"]);
+      },
     }),
     updateDeposit: builder.mutation<any, IUpdateDeposit>({
       query: (deposit) => ({
         url: `/deposit`,
         method: "PATCH",
-        body: deposit
+        body: deposit,
       }),
-      invalidatesTags: ["deposit"]
+      invalidatesTags: ["deposit"],
     }),
   }),
 });
 
-export const {
-  useLazyGetDepositQuery,
-  useUpdateDepositMutation,
-} = depositApi;
+export const { useLazyGetDepositQuery, useGetDepositQuery, useUpdateDepositMutation } = depositApi;
