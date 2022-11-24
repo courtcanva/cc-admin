@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Text, Flex, Image, Icon, Tooltip, Box } from "@chakra-ui/react";
+import { Text, Flex, Image, Icon, Tooltip } from "@chakra-ui/react";
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpand } from "react-icons/tb";
 
 interface Props {

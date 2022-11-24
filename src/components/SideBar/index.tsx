@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import Logo from "./Logo";
 import Profile from "./Profile";
-import SidebarItem from "./SidebarItem";
+import SidebarItems from "./SidebarItems";
 import { Flex, Box } from "@chakra-ui/react";
 
 interface Props {
@@ -26,7 +26,7 @@ const Sidebar = ({ sidebarExpand, setSidebarExpand }: Props) => {
     >
       <Box>
         <Logo sidebarExpand={sidebarExpand} setSidebarExpand={setSidebarExpand} />
-        <SidebarItem sidebarExpand={sidebarExpand} />
+        <SidebarItems sidebarExpand={sidebarExpand} />
       </Box>
       <Profile sidebarExpand={sidebarExpand} />
     </Flex>
