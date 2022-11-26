@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import Header from "./Header";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "../components/SideBar";
 import { Box, Flex } from "@chakra-ui/react";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
