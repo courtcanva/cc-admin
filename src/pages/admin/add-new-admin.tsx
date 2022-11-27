@@ -25,11 +25,11 @@ const AddNewAdmin = () => {
         name: "",
         email: "",
         password: "",
-        permission: "",
+        // permission: "",
       }}
       validationSchema={AdminSchema}
-      onSubmit={({ name, email, password, permission }, actions) => {
-        createAdmin({ name, email, password, permission })
+      onSubmit={({ name, email, password }, actions) => {
+        createAdmin({ name, email, password })
           .unwrap()
           .then(() => router.push("/admin"))
           .catch((error) => {
@@ -74,7 +74,7 @@ const AddNewAdmin = () => {
                   </FormControl>
                 )}
               </Field>
-              <Field name="permission">
+              {/* <Field name="permission">
                 {({ field, form }: any) => (
                   <FormControl isInvalid={form.errors.permission && form.touched.permission}>
                     <FormLabel htmlFor="permission">Permission</FormLabel>
@@ -85,7 +85,7 @@ const AddNewAdmin = () => {
                     <FormErrorMessage>{form.errors.permission}</FormErrorMessage>
                   </FormControl>
                 )}
-              </Field>
+              </Field> */}
               <Flex justifyContent="center">
                 <Button margin={4} onClick={() => routeHandler("admin")}>
                   Cancel

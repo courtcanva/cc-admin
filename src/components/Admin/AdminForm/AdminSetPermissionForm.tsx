@@ -7,20 +7,22 @@ import {
   Input,
   Container,
   FormErrorMessage,
+  Select,
   Text,
 } from "@chakra-ui/react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { IAdmin } from "../../../interfaces/adminData";
-import updateAdminSchema from "./updateAdminSchema";
+import updateAdminPermissionSchema from "./updateAdminPermissionSchema";
 import { useUpdateAdminMutation } from "@/redux/api/adminApi";
+import { useSetAdminPermissionMutation } from "@/redux/api/adminApi";
 
 type Props = {
   header: string;
   adminData: IAdmin;
 };
 
-const AdminForm: React.FC<Props> = ({ header, adminData }) => {
-  const [updateAdmin] = useUpdateAdminMutation();
+const AdminSetPermissionForm: React.FC<Props> = ({ header, adminData }) => {
+  const [updateAdminPermission] = useSetAdminPermissionMutation();
   const displayAdminData = {
     email: adminData.email,
     name: adminData.name,
@@ -30,9 +32,9 @@ const AdminForm: React.FC<Props> = ({ header, adminData }) => {
   return (
     <Formik
       initialValues={{ ...displayAdminData }}
-      validationSchema={updateAdminSchema}
+      validationSchema={updateAdminPermissionSchema}
       onSubmit={async (values, actions) => {
-        await updateAdmin({ ...adminData, ...values })
+        await updateAdminPermission({ ...adminData, ...values })
           .unwrap()
           .catch((_err) => {
             alert("Whoops! This account cannot be updated, please try again!");
@@ -67,13 +69,13 @@ const AdminForm: React.FC<Props> = ({ header, adminData }) => {
                 <Field name="name">
                   {({ field, form }: any) => (
                     <FormControl isInvalid={form.errors.name && form.touched.name}>
-                      <FormLabel htmlFor="name">Admin Name</FormLabel>
-                      <Input {...field} id="name" />
+                      <FormLabel htmlFor="name">Name</FormLabel>
+                      <Input {...field} id="name" disabled />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>
                   )}
                 </Field>
-                {/* <Field name="permission">
+                <Field name="permission">
                   {({ field, form }: any) => (
                     <FormControl isInvalid={form.errors.permission && form.touched.permission}>
                       <FormLabel htmlFor="permission">Permission</FormLabel>
@@ -84,7 +86,7 @@ const AdminForm: React.FC<Props> = ({ header, adminData }) => {
                       <FormErrorMessage>{form.errors.permission}</FormErrorMessage>
                     </FormControl>
                   )}
-                </Field> */}
+                </Field>
                 <Flex justifyContent="center">
                   <Button margin={4} onClick={() => routeHandler("admin")}>
                     Cancel
@@ -101,4 +103,4 @@ const AdminForm: React.FC<Props> = ({ header, adminData }) => {
     </Formik>
   );
 };
-export default AdminForm;
+export default AdminSetPermissionForm;

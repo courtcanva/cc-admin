@@ -1,10 +1,13 @@
 import formReducer from "@/components/Login/formReducer";
 import LoginForm from "@/components/Login/LoginForm";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
+import renderWithMockedProvider from "../../utils";
 
 it("should receive the correct form input value", () => {
   const setup = () => {
-    const utils = render(<LoginForm loginStatus={(status: boolean): boolean | void => status} />);
+    const utils = renderWithMockedProvider(
+      <LoginForm loginStatus={(status: boolean): boolean | void => status} />
+    );
     const input = utils.getByPlaceholderText(/Enter Email/i) as HTMLInputElement;
     return {
       input,
