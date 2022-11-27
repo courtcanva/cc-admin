@@ -28,7 +28,7 @@ import {
 } from "@/redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
 import DropDownFilter from "@/components/Admin/DropDownFilter";
-import { SUPER_ADMIN_TABLE_HEADER, NORMAL_ADMIN_TABLE_HEADER } from "../../constants/tableHeaders";
+import { ADMIN_TABLE_HEADER } from "../../constants/tableHeaders";
 import TableHeader from "../../components/TableHeader";
 import { useSelector } from "react-redux";
 import { setCurrentAdmin } from "../../store/reducer/currentAdminSlice";
@@ -96,11 +96,7 @@ const AdminAccounts = () => {
       </Button>
       <TableContainer>
         <Table variant="simple">
-          {superAdmin ? (
-            <TableHeader tableHeaderData={SUPER_ADMIN_TABLE_HEADER} />
-          ) : (
-            <TableHeader tableHeaderData={NORMAL_ADMIN_TABLE_HEADER} />
-          )}
+          <TableHeader tableHeaderData={ADMIN_TABLE_HEADER} />
           <Tbody>
             {adminAccData
               ?.filter((admin: IAdmin) => {
@@ -135,26 +131,34 @@ const AdminAccounts = () => {
                         )}
                       </Td>
                       <Td textAlign="center">{isDeleted ? <Icon as={ImBlocked} /> : "Active"}</Td>
-                      {superAdmin && (
-                        <Td>
-                          <ButtonGroup
-                            display="flex"
-                            justifyContent="center"
-                            variant="outline"
-                            spacing="1"
-                          >
-                            {!isDeleted ? (
-                              <>
-                                {currentAdminId === _id && (
-                                  <IconButton
-                                    aria-label="admin detail"
-                                    icon={
-                                      <RiEdit2Line
-                                        onClick={() => idRouteHandler(`admin/${_id}/updateAdmin`)}
-                                      />
-                                    }
-                                  />
-                                )}
+
+                      <Td>
+                        <ButtonGroup
+                          display="flex"
+                          justifyContent="center"
+                          variant="outline"
+                          spacing="1"
+                        >
+                          {currentAdminId === _id ? (
+                            <IconButton
+                              aria-label="edit admin detail"
+                              icon={
+                                <RiEdit2Line
+                                  onClick={() => idRouteHandler(`admin/${_id}/updateAdmin`)}
+                                />
+                              }
+                            />
+                          ) : (
+                            <IconButton
+                              aria-label="edit admin detail disabled"
+                              disabled
+                              icon={<RiEdit2Line />}
+                            />
+                          )}
+
+                          {!isDeleted ? (
+                            <>
+                              {superAdmin && (
                                 <IconButton
                                   aria-label="delete admin"
                                   icon={<FaTrashAlt />}
@@ -164,8 +168,10 @@ const AdminAccounts = () => {
                                     onModalOpen();
                                   }}
                                 />
-                              </>
-                            ) : (
+                              )}
+                            </>
+                          ) : (
+                            superAdmin && (
                               <IconButton
                                 aria-label="restore admin"
                                 icon={<RiRepeatLine />}
@@ -175,10 +181,10 @@ const AdminAccounts = () => {
                                   onModalOpen();
                                 }}
                               />
-                            )}
-                          </ButtonGroup>
-                        </Td>
-                      )}
+                            )
+                          )}
+                        </ButtonGroup>
+                      </Td>
                     </Tr>
                   </>
                 );

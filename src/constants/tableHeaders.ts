@@ -6,7 +6,7 @@ export const USERS_TABLE_HEADER = [
   "Email",
   "Account Type",
 ];
-export const SUPER_ADMIN_TABLE_HEADER = [
+export const ADMIN_TABLE_HEADER = [
   "Admin Name",
   "Email",
   "Created At",
@@ -16,12 +16,4 @@ export const SUPER_ADMIN_TABLE_HEADER = [
   "Operation",
 ];
 
-export const NORMAL_ADMIN_TABLE_HEADER = [
-  "Admin Name",
-  "Email",
-  "Created At",
-  "Updated At",
-  "Permission",
-  "Status",
-];
 export const DEPOSIT_TABLE_HEADER = ["Deposit Rate", "Updated At", "Operation"]
