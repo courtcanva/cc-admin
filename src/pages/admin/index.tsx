@@ -25,13 +25,12 @@ import {
   useGetAllAdminQuery,
   useDeleteAdminMutation,
   useRestoreAdminMutation,
-} from "@/redux/api/adminApi";
+} from "../../redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
 import DropDownFilter from "@/components/Admin/DropDownFilter";
 import { ADMIN_TABLE_HEADER } from "../../constants/tableHeaders";
 import TableHeader from "../../components/TableHeader";
 import { useSelector } from "react-redux";
-import { setCurrentAdmin } from "../../store/reducer/currentAdminSlice";
 import type { RootState } from "../../store";
 
 interface FilterType {
