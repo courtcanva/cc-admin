@@ -1,5 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalBody, Box } from "@chakra-ui/react";
-import Image from "next/image";
+import { Modal, ModalOverlay, ModalContent, ModalBody, Image, Flex } from "@chakra-ui/react";
 
 interface Prop {
   isOpen: boolean;
@@ -13,9 +12,9 @@ const CourtPreviewModal = (props: Prop) => {
       <ModalOverlay />
       <ModalContent>
         <ModalBody data-testid="court-preview">
-          <Box width="full" height="550px" position="relative">
-            <Image src={props.image} layout="fill" objectFit="contain" />
-          </Box>
+          <Flex width="full" height="550px" position="relative" justify="center">
+            <Image height="full" src={props.image} alt='court preview' />
+          </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>

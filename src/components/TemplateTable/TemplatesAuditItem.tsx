@@ -1,7 +1,6 @@
 import { ITemplateDataDb } from "@/interfaces/template";
 import { useUpdateTemplateMutation } from "../../redux/api/templateApi";
 import {
-  Box,
   Modal,
   ModalBody,
   ModalContent,
@@ -15,8 +14,8 @@ import {
   Flex,
   ModalFooter,
   ModalHeader,
+  Image
 } from "@chakra-ui/react";
-import Image from "next/image";
 import { useState } from "react";
 import CourtPreviewModal from "./CourtPreviewModal";
 
@@ -62,9 +61,9 @@ const TemplatesAuditItem = (prop: Prop) => {
         <Tr>
           {/* template preview */}
           <Td>
-            <Box width="full" height="200px" position="relative">
-              <Image src={image} layout="fill" objectFit="contain" onClick={onImageOpen} />
-            </Box>
+            <Flex height="200px" justify="center">
+              <Image height="full" src={image} alt='court preview' objectFit="contain" onClick={onImageOpen} />
+            </Flex>
           </Td>
 
           {/* template name */}
