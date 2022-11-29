@@ -7,6 +7,7 @@ import { usersAccountApi } from "../redux/api/usersAccountApi";
 import { depositApi } from "../redux/api/depositApi";
 import { templateApi } from "../redux/api/templateApi";
 import { ordersApi } from "../redux/api/ordersApi";
+import { dashboardApi } from "../redux/api/dashboardApi";
 
 export const makeStore = () =>
   configureStore({
@@ -19,6 +20,7 @@ export const makeStore = () =>
       [templateApi.reducerPath]: templateApi.reducer,
       [depositApi.reducerPath]: depositApi.reducer,
       [ordersApi.reducerPath]: ordersApi.reducer,
+      [dashboardApi.reducerPath]: dashboardApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
@@ -28,7 +30,8 @@ export const makeStore = () =>
         usersAccountApi.middleware,
         templateApi.middleware,
         depositApi.middleware,
-        ordersApi.middleware
+        ordersApi.middleware,
+        dashboardApi.middleware
       ),
   });
 

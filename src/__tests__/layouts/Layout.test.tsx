@@ -1,13 +1,14 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import Layout from "../../layouts";
 import Home from "../../pages";
+import renderWithMockedProvider from "../utils";
 
 describe("Layout", () => {
   it("main'width should be 240px", () => {
     const useStateMock: any = () => [true, jest.fn()];
     jest.spyOn(React, "useState").mockImplementation(useStateMock);
-    render(
+    renderWithMockedProvider(
       <Layout>
         <Home />
       </Layout>
@@ -19,7 +20,7 @@ describe("Layout", () => {
     const useStateMock: any = () => [false, jest.fn()];
     jest.spyOn(React, "useState").mockImplementation(useStateMock);
 
-    render(
+    renderWithMockedProvider(
       <Layout>
         <Home />
       </Layout>

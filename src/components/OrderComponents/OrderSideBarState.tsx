@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 import { Flex, Box } from "@chakra-ui/react";
+import { ORDER_STATUS_COLOR } from "@/constants/orderStatusColor";
 
 interface PropsType {
   status: string;
 }
 
-const STATUS_COLOR_MAP: { [key: string]: string } = {
-  unpaid: "#C13D46",
-  completed: "#44BC84",
-  processing: "#7C9FDF",
-  cancelled: "gray",
-};
-
 const OrderSideBarState = ({ status }: PropsType) => {
   const [statusColor, setStatusColor] = useState("");
 
   useEffect(() => {
-    setStatusColor(STATUS_COLOR_MAP[status]);
+    setStatusColor(ORDER_STATUS_COLOR[status]);
   }, [status]);
 
   return (
