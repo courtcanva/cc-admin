@@ -14,7 +14,7 @@ import {
   Flex,
   ModalFooter,
   ModalHeader,
-  Image
+  Image,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import CourtPreviewModal from "./CourtPreviewModal";
@@ -62,7 +62,13 @@ const TemplatesAuditItem = (prop: Prop) => {
           {/* template preview */}
           <Td>
             <Flex height="200px" justify="center">
-              <Image height="full" src={image} alt='court preview' objectFit="contain" onClick={onImageOpen} />
+              <Image
+                height="full"
+                src={image}
+                alt="court preview"
+                objectFit="contain"
+                onClick={onImageOpen}
+              />
             </Flex>
           </Td>
 

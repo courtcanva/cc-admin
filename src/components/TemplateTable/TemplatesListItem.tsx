@@ -18,11 +18,17 @@ const TemplatesListItem = (prop: Prop) => {
           {/* account id */}
           <Td>{userId}</Td>
           {/* template name */}
-          <Td>{design.designName}</Td>       
+          <Td>{design.designName}</Td>
           {/* Template Preview */}
           <Td>
             <Flex height="200px" justify="center">
-              <Image height="full" src={image} alt='court preview' objectFit="contain" onClick={onOpen} />
+              <Image
+                height="full"
+                src={image}
+                alt="court preview"
+                objectFit="contain"
+                onClick={onOpen}
+              />
             </Flex>
           </Td>
           {/* description */}

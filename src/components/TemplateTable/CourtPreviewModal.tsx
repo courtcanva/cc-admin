@@ -13,7 +13,7 @@ const CourtPreviewModal = (props: Prop) => {
       <ModalContent>
         <ModalBody data-testid="court-preview">
           <Flex width="full" height="550px" position="relative" justify="center">
-            <Image height="full" src={props.image} alt='court preview' />
+            <Image height="full" src={props.image} alt="court preview" />
           </Flex>
         </ModalBody>
       </ModalContent>
