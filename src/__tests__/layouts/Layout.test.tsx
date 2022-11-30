@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import Layout from "../../layouts";
 import Home from "../../pages";
 import renderWithMockedProvider from "../utils";
