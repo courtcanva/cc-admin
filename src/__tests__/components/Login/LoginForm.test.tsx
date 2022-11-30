@@ -1,9 +1,12 @@
-import { screen, render } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import LoginForm from "@/components/Login/LoginForm";
+import renderWithMockedProvider from "../../utils";
 
 describe("LoginForm", () => {
   it("should render the LoginForm", () => {
-    render(<LoginForm loginStatus={(status: boolean): boolean | void => status} />);
+    renderWithMockedProvider(
+      <LoginForm loginStatus={(status: boolean): boolean | void => status} />
+    );
 
     const emailText = screen.getByText(/Email/i);
     const passwordText = screen.getByText(/Password/i);

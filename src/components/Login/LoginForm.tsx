@@ -3,6 +3,8 @@ import { Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import formReducer, { FormActionKind } from "./formReducer";
 import useAuthRequest from "@/components/Login/helpers/useAuthRequest";
 import UserTokenService from "@/components/Login/helpers/TokenService";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentAdmin, clearCurrentAdmin } from "@/store/reducer/currentAdminSlice";
 
 interface ILoginFromProps {
   loginStatus: (arg0: boolean) => boolean | void;
@@ -18,6 +20,7 @@ const LoginForm = ({ loginStatus }: ILoginFromProps) => {
   const [isLoginFail, setIsLoginFail] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { loginRequest } = useAuthRequest();
+  const reduxDispatch = useDispatch();
 
   const isInvalid = !state.userEmail || !state.userPassword;
 
@@ -45,7 +48,7 @@ const LoginForm = ({ loginStatus }: ILoginFromProps) => {
     }
 
     const tokens: object = loginResponse.data;
-
+    reduxDispatch(setCurrentAdmin(loginResponse.data.admin));
     UserTokenService.setUserToken(tokens);
     setIsLoading(false);
   };

@@ -57,9 +57,6 @@ const DropDownFilter = ({ handleValueChange }: PropsType) => {
           </CheckboxGroup>
         </MenuList>
       </Menu>
-      <Text fontSize="md" color="teal.500">
-        {!value ? null : `Selected: ${value.toString()}`}
-      </Text>
     </Flex>
   );
 };

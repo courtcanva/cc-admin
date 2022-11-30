@@ -25,16 +25,19 @@ import {
   useGetAllAdminQuery,
   useDeleteAdminMutation,
   useRestoreAdminMutation,
-} from "@/redux/api/adminApi";
+} from "../../redux/api/adminApi";
 import { IAdmin } from "@/interfaces/adminData";
 import DropDownFilter from "@/components/Admin/DropDownFilter";
 import { ADMIN_TABLE_HEADER } from "../../constants/tableHeaders";
 import TableHeader from "../../components/TableHeader";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store";
 
 interface FilterType {
   isActive: boolean;
   isDelete: boolean;
 }
+
 const AdminAccounts = () => {
   const [adminIdToDelete, setAdminIdToDelete] = useState("");
   const [adminIdToRestore, setAdminIdToRestore] = useState("");
@@ -43,6 +46,10 @@ const AdminAccounts = () => {
   const [restoreAdmin] = useRestoreAdminMutation();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
   const [filterValue, setFilterValue] = useState<FilterType>();
+
+  const adminLoginResponseData = useSelector((state: RootState) => state.currentAdmin);
+  const superAdmin = adminLoginResponseData.currentAdmin?.permission === "super";
+  const currentAdminId = adminLoginResponseData.currentAdmin?.id;
 
   const confirmDeleteAdmin = (id: string) => {
     deleteAdmin(id);
@@ -109,8 +116,21 @@ const AdminAccounts = () => {
                       <Td textAlign="center">{updatedAt}</Td>
                       <Td textAlign="center" textTransform="capitalize">
                         {permission}
+                        {!isDeleted && superAdmin && (
+                          <IconButton
+                            aria-label="admin permission"
+                            variant="outline"
+                            marginLeft="10px"
+                            icon={
+                              <RiEdit2Line
+                                onClick={() => idRouteHandler(`admin/${_id}/setAdminPermission`)}
+                              />
+                            }
+                          />
+                        )}
                       </Td>
                       <Td textAlign="center">{isDeleted ? <Icon as={ImBlocked} /> : "Active"}</Td>
+
                       <Td>
                         <ButtonGroup
                           display="flex"
@@ -118,34 +138,49 @@ const AdminAccounts = () => {
                           variant="outline"
                           spacing="1"
                         >
+                          {currentAdminId === _id ? (
+                            <IconButton
+                              aria-label="edit admin detail"
+                              icon={
+                                <RiEdit2Line
+                                  onClick={() => idRouteHandler(`admin/${_id}/updateAdmin`)}
+                                />
+                              }
+                            />
+                          ) : (
+                            <IconButton
+                              aria-label="edit admin detail disabled"
+                              disabled
+                              icon={<RiEdit2Line />}
+                            />
+                          )}
+
                           {!isDeleted ? (
                             <>
+                              {superAdmin && (
+                                <IconButton
+                                  aria-label="delete admin"
+                                  icon={<FaTrashAlt />}
+                                  onClick={() => {
+                                    setCurrentModal("Delete");
+                                    setAdminIdToDelete(_id);
+                                    onModalOpen();
+                                  }}
+                                />
+                              )}
+                            </>
+                          ) : (
+                            superAdmin && (
                               <IconButton
-                                aria-label="admin detail"
-                                icon={
-                                  <RiEdit2Line onClick={() => idRouteHandler(`admin/${_id}`)} />
-                                }
-                              />
-                              <IconButton
-                                aria-label="delete admin"
-                                icon={<FaTrashAlt />}
+                                aria-label="restore admin"
+                                icon={<RiRepeatLine />}
                                 onClick={() => {
-                                  setCurrentModal("Delete");
-                                  setAdminIdToDelete(_id);
+                                  setCurrentModal("Restore");
+                                  setAdminIdToRestore(_id);
                                   onModalOpen();
                                 }}
                               />
-                            </>
-                          ) : (
-                            <IconButton
-                              aria-label="restore admin"
-                              icon={<RiRepeatLine />}
-                              onClick={() => {
-                                setCurrentModal("Restore");
-                                setAdminIdToRestore(_id);
-                                onModalOpen();
-                              }}
-                            />
+                            )
                           )}
                         </ButtonGroup>
                       </Td>

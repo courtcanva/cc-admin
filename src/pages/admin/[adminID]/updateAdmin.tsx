@@ -1,4 +1,4 @@
-import AdminForm from "@/components/Admin/AdminForm";
+import AdminForm from "@/components/Admin/AdminForm/AdminForm";
 import { Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useGetAdminByIdQuery } from "@/redux/api/adminApi";

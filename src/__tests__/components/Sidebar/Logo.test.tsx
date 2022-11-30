@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Logo from "../../../components/SideBar/Logo";
+import renderWithMockedProvider from "../../utils";
 
 describe("Sidebar Logo", () => {
   const props = {
@@ -9,7 +10,7 @@ describe("Sidebar Logo", () => {
   };
 
   it("Click sidebar expand icon should change the sidebar width", () => {
-    render(<Logo {...props} />);
+    renderWithMockedProvider(<Logo {...props} />);
     userEvent.click(screen.getByTestId("toggle-icon"));
     expect(props.setSidebarExpand).toBeCalled();
   });

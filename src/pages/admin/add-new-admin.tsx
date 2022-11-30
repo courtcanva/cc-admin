@@ -8,7 +8,6 @@ import {
   Container,
   FormErrorMessage,
   Text,
-  Select,
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { useCreateAdminMutation } from "@/redux/api/adminApi";
@@ -25,11 +24,10 @@ const AddNewAdmin = () => {
         name: "",
         email: "",
         password: "",
-        permission: "",
       }}
       validationSchema={AdminSchema}
-      onSubmit={({ name, email, password, permission }, actions) => {
-        createAdmin({ name, email, password, permission })
+      onSubmit={({ name, email, password }, actions) => {
+        createAdmin({ name, email, password })
           .unwrap()
           .then(() => router.push("/admin"))
           .catch((error) => {
@@ -71,18 +69,6 @@ const AddNewAdmin = () => {
                     <FormLabel htmlFor="password">Admin password</FormLabel>
                     <Input {...field} id="password" />
                     <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
-              <Field name="permission">
-                {({ field, form }: any) => (
-                  <FormControl isInvalid={form.errors.permission && form.touched.permission}>
-                    <FormLabel htmlFor="permission">Permission</FormLabel>
-                    <Select {...field} id="permission" placeholder="Select option">
-                      <option value="super">Super</option>
-                      <option value="normal">Normal</option>
-                    </Select>
-                    <FormErrorMessage>{form.errors.permission}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>

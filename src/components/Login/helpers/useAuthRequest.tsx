@@ -2,6 +2,8 @@ import UserTokenService from "@/components/Login/helpers/TokenService";
 import { api } from "@/utils/axios";
 import { AxiosRequestConfig } from "axios";
 import { useRouter } from "next/router";
+import { clearCurrentAdmin } from "@/store/reducer/currentAdminSlice";
+import store from "../../../store";
 
 export interface AxiosResponse<T = object> {
   data: T;
@@ -42,6 +44,7 @@ export default function useAuthRequest() {
         method: "post",
         token: UserTokenService.getLocalAccessToken(),
       });
+      store.dispatch(clearCurrentAdmin());
     } catch (error) {
       console.log(error);
     } finally {

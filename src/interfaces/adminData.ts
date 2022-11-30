@@ -15,5 +15,4 @@ export interface IAdmin {
     email: string;
     password: string;
     name: string;
-    permission: string;
   }
