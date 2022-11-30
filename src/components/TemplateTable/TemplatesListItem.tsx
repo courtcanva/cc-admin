@@ -1,6 +1,5 @@
 import { ITemplateDataDb } from "@/interfaces/template";
-import { Box, Tbody, Td, Tr, useDisclosure, Tag } from "@chakra-ui/react";
-import Image from "next/image";
+import { Tbody, Td, Tr, useDisclosure, Tag, Flex, Image } from "@chakra-ui/react";
 import CourtPreviewModal from "./CourtPreviewModal";
 
 interface Prop {
@@ -22,9 +21,15 @@ const TemplatesListItem = (prop: Prop) => {
           <Td>{design.designName}</Td>
           {/* Template Preview */}
           <Td>
-            <Box width="full" height="200px" position="relative">
-              <Image src={image} layout="fill" objectFit="contain" onClick={onOpen} />
-            </Box>
+            <Flex height="200px" justify="center">
+              <Image
+                height="full"
+                src={image}
+                alt="court preview"
+                objectFit="contain"
+                onClick={onOpen}
+              />
+            </Flex>
           </Td>
           {/* description */}
           <Td minWidth="150px" maxWidth="400px" whiteSpace="pre-line">
