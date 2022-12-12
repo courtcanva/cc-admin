@@ -42,8 +42,10 @@ const Accounts = () => {
     handleSearch(searchValue, searchField);
   }, [searchValue]);
   useEffect(() => {
-    if(searchValue) { setSearchLoading(true);
-    handleSearch(searchValue, searchField);}
+    if (searchValue) {
+      setSearchLoading(true);
+      handleSearch(searchValue, searchField);
+    }
   }, [searchField]);
   const handleSearch = useCallback(
     _.debounce((searchValue, searchField) => {
@@ -76,9 +78,9 @@ const Accounts = () => {
       header: "ACCOUNT TYPE",
       cell: (item) => {
         return item.getValue() ? (
-          <TableBadge colorScheme="red" text="Google"></TableBadge>
+          <TableBadge colorScheme="yellow" text="Google"></TableBadge>
         ) : (
-          <TableBadge colorScheme="green" text="Email"></TableBadge>
+          <TableBadge colorScheme="yellow" text="Email"></TableBadge>
         );
       },
     }),
@@ -136,7 +138,6 @@ const Accounts = () => {
           ></DisplayDataTable>
         </Box>
       )}
-      {console.log(data)}
     </>
   );
 };
