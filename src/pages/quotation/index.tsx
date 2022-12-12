@@ -28,6 +28,7 @@ const Quotation = () => {
   });
   const [sorting, setSorting] = useState<SortingState>([]);
   const [searchValue, setSearchValue] = useState("");
+  const [searchField, setSearchField] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
   const [optionalQuery, setOptionalQuery] = useState(`&user_id=${searchValue}`);
 
@@ -128,6 +129,9 @@ const Quotation = () => {
     : [];
   const tableSearch = {
     searchPlaceholder: "Search account ID",
+    searchFieldSelect: false,
+    searchField: "default",
+    setSearchField: setSearchField,
     searchValue: searchValue,
     setSearchValue: setSearchValue,
     searchLoading: searchLoading,
