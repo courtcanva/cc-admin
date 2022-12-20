@@ -1,8 +1,6 @@
 import useAuthRequest from "@/components/Login/helpers/useAuthRequest";
 import { Text, Flex, IconButton, Tooltip } from "@chakra-ui/react";
 import { TbLogout } from "react-icons/tb";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../store";
 
 interface Props {
   sidebarExpand: boolean;
@@ -10,7 +8,8 @@ interface Props {
 
 const Profile = ({ sidebarExpand }: Props) => {
   const { logoutRequest } = useAuthRequest();
-  const adminLoginResponseData = useSelector((state: RootState) => state.currentAdmin);
+  const adminLoginResponseData = JSON.parse(localStorage.getItem("adminInfo") || "{}");
+
   return (
     <Flex
       paddingTop="20px"
@@ -20,7 +19,7 @@ const Profile = ({ sidebarExpand }: Props) => {
     >
       {sidebarExpand && (
         <Text fontWeight="500" color="#FFFFFF">
-          {adminLoginResponseData.currentAdmin?.name}
+          {adminLoginResponseData?.name}
         </Text>
       )}
 

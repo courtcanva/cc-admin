@@ -21,11 +21,11 @@ export const currentAdminSlice = createSlice({
   reducers: {
     setCurrentAdmin: (state, action: PayloadAction<currentAdmin>) => {
       state.currentAdmin = action.payload;
-      console.log("setCurrentAdmin", state.currentAdmin);
+      localStorage.setItem("adminInfo", JSON.stringify(state.currentAdmin));
     },
     clearCurrentAdmin: (state) => {
       state.currentAdmin = null;
-      console.log("clearCurrentAdmin", state.currentAdmin);
+      localStorage.removeItem("adminInfo");
     },
   },
 });

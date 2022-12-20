@@ -30,8 +30,6 @@ import { IAdmin } from "@/interfaces/adminData";
 import DropDownFilter from "@/components/Admin/DropDownFilter";
 import { ADMIN_TABLE_HEADER } from "../../constants/tableHeaders";
 import TableHeader from "../../components/TableHeader";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../store";
 
 interface FilterType {
   isActive: boolean;
@@ -47,9 +45,9 @@ const AdminAccounts = () => {
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
   const [filterValue, setFilterValue] = useState<FilterType>();
 
-  const adminLoginResponseData = useSelector((state: RootState) => state.currentAdmin);
-  const superAdmin = adminLoginResponseData.currentAdmin?.permission === "super";
-  const currentAdminId = adminLoginResponseData.currentAdmin?.id;
+  const adminLoginResponseData = JSON.parse(localStorage.getItem("adminInfo") || "{}");
+  const superAdmin = adminLoginResponseData?.permission === "super";
+  const currentAdminId = adminLoginResponseData?.id;
 
   const confirmDeleteAdmin = (id: string) => {
     deleteAdmin(id);
@@ -197,7 +195,7 @@ const AdminAccounts = () => {
           isOpen={isModalOpen}
           onClose={onModalClose}
           onConfirm={() => confirmDeleteAdmin(adminIdToDelete)}
-          shownText={"Are you sure you want to restore this admin?"}
+          shownText={"Are you sure you want to delete this admin?"}
         />
       )}
       {currentModal === "Restore" && (
