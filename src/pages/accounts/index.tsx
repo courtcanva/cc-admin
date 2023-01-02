@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Box, Center } from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import { useListUsersQuery } from "../../redux/api/usersAccountApi";
 import _ from "lodash";
 import DisplayDataTable from "@/components/DisplayDataTable";
@@ -50,8 +50,16 @@ const Accounts = () => {
   const handleSearch = useCallback(
     _.debounce((searchValue, searchField) => {
       ["user_id", "email", "name"].includes(searchField)
-        ? setOptionalQuery(`&${searchField}=${searchValue}`)
-        : setOptionalQuery(`&user_id=${searchValue}&email=${searchValue}&name=${searchValue}`);
+        ? setOptionalQuery(
+            `&${searchField}=${searchValue}&sort=${sorting[0]?.id}&desc=${
+              sorting[0]?.desc ? -1 : 1
+            }`
+          )
+        : setOptionalQuery(
+            `&user_id=${searchValue}&email=${searchValue}&name=${searchValue}&sort=${
+              sorting[0]?.id
+            }&desc=${sorting[0]?.desc ? -1 : 1}`
+          );
       setPagination({
         pageIndex: 0,
         pageSize: LIMIT[0],
@@ -110,33 +118,33 @@ const Accounts = () => {
     setSearchValue: setSearchValue,
     searchLoading: searchLoading,
     searchLoadingText: "Please wait while the user data is loading...",
+    searchOptions: ["user_id", "email", "name"],
+    searchOptionsText: ["By User ID", "By Email", "By Name"],
   };
   return (
     <>
       {isError && (
         <Center height="100vh">
           <Error
-            errorTitle="Sorry, failed to get quotation data"
+            errorTitle="Sorry, failed to get user data"
             errorDescription="Your request was not sent successfully, please try again or contact IT support."
           ></Error>
         </Center>
       )}
       {isSuccess && (
-        <Box paddingTop="40px" paddingBottom="20px">
-          <DisplayDataTable
-            columns={columns}
-            data={userData}
-            pageIndex={pageIndex}
-            pageSize={pageSize}
-            setPagination={setPagination}
-            sorting={sorting}
-            setSorting={setSorting}
-            totalCount={data.total}
-            tableTitle="User"
-            showTotalQuantity
-            tableSearch={tableSearch}
-          ></DisplayDataTable>
-        </Box>
+        <DisplayDataTable
+          columns={columns}
+          data={userData}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          setPagination={setPagination}
+          sorting={sorting}
+          setSorting={setSorting}
+          totalCount={data.total}
+          tableTitle="User"
+          showTotalQuantity
+          tableSearch={tableSearch}
+        ></DisplayDataTable>
       )}
     </>
   );

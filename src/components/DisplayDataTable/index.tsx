@@ -73,6 +73,8 @@ interface Search {
   setSearchValue: Dispatch<SetStateAction<string>>;
   searchLoading: boolean;
   searchLoadingText: string;
+  searchOptions: string[];
+  searchOptionsText: string[];
 }
 
 function DisplayDataTable<Data extends object>({
@@ -151,6 +153,8 @@ function DisplayDataTable<Data extends object>({
                 setSearchField={tableSearch.setSearchField as Dispatch<SetStateAction<string>>}
                 searchValue={tableSearch.searchValue as string}
                 setSearchValue={tableSearch.setSearchValue as Dispatch<SetStateAction<string>>}
+                searchOptions={tableSearch.searchOptions}
+                searchOptionsText={tableSearch.searchOptionsText}
               ></Search>
             </Box>
           )}

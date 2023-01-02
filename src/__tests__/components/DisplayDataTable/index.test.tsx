@@ -82,6 +82,8 @@ describe("DisplayDataTable", () => {
       setSearchValue: jest.fn(),
       searchLoading: false,
       searchLoadingText: "",
+      searchOptions: ["user_id", "email", "name"],
+      searchOptionsText: ["By User ID", "By Email", "By Name"],
     };
 
     render(

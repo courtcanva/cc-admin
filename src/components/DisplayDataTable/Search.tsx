@@ -16,6 +16,8 @@ interface Props {
   setSearchField: Dispatch<SetStateAction<string>>;
   searchValue: string;
   setSearchValue: Dispatch<SetStateAction<string>>;
+  searchOptions: string[];
+  searchOptionsText: string[];
 }
 
 const Search = ({
@@ -25,6 +27,8 @@ const Search = ({
   setSearchField,
   searchValue,
   setSearchValue,
+  searchOptions,
+  searchOptionsText,
 }: Props) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -73,9 +77,11 @@ const Search = ({
           }}
           data-testid="search-select"
         >
-          <option value="user_id">By User ID</option>
-          <option value="email">By Email</option>
-          <option value="name">By Name</option>
+          {searchOptions.map((item, index) => (
+            <option key={item} value={item}>
+              {searchOptionsText[index]}
+            </option>
+          ))}
         </Select>
       )}
     </Flex>

@@ -14,6 +14,8 @@ describe("Search Component", () => {
         setSearchField={mockSearchField}
         searchValue=""
         setSearchValue={mockSearch}
+        searchOptions={["user_id", "email", "name"]}
+        searchOptionsText={["By User ID", "By Email", "By Name"]}
       />
     );
 
@@ -33,6 +35,8 @@ describe("Search Component", () => {
         setSearchField={mockSearchField}
         searchValue="test"
         setSearchValue={mockSearch}
+        searchOptions={["user_id", "email", "name"]}
+        searchOptionsText={["By User ID", "By Email", "By Name"]}
       />
     );
 
@@ -52,6 +56,8 @@ describe("Search Component", () => {
         setSearchField={mockSearchField}
         searchValue="test"
         setSearchValue={mockSearch}
+        searchOptions={["user_id", "email", "name"]}
+        searchOptionsText={["By User ID", "By Email", "By Name"]}
       />
     );
 

@@ -136,6 +136,8 @@ const Quotation = () => {
     setSearchValue: setSearchValue,
     searchLoading: searchLoading,
     searchLoadingText: "Please wait while the quotation data is loading...",
+    searchOptions: [],
+    searchOptionsText: [],
   };
 
   return (

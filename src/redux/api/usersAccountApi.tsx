@@ -14,17 +14,7 @@ export const usersAccountApi = createApi({
     query: ({ offset, limit, optionalQuery }) => `/user?offset=${offset}&limit=${limit}${optionalQuery}`,
     providesTags: [{ type: "usersAccount", id: "LIST" }],
     }),
-    deleteUser: builder.mutation<{ success: boolean; id: number }, number>({
-      query: (id) => ({
-        url: `/user/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: (_1, _2, id) => [
-        { type: "usersAccount", id },
-        { type: "usersAccount", id: "LIST" },
-      ],
-    }),
   }),
 });
 
-export const { useListUsersQuery, useDeleteUserMutation } = usersAccountApi;
+export const { useListUsersQuery } = usersAccountApi;
