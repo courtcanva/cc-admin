@@ -11,7 +11,6 @@ import { ordersApi } from "../redux/api/ordersApi";
 import { dashboardApi } from "../redux/api/dashboardApi";
 import { expirationApi } from "../redux/api/expirationApi";
 
-
 export const makeStore = () =>
   configureStore({
     reducer: {
@@ -37,7 +36,7 @@ export const makeStore = () =>
         depositApi.middleware,
         ordersApi.middleware,
         dashboardApi.middleware,
-        expirationApi.middleware,
+        expirationApi.middleware
       ),
   });
 
