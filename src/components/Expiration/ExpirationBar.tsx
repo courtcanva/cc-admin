@@ -1,0 +1,60 @@
+import { EXPIRATION_TABLE_HEADER } from "@/constants/tableHeaders";
+import { IExpiration } from "@/interfaces/expirationData";
+import { useLazyGetExpirationQuery } from "../../redux/api/expirationApi";
+import { Box, Text, Table, Tr, Tbody, IconButton, Td, useDisclosure } from "@chakra-ui/react";
+import { FaPen } from "react-icons/fa";
+import TableHeader from "../TableHeader";
+import EditConfirmModal from "./EditConfirmModal";
+import { useEffect, useState } from "react";
+
+const ExpirationBar = () => {
+  const [loading, { data: expiration }] = useLazyGetExpirationQuery();
+  console.log("before state"+expiration);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [{ updatedAt, expireDays }, setExpirationData] = useState({ updatedAt: "2022-11-20 17:10:32", expireDays: 1 });
+  console.log("after state"+expiration);
+    console.log("before effect "+updatedAt);
+
+// load expiration data from api once
+  useEffect(() => {
+    loading();
+  }, []);
+
+// update expiration data when change
+  useEffect(() => {
+    const dataCopy = { ...expiration } as IExpiration;
+    const { updatedAt, expireDays } = dataCopy;
+    setExpirationData({ updatedAt, expireDays });
+
+    console.log("in effect "+updatedAt);
+  }, [expiration]);
+
+  console.log("after effect "+updatedAt);
+
+
+
+  return (
+    <>
+      <Box paddingY="50px">
+        <Text fontSize="36px" fontWeight="700">
+          Expiration
+        </Text>
+      </Box>
+      <Table variant="simple">
+        <TableHeader tableHeaderData={EXPIRATION_TABLE_HEADER} />
+        <Tbody>
+          <Tr>
+            <Td textAlign="center">{expireDays}</Td>
+            <Td textAlign="center">{updatedAt}</Td>
+            <Td textAlign="center">
+              <IconButton icon={<FaPen />} aria-label="change expiration day" onClick={onOpen} />
+            </Td>
+          </Tr>
+        </Tbody>
+      </Table>
+      <EditConfirmModal onClose={onClose} isOpen={isOpen} currentExpireDays={expireDays} />
+    </>
+  );
+};
+
+export default ExpirationBar;
