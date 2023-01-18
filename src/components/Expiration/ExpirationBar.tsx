@@ -18,12 +18,10 @@ const ExpirationBar = () => {
     expireDays: 1,
   });
 
-  // load expiration data from api once
   useEffect(() => {
     loading();
   }, []);
 
-  // update expiration data when change
   useEffect(() => {
     const dataCopy = { ...expiration } as IExpiration;
     const { updatedAt, expireDays } = dataCopy;
