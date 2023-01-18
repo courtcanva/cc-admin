@@ -1,12 +1,11 @@
 import { EXPIRATION_TABLE_HEADER } from "@/constants/tableHeaders";
 import { IExpiration } from "@/interfaces/expirationData";
-import { useLazyGetExpirationQuery } from "../../redux/api/expirationApi";
+import { useLazyGetExpirationQuery, useUpdateExpirationMutation } from "../../redux/api/expirationApi";
 import { Box, Text, Table, Tr, Tbody, IconButton, Td, useDisclosure } from "@chakra-ui/react";
 import { FaPen } from "react-icons/fa";
 import TableHeader from "../TableHeader";
 import EditConfirmModal from "../ConfirmModal/EditConfirmModal";
 import { useEffect, useState } from "react";
-import { useUpdateExpirationMutation } from "../../redux/api/expirationApi";
 
 const ExpirationBar = () => {
   const [loading, { data: expiration }] = useLazyGetExpirationQuery();
@@ -48,7 +47,7 @@ const ExpirationBar = () => {
             <Td textAlign="center">{expireDays}</Td>
             <Td textAlign="center">{updatedAt}</Td>
             <Td textAlign="center">
-              <IconButton icon={<FaPen />} aria-label="change expiration day" onClick={onOpen} />
+              <IconButton icon={<FaPen />} aria-label="change expiration day" onClick={onOpen} data-testid="operationButton"/>
             </Td>
           </Tr>
         </Tbody>
