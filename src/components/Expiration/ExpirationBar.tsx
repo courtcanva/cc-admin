@@ -4,8 +4,9 @@ import { useLazyGetExpirationQuery } from "../../redux/api/expirationApi";
 import { Box, Text, Table, Tr, Tbody, IconButton, Td, useDisclosure } from "@chakra-ui/react";
 import { FaPen } from "react-icons/fa";
 import TableHeader from "../TableHeader";
-import EditConfirmModal from "./EditConfirmModal";
+import EditConfirmModal from "../ConfirmModal/EditConfirmModal";
 import { useEffect, useState } from "react";
+import { useUpdateExpirationMutation } from "../../redux/api/expirationApi";
 
 const ExpirationBar = () => {
   const [loading, { data: expiration }] = useLazyGetExpirationQuery();
@@ -14,7 +15,6 @@ const ExpirationBar = () => {
     updatedAt: "2022-11-20 17:10:32",
     expireDays: 1,
   });
-
 
   // load expiration data from api once
   useEffect(() => {
@@ -26,8 +26,13 @@ const ExpirationBar = () => {
     const dataCopy = { ...expiration } as IExpiration;
     const { updatedAt, expireDays } = dataCopy;
     setExpirationData({ updatedAt, expireDays });
-
   }, [expiration]);
+
+  const step = 1;
+  const min = 1;
+  const max = 365;
+  const updateData = useUpdateExpirationMutation();
+  const precision = 0;
 
   return (
     <>
@@ -48,7 +53,16 @@ const ExpirationBar = () => {
           </Tr>
         </Tbody>
       </Table>
-      <EditConfirmModal onClose={onClose} isOpen={isOpen} currentExpireDays={expireDays} />
+      <EditConfirmModal
+        onClose={onClose}
+        isOpen={isOpen}
+        currentData={expireDays}
+        updateData={updateData}
+        precision={precision}
+        step={step}
+        min={min}
+        max={max}
+      />
     </>
   );
 };

@@ -1,5 +1,3 @@
-import { IExpiration } from "@/interfaces/expirationData";
-import { useUpdateExpirationMutation } from "../../redux/api/expirationApi";
 import {
   Modal,
   ModalOverlay,
@@ -20,25 +18,30 @@ import React, { useRef } from "react";
 interface Props {
   onClose: () => void;
   isOpen: boolean;
-  currentExpireDays: number;
+  currentData: number;
+  updateData: any;
+  step: number;
+  min: number;
+  max: number;
+  precision: number;
 }
 
 const EditConfirmModal = (props: Props) => {
   const ref = useRef<HTMLInputElement | null>(null);
-  const { onClose, isOpen, currentExpireDays } = props;
+  const { onClose, isOpen, currentData, updateData, precision, step, min, max } = props;
   const toast = useToast();
-  const [updateExpiration] = useUpdateExpirationMutation();
+  const [updateCurrentData] = updateData;
 
   const onConfirm = async () => {
-    const newExpireDays = ref.current?.value;
-    if (!newExpireDays || Number(newExpireDays) === currentExpireDays) return;
-    const newExpiration = { expireDays: Number(newExpireDays) } as IExpiration;
-    await updateExpiration(newExpiration)
+    const newData = ref.current?.value;
+    if (!newData || Number(newData) === currentData) return;
+    const newCurrentData = { expireDays: Number(newData) };
+    await updateCurrentData(newCurrentData)
       .unwrap()
-      .then((_res) => {
+      .then((_res: any) => {
         onClose();
       })
-      .catch((err) => {
+      .catch((err: any) => {
         return toast({
           title: `Oops`,
           description: `Error: ${err}`,
@@ -56,7 +59,13 @@ const EditConfirmModal = (props: Props) => {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody textAlign="center" marginTop="60px">
-            <NumberInput defaultValue={currentExpireDays} step={1} min={1}>
+            <NumberInput
+              defaultValue={currentData}
+              precision={precision}
+              step={step}
+              min={min}
+              max={max}
+            >
               <NumberInputField ref={ref} data-testid="numberInput" autoFocus />
               <NumberInputStepper>
                 <NumberIncrementStepper />
