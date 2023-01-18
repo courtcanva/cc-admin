@@ -1,6 +1,9 @@
 import { EXPIRATION_TABLE_HEADER } from "@/constants/tableHeaders";
 import { IExpiration } from "@/interfaces/expirationData";
-import { useLazyGetExpirationQuery, useUpdateExpirationMutation } from "../../redux/api/expirationApi";
+import {
+  useLazyGetExpirationQuery,
+  useUpdateExpirationMutation,
+} from "../../redux/api/expirationApi";
 import { Box, Text, Table, Tr, Tbody, IconButton, Td, useDisclosure } from "@chakra-ui/react";
 import { FaPen } from "react-icons/fa";
 import TableHeader from "../TableHeader";
@@ -47,7 +50,12 @@ const ExpirationBar = () => {
             <Td textAlign="center">{expireDays}</Td>
             <Td textAlign="center">{updatedAt}</Td>
             <Td textAlign="center">
-              <IconButton icon={<FaPen />} aria-label="change expiration day" onClick={onOpen} data-testid="operationButton"/>
+              <IconButton
+                icon={<FaPen />}
+                aria-label="change expiration day"
+                onClick={onOpen}
+                data-testid="operationButton"
+              />
             </Td>
           </Tr>
         </Tbody>
