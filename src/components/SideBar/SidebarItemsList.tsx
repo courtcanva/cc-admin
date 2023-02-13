@@ -5,7 +5,7 @@ import { TbRectangle } from "react-icons/tb";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { CgNotes } from "react-icons/cg";
 import { ISidebarItem } from "../../interfaces/sidebarItem";
-import { RiPercentLine } from "react-icons/ri";
+import { RiPercentLine, RiFileWarningLine } from "react-icons/ri";
 
 const SidebarItemsList: ISidebarItem[] = [
   {
@@ -61,6 +61,12 @@ const SidebarItemsList: ISidebarItem[] = [
     title: "Templates",
     icon: CgTemplate,
     href: "/templates",
+  },
+  {
+    id: 10,
+    title: "Expiration",
+    icon: RiFileWarningLine,
+    href: "/expiration",
   },
 ];
 export default SidebarItemsList;

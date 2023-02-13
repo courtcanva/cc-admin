@@ -17,3 +17,5 @@ export const ADMIN_TABLE_HEADER = [
 ];
 
 export const DEPOSIT_TABLE_HEADER = ["Deposit Rate", "Updated At", "Operation"]
+
+export const EXPIRATION_TABLE_HEADER = ["Expiration Day", "Updated At", "Operation"]
