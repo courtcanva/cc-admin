@@ -70,7 +70,6 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::245866473499:role/OIDC-S3-deployment
-          role-session-name: S3Deployment
           aws-region: ap-southeast-2
       - name: Deploy to PROD S3
         run: |
