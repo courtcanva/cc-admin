@@ -26,6 +26,18 @@ jobs:
           name: out-files
           path: out
 
+  # test:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get code
+  #       uses: actions/checkout@v3
+  #     - name: Load & cache dependencies
+  #       id: cache-dependencies
+  #       uses: ./.github/actions/cached-dependencies
+  #     - name: Run Unit test
+  #       run: npm run test
+
   lint:
     needs: build
     runs-on: ubuntu-latest
@@ -61,6 +73,7 @@ jobs:
   deploy-prod:
     needs: deploy-uat
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Get code
         uses: actions/checkout@v3
