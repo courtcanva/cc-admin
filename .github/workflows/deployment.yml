@@ -3,6 +3,13 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: 'where to release (Uat or Prod)?'
+        required: true
+        default: 'Uat'
+    
 permissions:
   id-token: write
   contents: read
@@ -50,7 +57,9 @@ jobs:
       - name: Lint code
         run: npm run lint
 
-  deploy-uat:
+  uat:
+    name: Deploy to Uat
+    environment: Uat
     needs: lint
     runs-on: ubuntu-latest
     steps:
@@ -70,10 +79,11 @@ jobs:
         run: |
           aws s3 sync out ${{ secrets.S3_UAT_ADMIN_BUCKET }}
 
-  deploy-prod:
-    needs: deploy-uat
+  prod:
+    name: Deploy to Prod
+    environment: Prod
+    needs: uat
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Get code
         uses: actions/checkout@v3
