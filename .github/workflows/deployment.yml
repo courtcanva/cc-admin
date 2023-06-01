@@ -3,13 +3,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      releaseType:
-        description: 'where to release (Uat or Prod)?'
-        required: true
-        default: 'Uat'
-    
+
 permissions:
   id-token: write
   contents: read
