@@ -44,7 +44,6 @@ jobs:
   #       uses: ./.github/actions/cached-dependencies
   #     - name: Run Unit test
   #       run: npm run test
-
   lint:
     needs: build
     runs-on: ubuntu-latest
@@ -100,3 +99,4 @@ jobs:
       - name: Deploy to PROD S3
         run: |
           aws s3 sync out ${{ secrets.S3_PROD_ADMIN_BUCKET }}
+
