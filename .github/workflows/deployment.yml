@@ -52,7 +52,9 @@ jobs:
 
   deploy-uat:
     name: Deploy to Uat
-    environment: Uat
+    environment: 
+      name: Uat
+      url: 'https://uat.admin.courtcanva.com'
     needs: lint
     runs-on: ubuntu-latest
     steps:
@@ -74,7 +76,9 @@ jobs:
 
   deploy-prod:
     name: Deploy to Prod
-    environment: Prod
+    environment: 
+      name: Prod
+      url: 'https://admin.courtcanva.com'
     needs: deploy-uat
     runs-on: ubuntu-latest
     steps:
