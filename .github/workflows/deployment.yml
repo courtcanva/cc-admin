@@ -57,7 +57,7 @@ jobs:
       - name: Lint code
         run: npm run lint
 
-  uat:
+  deploy-uat:
     name: Deploy to Uat
     environment: Uat
     needs: lint
@@ -79,10 +79,10 @@ jobs:
         run: |
           aws s3 sync out ${{ secrets.S3_UAT_ADMIN_BUCKET }}
 
-  prod:
+  deploy-prod:
     name: Deploy to Prod
     environment: Prod
-    needs: uat
+    needs: deploy-uat
     runs-on: ubuntu-latest
     steps:
       - name: Get code
