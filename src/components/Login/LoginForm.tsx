@@ -104,7 +104,7 @@ const LoginForm = ({ loginStatus }: ILoginFromProps) => {
         disabled={isInvalid}
         isLoading={isLoading}
       >
-        Login in
+        Log in
       </Button>
     </form>
   );
