@@ -66,10 +66,15 @@ interface Props<Data extends object> {
 
 interface Search {
   searchPlaceholder: string;
+  searchFieldSelect: boolean;
+  searchField: string;
+  setSearchField: Dispatch<SetStateAction<string>>;
   searchValue: string;
   setSearchValue: Dispatch<SetStateAction<string>>;
   searchLoading: boolean;
   searchLoadingText: string;
+  searchOptions: string[];
+  searchOptionsText: string[];
 }
 
 function DisplayDataTable<Data extends object>({
@@ -143,8 +148,13 @@ function DisplayDataTable<Data extends object>({
             <Box width="fit-content" data-testid="table-search">
               <Search
                 searchPlaceholder={tableSearch.searchPlaceholder}
+                searchFieldSelect={tableSearch.searchFieldSelect}
+                searchField={tableSearch.searchField as string}
+                setSearchField={tableSearch.setSearchField as Dispatch<SetStateAction<string>>}
                 searchValue={tableSearch.searchValue as string}
                 setSearchValue={tableSearch.setSearchValue as Dispatch<SetStateAction<string>>}
+                searchOptions={tableSearch.searchOptions}
+                searchOptionsText={tableSearch.searchOptionsText}
               ></Search>
             </Box>
           )}

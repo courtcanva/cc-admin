@@ -75,10 +75,15 @@ describe("DisplayDataTable", () => {
   it("Should render search", () => {
     const tableSearch = {
       searchPlaceholder: "",
+      searchFieldSelect: false,
+      searchField: "",
+      setSearchField: jest.fn(),
       searchValue: "",
       setSearchValue: jest.fn(),
       searchLoading: false,
       searchLoadingText: "",
+      searchOptions: ["user_id", "email", "name"],
+      searchOptionsText: ["By User ID", "By Email", "By Name"],
     };
 
     render(
@@ -94,7 +99,6 @@ describe("DisplayDataTable", () => {
         tableSearch={tableSearch}
       />
     );
-
     expect(screen.getByTestId("table-search")).toBeInTheDocument();
   });
 
